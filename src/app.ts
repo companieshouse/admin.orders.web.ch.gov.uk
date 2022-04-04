@@ -4,13 +4,13 @@ const createError = require('http-errors');
 import express, {Express} from 'express';
 import ErrnoException = NodeJS.ErrnoException;
 import {Server} from "net";
-import {Router} from "express/ts4.0";
+import {NextFunction, Request, Response, Router} from "express/ts4.0";
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-type HandlerFunction = (req: any, res: { render: (arg0: string, arg1: { title: string; }) => void; }, next: any) => void
+type HandlerFunction = (req: Request, res: Response, next: NextFunction) => Promise<void>
 
 export class App {
     public app: Express;

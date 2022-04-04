@@ -1,11 +1,13 @@
 import {App} from "../app";
+import {NextFunction, Request} from "express";
+import {Response} from "express";
 
 export class HelloController {
     constructor(private readonly app: App) {
         app.addRoute('/', this.render)
     }
 
-    render = (req: any, res: { render: (arg0: string, arg1: { title: string; }) => void; }, next: any) => {
+    render = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         res.render('index', {title: 'Express'});
     }
 }
