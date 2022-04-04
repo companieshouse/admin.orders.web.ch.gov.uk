@@ -1,10 +1,12 @@
 import http from "http";
 
 const createError = require('http-errors');
-import express, {Express} from 'express';
+import express, { Express } from 'express';
 import ErrnoException = NodeJS.ErrnoException;
-import {Server} from "net";
-import {NextFunction, Request, Response, Router} from "express/ts4.0";
+import { Server } from "net";
+import { NextFunction, Request, Response, Router } from "express/ts4.0";
+import { MiddlewareProvider } from "security/MiddlewareProvider";
+import { ControllerHandler } from "security/ControllerHandler";
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -13,11 +15,11 @@ const logger = require('morgan');
 type HandlerFunction = (req: Request, res: Response, next: NextFunction) => Promise<void>
 
 export class App {
-    public app: Express;
+    private app: Express;
     private server: Server;
     private router: Router;
 
-    constructor(private readonly port: number) {
+    constructor(private readonly port: number, private readonly middlewareProvider: MiddlewareProvider, private readonly interceptors: ControllerHandler[]) {
         this.router = express.Router();
 
         this.app = express();
@@ -28,7 +30,7 @@ export class App {
 
         this.app.use(logger('dev'));
         this.app.use(express.json());
-        this.app.use(express.urlencoded({extended: false}));
+        this.app.use(express.urlencoded({ extended: false }));
         this.app.use(cookieParser());
         this.app.use(express.static(path.join(__dirname, 'public')));
 
@@ -99,7 +101,11 @@ export class App {
         console.debug('Listening on port ' + this.port);
     }
 
-    addRoute = (path: string, handlerFunction: HandlerFunction) => {
+    addGetRoute = (path: string, handlerFunction: HandlerFunction) => {
         this.router.get(path, handlerFunction);
+        this.app.use(path, this.middlewareProvider.sessionMiddleware())
+        this.interceptors.forEach(interceptor => {
+            this.app.use(path, interceptor.handler)
+        });
     }
 }
