@@ -3,7 +3,8 @@
 ## Summary
 
 * Internal Admin web application tool used to examine orders.
-* Would be able to pull up details of orders that have been paid, so an examiner can process it.
+* Examiners would be inspect details of orders that have been paid status, 
+for further processing.
 
 ## System requirements
 
@@ -15,10 +16,11 @@
 
 ## Architecture
 
-* The admin orders web app has been developed using ExpressJS and TypeScript.
-* The template engine used is Nunjucks, to follow the standards set by the GovUK Design System.
-* Unit testing has been written be using the Jess testing framework.
-* Integration testing will be done in project using CucumberJS, Gherkin & Jess.
+* The admin orders web app has been developed using [ExpressJS](https://expressjs.com/) and [TypeScript](https://www.typescriptlang.org/).
+* The template engine used is [Nunjucks](https://mozilla.github.io/nunjucks/), 
+to follow the standards set by the [GovUK Design System](https://design-system.service.gov.uk/).
+* Unit testing has been written be using the [Jest](https://jestjs.io/) testing framework.
+* Integration testing is written in project using [CucumberJS](https://cucumber.io/docs/installation/javascript/), [Gherkin](https://cucumber.io/docs/gherkin/) & Jest.
 
 
 ## Environment variables
