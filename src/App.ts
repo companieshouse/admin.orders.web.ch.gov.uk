@@ -2,18 +2,22 @@ import nunjucks from "nunjucks";
 import http from "http"
 import express, { Express, NextFunction, Request, Response, Router } from "express"
 import { Middlewareable } from "application/Middlewareable"
+import { injectable, inject } from "inversify";
+import "reflect-metadata";
 
 import path from "path"
 
 const createError = require('http-errors')
 import ErrnoException = NodeJS.ErrnoException;
+import { Bindable } from "application/Bindable";
 
 const cookieParser = require('cookie-parser')
 
 type HandlerFunction = (req: Request, res: Response, next: NextFunction) => Promise<void>
 type Process = () => void
 
-export class App {
+@injectable()
+export class App implements Bindable {
     private readonly app: Express
     private readonly router: Router
     private readonly routerBindings: Process[] = []
