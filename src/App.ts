@@ -1,3 +1,4 @@
+import nunjucks from "nunjucks";
 import http from "http"
 import express, { Express, NextFunction, Request, Response, Router } from "express"
 import { Middlewareable } from "application/Middlewareable"
@@ -26,8 +27,9 @@ export class App {
         this.app.set('port', this.port)
 
         // View engine setup TODO: Nunjucks
-        this.app.set('views', path.join(__dirname, 'views'))
-        this.app.set('view engine', 'jade')
+        //this.app.set('views', path.join(__dirname, 'views'))
+        this.app.engine('njk', nunjucks.render)
+        this.app.set('view engine', 'njk')
     }
 
     start = () => {
@@ -35,6 +37,19 @@ export class App {
         this.app.use(express.urlencoded({ extended: false }))
         this.app.use(cookieParser())
         this.app.use(express.static(path.join(__dirname, 'public')))
+
+        // where nunjucks templates should resolve to
+        const viewPath = path.join(__dirname, "views");
+
+// set up the template engine
+        const env = nunjucks.configure([
+            viewPath
+//    "node_modules/govuk-frontend/",
+//    "node_modules/govuk-frontend/components"
+        ], {
+            autoescape: true,
+            express: this.app
+        });
 
         this.app.use('/', this.router)
 
