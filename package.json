@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./dist/bin/www",
-    "build": "npx tsc && cp -r src/views dist/ && cp -r src/public dist/",
+    "start": "node -r source-map-support/register ./dist/bin/www",
+    "build": "tsc -sourcemap && cp -r src/views dist/ && cp -r src/public dist/",
     "clean": "rm -r ./dist"
   },
   "dependencies": {

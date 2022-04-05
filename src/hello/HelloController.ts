@@ -8,6 +8,6 @@ export class HelloController {
 
     render = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         console.log("Hello")
-        res.render('index', { title: 'Express' });
+        res.render('xindex', { title: 'Express' });
     }
 }
