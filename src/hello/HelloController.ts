@@ -1,17 +1,19 @@
+import { Bindable } from "../application/Bindable";
 import { NextFunction, Request, Response } from "express";
-import { injectable, inject, named } from "inversify";
-import { Bindable } from "application/Bindable";
-import { TYPES } from "../types";
+import { injectable } from "inversify";
 
 @injectable()
 export class HelloController {
-    constructor(@inject(TYPES.Bindable) @named("app") private readonly app: Bindable) {
+    constructor() {
         console.log("Hello constructed")
-        app.bindGet('/', this.render)
     }
 
     public async render(req: Request, res: Response, next: NextFunction): Promise<void> {
         console.log("Hello")
         res.render('index', { title: 'Express' });
+    }
+
+    configure(app: Bindable) {
+        app.bindGet('/', this.render)
     }
 }

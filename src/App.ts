@@ -1,7 +1,6 @@
 import nunjucks from "nunjucks";
 import http from "http"
 import express, { Express, NextFunction, Request, Response, Router } from "express"
-import { Middlewareable } from "application/Middlewareable"
 import { injectable, inject } from "inversify";
 import "reflect-metadata";
 
@@ -10,6 +9,7 @@ import path from "path"
 const createError = require('http-errors')
 import ErrnoException = NodeJS.ErrnoException;
 import { Bindable } from "application/Bindable";
+import { Configuration } from "config/Configuration";
 
 const cookieParser = require('cookie-parser')
 
@@ -22,13 +22,13 @@ export class App implements Bindable {
     private readonly router: Router
     private readonly routerBindings: Process[] = []
 
-    constructor(private readonly port: number, private readonly applicationMiddlewareables: Middlewareable[]) {
+    constructor(@inject(Configuration) private readonly configuration: Configuration) {
         this.router = Router()
 
         this.app = express()
 
         // Port
-        this.app.set('port', this.port)
+        this.app.set('port', configuration.port)
 
         // View engine setup TODO: Nunjucks
         //this.app.set('views', path.join(__dirname, 'views'))
@@ -79,7 +79,7 @@ export class App implements Bindable {
         const server = http.createServer(this.app)
 
         // Listen on provided port, on all network interfaces.
-        server.listen(this.port)
+        server.listen(this.configuration.port)
         server.on('error', this.onError.bind(this))
         server.on('listening', this.onListening.bind(this))
     }
@@ -92,11 +92,11 @@ export class App implements Bindable {
         // handle specific listen errors with friendly messages
         switch (error.code) {
             case 'EACCES':
-                console.error('Port ' + this.port + ' requires elevated privileges')
+                console.error('Port ' + this.configuration.port + ' requires elevated privileges')
                 process.exit(1)
                 break
             case 'EADDRINUSE':
-                console.error('Port ' + this.port + ' is already in use')
+                console.error('Port ' + this.configuration.port + ' is already in use')
                 process.exit(1)
                 break
             default:
@@ -106,13 +106,13 @@ export class App implements Bindable {
 
     // Event listener for HTTP server "listening" event.
     private onListening() : void {
-        console.debug('Listening on port ' + this.port)
+        console.debug('Listening on port ' + this.configuration.port)
     }
 
     // Bind uriPath GET to handlerFunction
     public bindGet(uriPath: string, handlerFunction: HandlerFunction) : void {
         // Bind path to application middleware
-        for (let applicationMiddlewareable of this.applicationMiddlewareables) {
+        for (let applicationMiddlewareable of this.configuration.applicationMiddlewareables()) {
             this.app.get(uriPath, applicationMiddlewareable.handler)
         }
 
