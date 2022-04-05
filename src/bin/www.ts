@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import {AuthorisationInterceptor} from "../security/AuthorisationInterceptor";
-import {FakeMiddlewareProvider} from "../security/FakeMiddlewareProvider";
-import {App} from "../app"
+import {AuthorisationMiddleware} from "../security/AuthorisationMiddleware";
+import {FakeAuthenticationMiddleware} from "../security/FakeAuthenticationMiddleware";
+import {App} from "../App"
 import {HelloController} from "../hello/HelloController";
 
 // Get port from environment
@@ -11,9 +11,7 @@ if (isNaN(port)) {
     throw Error('Port number not provided by environment')
 }
 
-const app = new App(port,
-    new FakeMiddlewareProvider(),
-    [new AuthorisationInterceptor()])
+const app = new App(port, [new FakeAuthenticationMiddleware(), new AuthorisationMiddleware()])
 
 new HelloController(app)
 

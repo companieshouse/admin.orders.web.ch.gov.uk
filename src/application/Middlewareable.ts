@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 
-export interface ControllerHandler {
+export interface Middlewareable {
     handler(req: Request, res: Response, next: NextFunction): Promise<void>
 }

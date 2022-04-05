@@ -1,12 +1,11 @@
 import http from "http"
 import express, { Express, NextFunction, Request, Response, Router } from "express"
-import { MiddlewareProvider } from "security/MiddlewareProvider"
-import { ControllerHandler } from "security/ControllerHandler"
+import { Middlewareable } from "application/Middlewareable"
 
 import path from "path"
 
 const createError = require('http-errors')
-import ErrnoException = NodeJS.ErrnoException
+import ErrnoException = NodeJS.ErrnoException;
 
 const cookieParser = require('cookie-parser')
 
@@ -18,7 +17,7 @@ export class App {
     private readonly router: Router
     private readonly routerBindings: Process[] = []
 
-    constructor(private readonly port: number, private readonly middlewareProvider: MiddlewareProvider, private readonly interceptors: ControllerHandler[]) {
+    constructor(private readonly port: number, private readonly applicationMiddlewareables: Middlewareable[]) {
         this.router = Router()
 
         this.app = express()
@@ -94,9 +93,9 @@ export class App {
 
     // Bind uriPath GET to handlerFunction
     bindGet = (uriPath: string, handlerFunction: HandlerFunction) => {
-        this.app.get(uriPath, this.middlewareProvider.sessionMiddleware())
-        for (let interceptor of this.interceptors) {
-            this.app.get(uriPath, interceptor.handler)
+        // Bind path to application middleware
+        for (let applicationMiddlewareable of this.applicationMiddlewareables) {
+            this.app.get(uriPath, applicationMiddlewareable.handler)
         }
 
         // NB: router middleware must be bound last after all application middleware; i.e. in start() above.
