@@ -41,11 +41,10 @@ export class App {
         // where nunjucks templates should resolve to
         const viewPath = path.join(__dirname, "views");
 
-// set up the template engine
-        const env = nunjucks.configure([
-            viewPath
-//    "node_modules/govuk-frontend/",
-//    "node_modules/govuk-frontend/components"
+        // set up the template engine
+        nunjucks.configure([
+            viewPath,
+            path.join(__dirname, "/../../node_modules/govuk-frontend/"),
         ], {
             autoescape: true,
             express: this.app
@@ -77,8 +76,8 @@ export class App {
 
         // Listen on provided port, on all network interfaces.
         server.listen(this.port)
-        server.on('error', this.onError)
-        server.on('listening', this.onListening)
+        server.on('error', this.onError.bind(this))
+        server.on('listening', this.onListening.bind(this))
     }
 
     private onError(error: ErrnoException) : void {
