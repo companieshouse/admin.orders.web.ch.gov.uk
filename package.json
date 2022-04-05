@@ -1,11 +1,12 @@
 {
-  "name": "express",
+  "name": "admin.orders.web.ch.gov.uk",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node -r source-map-support/register ./dist/bin/www",
     "build": "tsc -sourcemap && cp -r src/views dist/ && cp -r src/public dist/",
-    "clean": "rm -r ./dist"
+    "clean": "rm -rf ./dist",
+    "test": "npx jest"
   },
   "dependencies": {
     "@companieshouse/node-session-handler": "~4.1.6",

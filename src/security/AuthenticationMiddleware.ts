@@ -10,7 +10,7 @@ export class AuthenticationMiddleware implements Middlewareable {
         this.sessionMiddleware = SessionMiddleware(this.config, this.sessionStore)
     }
 
-    handler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public async handler(req: Request, res: Response, next: NextFunction): Promise<void> {
         return this.sessionMiddleware(req, res, next)
     }
 }

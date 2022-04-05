@@ -32,7 +32,7 @@ export class App {
         this.app.set('view engine', 'njk')
     }
 
-    start = () => {
+    public start() : void {
         this.app.use(express.json())
         this.app.use(express.urlencoded({ extended: false }))
         this.app.use(cookieParser())
@@ -81,7 +81,7 @@ export class App {
         server.on('listening', this.onListening)
     }
 
-    onError = (error: ErrnoException) => {
+    private onError(error: ErrnoException) : void {
         if (error.syscall !== 'listen') {
             throw error
         }
@@ -102,12 +102,12 @@ export class App {
     }
 
     // Event listener for HTTP server "listening" event.
-    onListening = () => {
+    private onListening() : void {
         console.debug('Listening on port ' + this.port)
     }
 
     // Bind uriPath GET to handlerFunction
-    bindGet = (uriPath: string, handlerFunction: HandlerFunction) => {
+    public bindGet(uriPath: string, handlerFunction: HandlerFunction) : void {
         // Bind path to application middleware
         for (let applicationMiddlewareable of this.applicationMiddlewareables) {
             this.app.get(uriPath, applicationMiddlewareable.handler)

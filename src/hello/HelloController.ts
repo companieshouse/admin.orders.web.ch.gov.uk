@@ -6,7 +6,7 @@ export class HelloController {
         app.bindGet('/', this.render)
     }
 
-    render = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    public async render(req: Request, res: Response, next: NextFunction): Promise<void> {
         console.log("Hello")
         res.render('index', { title: 'Express' });
     }
