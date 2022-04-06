@@ -22,7 +22,7 @@ export class Registrar {
     }
 
     public start(): void {
-        this.app.bindGet('/', this.helloController.render.bind(this.helloController), this.middlewareables)
+        this.app.bindGet('/hello', this.helloController.render.bind(this.helloController), this.middlewareables)
 
         this.app.start()
     }
