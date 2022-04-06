@@ -1,17 +1,14 @@
-# admin.orders.api.ch.gov.uk
+# admin.orders.web.ch.gov.uk
 
 ## Summary
 
 * Internal Admin web application tool used to examine orders.
-* Examiners would be inspect details of orders that have been paid status, 
+* Examiners will be able to inspect details of paid orders 
 for further processing.
 
 ## System requirements
 
 * [Git](https://git-scm.com/downloads)
-* [Maven](https://maven.apache.org/download.cgi)
-* [MongoDB](https://www.mongodb.com/)
-* [AWS](https://aws.amazon.com/)
 * [NodeJS](https://nodejs.org/en/)
 
 ## Architecture
@@ -19,8 +16,9 @@ for further processing.
 * The admin orders web app has been developed using [ExpressJS](https://expressjs.com/) and [TypeScript](https://www.typescriptlang.org/).
 * The template engine used is [Nunjucks](https://mozilla.github.io/nunjucks/), 
 to follow the standards set by the [GovUK Design System](https://design-system.service.gov.uk/).
-* Unit testing has been written be using the [Jest](https://jestjs.io/) testing framework.
-* Integration testing is written in project using [CucumberJS](https://cucumber.io/docs/installation/javascript/), [Gherkin](https://cucumber.io/docs/gherkin/) & Jest.
+* Unit tests use the [Jest](https://jestjs.io/) testing framework and [Mocha](https://mochajs.org/).
+* Integration tests use [CucumberJS](https://cucumber.io/docs/installation/javascript/), [Gherkin](https://cucumber.io/docs/gherkin/), 
+Jest & [TestContainers](https://github.com/testcontainers/testcontainers-node).
 
 
 ## Environment variables
@@ -41,7 +39,7 @@ to follow the standards set by the [GovUK Design System](https://design-system.s
 1. Clone [Docker CHS Development](https://github.com/companieshouse/docker-chs-development) and follow the steps in the
    README.
 
-1. Enable the `orders` module
+1. Enable the `admin-orders` module
 
 1. Run `tilt up` and wait for all services to start
 
@@ -50,7 +48,7 @@ to follow the standards set by the [GovUK Design System](https://design-system.s
 Development mode is available for this service
 in [Docker CHS Development](https://github.com/companieshouse/docker-chs-development).
 
-    ./bin/chs-dev development enable orders
+    ./bin/chs-dev development enable admin-orders
 
 This will clone the admin orders web app into the repositories folder. Any changes to the code, or resources will
 automatically trigger a rebuild and reluanch.
