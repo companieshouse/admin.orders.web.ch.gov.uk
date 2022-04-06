@@ -18,7 +18,7 @@ export class App {
     private readonly router: Router
     private readonly routerBindings: Process[] = []
 
-    constructor(private readonly port: number, private readonly applicationMiddlewareables: Middlewareable[]) {
+    constructor(private readonly port: number) {
         this.router = Router()
 
         this.app = express()
@@ -27,7 +27,7 @@ export class App {
         this.app.set('port', this.port)
 
         // View engine setup TODO: Nunjucks
-        //this.app.set('views', path.join(__dirname, 'views'))
+        // this.app.set('views', path.join(__dirname, 'views'))
         this.app.engine('njk', nunjucks.render)
         this.app.set('view engine', 'njk')
     }
@@ -36,15 +36,15 @@ export class App {
         this.app.use(express.json())
         this.app.use(express.urlencoded({ extended: false }))
         this.app.use(cookieParser())
-        this.app.use(express.static(path.join(__dirname, 'public')))
+        this.app.use(express.static(path.join(__dirname, '../public')))
 
         // where nunjucks templates should resolve to
-        const viewPath = path.join(__dirname, "views");
+        const viewPath = path.join(__dirname, "../views");
 
         // set up the template engine
         nunjucks.configure([
             viewPath,
-            path.join(__dirname, "/../../node_modules/govuk-frontend/"),
+            path.join(__dirname, "../../../node_modules/govuk-frontend/"),
         ], {
             autoescape: true,
             express: this.app
@@ -106,9 +106,9 @@ export class App {
     }
 
     // Bind uriPath GET to handlerFunction
-    public bindGet(uriPath: string, handlerFunction: HandlerFunction) : void {
+    public bindGet(uriPath: string, handlerFunction: HandlerFunction, applicationMiddlewareables: Middlewareable[]) : void {
         // Bind path to application middleware
-        for (let applicationMiddlewareable of this.applicationMiddlewareables) {
+        for (let applicationMiddlewareable of applicationMiddlewareables) {
             this.app.get(uriPath, applicationMiddlewareable.handler)
         }
 
