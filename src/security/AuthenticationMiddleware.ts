@@ -1,7 +1,10 @@
 import { CookieConfig, SessionMiddleware, SessionStore } from "@companieshouse/node-session-handler";
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { Middlewareable } from "../application/Middlewareable";
+import { Service } from "typedi"
+import 'reflect-metadata'
 
+@Service()
 export class AuthenticationMiddleware implements Middlewareable {
 
     private readonly sessionMiddleware: RequestHandler

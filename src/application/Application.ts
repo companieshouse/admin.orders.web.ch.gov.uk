@@ -2,29 +2,32 @@ import nunjucks from "nunjucks";
 import http from "http"
 import express, { Express, NextFunction, Request, Response, Router } from "express"
 import { Middlewareable } from "application/Middlewareable"
-
+import { Service } from "typedi"
+import 'reflect-metadata'
 import path from "path"
 
 const createError = require('http-errors')
 import ErrnoException = NodeJS.ErrnoException;
+import { Config } from "./Config";
 
 const cookieParser = require('cookie-parser')
 
 type HandlerFunction = (req: Request, res: Response, next: NextFunction) => Promise<void>
 type Process = () => void
 
+@Service()
 export class Application {
     private readonly app: Express
     private readonly router: Router
     private readonly routerBindings: Process[] = []
 
-    constructor(private readonly port: number) {
+    constructor(private readonly config: Config) {
         this.router = Router()
 
         this.app = express()
 
         // Port
-        this.app.set('port', this.port)
+        this.app.set('port', this.config.getPort())
 
         // View engine setup TODO: Nunjucks
         this.app.engine('njk', nunjucks.render)
@@ -74,7 +77,7 @@ export class Application {
         const server = http.createServer(this.app)
 
         // Listen on provided port, on all network interfaces.
-        server.listen(this.port)
+        server.listen(this.config.getPort())
         server.on('error', this.onError.bind(this))
         server.on('listening', this.onListening.bind(this))
     }
@@ -87,11 +90,11 @@ export class Application {
         // handle specific listen errors with friendly messages
         switch (error.code) {
             case 'EACCES':
-                console.error('Port ' + this.port + ' requires elevated privileges')
+                console.error('Port ' + this.config.getPort() + ' requires elevated privileges')
                 process.exit(1)
                 break
             case 'EADDRINUSE':
-                console.error('Port ' + this.port + ' is already in use')
+                console.error('Port ' + this.config.getPort() + ' is already in use')
                 process.exit(1)
                 break
             default:
@@ -101,7 +104,7 @@ export class Application {
 
     // Event listener for HTTP server "listening" event.
     private onListening() : void {
-        console.debug('Listening on port ' + this.port)
+        console.debug('Listening on port ' + this.config.getPort())
     }
 
     // Bind uriPath GET to handlerFunction
