@@ -13,7 +13,7 @@ const cookieParser = require('cookie-parser')
 type HandlerFunction = (req: Request, res: Response, next: NextFunction) => Promise<void>
 type Process = () => void
 
-export class App {
+export class Application {
     private readonly app: Express
     private readonly router: Router
     private readonly routerBindings: Process[] = []
@@ -27,7 +27,6 @@ export class App {
         this.app.set('port', this.port)
 
         // View engine setup TODO: Nunjucks
-        // this.app.set('views', path.join(__dirname, 'views'))
         this.app.engine('njk', nunjucks.render)
         this.app.set('view engine', 'njk')
     }

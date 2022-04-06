@@ -1,11 +1,11 @@
-import { App } from "./App";
+import { Application } from "./Application";
 import { FakeAuthenticationMiddleware } from "../security/FakeAuthenticationMiddleware";
 import { AuthorisationMiddleware } from "../security/AuthorisationMiddleware";
 import { HelloController } from "../hello/HelloController";
 import { Middlewareable } from "./Middlewareable";
 
 export class Registrar {
-    private readonly app: App
+    private readonly app: Application
     private readonly middlewareables: Middlewareable[]
 
     constructor(private readonly helloController: HelloController) {
@@ -18,7 +18,7 @@ export class Registrar {
             throw Error('Port number not provided by environment')
         }
 
-        this.app = new App(port)
+        this.app = new Application(port)
     }
 
     public start(): void {
