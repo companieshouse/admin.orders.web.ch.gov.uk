@@ -1,5 +1,5 @@
 import nunjucks from "nunjucks";
-import http from "http";
+import http, {Server} from "http";
 import express, { Express, NextFunction, Request, Response, Router } from "express";
 import { Middlewareable } from "application/Middlewareable";
 import { Service } from "typedi";
@@ -7,8 +7,9 @@ import "reflect-metadata";
 import path from "path";
 import { Config } from "./Config";
 
-const createError = require("http-errors");
+const createError = require('http-errors');
 import ErrnoException = NodeJS.ErrnoException;
+import {AddressInfo} from "net";
 
 const cookieParser = require("cookie-parser");
 
@@ -20,6 +21,7 @@ export class Application {
     private readonly app: Express;
     private readonly router: Router;
     private readonly routerBindings: Process[] = [];
+    private server: Server | null = null;
 
     constructor(private readonly config: Config) {
         this.router = Router();
@@ -73,12 +75,12 @@ export class Application {
         this.routerBindings.forEach(routerBinding => routerBinding());
 
         // Create HTTP server.
-        const server = http.createServer(this.app);
+        this.server = http.createServer(this.app);
 
         // Listen on provided port, on all network interfaces.
-        server.listen(this.config.port());
-        server.on("error", this.onError.bind(this));
-        server.on("listening", this.onListening.bind(this));
+        this.server.listen(this.config.port());
+        this.server.on("error", this.onError.bind(this));
+        this.server.on("listening", this.onListening.bind(this));
     }
 
     // Bind uriPath GET to handlerFunction
@@ -92,6 +94,22 @@ export class Application {
         this.routerBindings.push(() => {
             this.router.get(uriPath, handlerFunction);
         });
+    }
+
+    public stop(): void {
+        if (this.server == null) {
+            console.error("Server not started");
+            return;
+        }
+        this.server.close();
+    }
+
+    public getPort(): number {
+        if (this.server == null) {
+            console.error("Server not started");
+            return 0;
+        }
+        return (this.server.address() as AddressInfo).port;
     }
 
     private onError(error: ErrnoException): void {
@@ -116,6 +134,6 @@ export class Application {
 
     // Event listener for HTTP server "listening" event.
     private onListening(): void {
-        console.debug("Listening on port " + this.config.port());
+        console.debug("Listening on port " + (this.server?.address() as AddressInfo).port);
     }
 }
