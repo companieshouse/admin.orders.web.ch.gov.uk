@@ -4,7 +4,6 @@ import express, { Express, NextFunction, Request, Response, Router } from "expre
 import { Middlewareable } from "application/Middlewareable";
 import { Service } from "typedi";
 import "reflect-metadata";
-import path from "path";
 import { Config } from "./Config";
 
 const createError = require("http-errors");
@@ -33,26 +32,21 @@ export class Application {
         this.app.set("view engine", "njk");
     }
 
-    public start() : void {
-        this.app.use(express.json())
-        this.app.use(express.urlencoded({ extended: false }))
-        this.app.use(cookieParser())
-        this.app.use(express.static(path.join(__dirname, '../public')))
-console.log("static path:" + path.join(__dirname, '../public'))
+    public start(): void {
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: false }));
+        this.app.use(cookieParser());
 
-        // where nunjucks templates should resolve to
-        const viewPath = path.join(__dirname, "../views");
-        console.log("view path:" + path.join(__dirname, "../views"));
+        // serve static assets
+        this.app.use(this.config.webContextPath, express.static(this.config.staticResourcePath));
 
         // set up the template engine
-        nunjucks.configure([
-            viewPath,
-            path.join(__dirname, "../../node_modules/govuk-frontend/")
-        ], {
+        const nunjucksEnv = nunjucks.configure(this.config.templatePaths, {
             autoescape: true,
             express: this.app
         });
-        console.log("nunjucks path:" + path.join(__dirname, "../../../node_modules/govuk-frontend/"))
+        nunjucksEnv.addGlobal("CONTEXT_PATH", this.config.webContextPath); // Root of stylesheets, scripts etc
+        nunjucksEnv.addGlobal("assetPath", this.config.gdsAssetPath); // GDS assets path
 
         this.app.use("/", this.router);
 
