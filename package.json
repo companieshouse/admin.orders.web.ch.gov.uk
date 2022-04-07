@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node -r source-map-support/register ./dist/src/bin/www",
+    "start": "node -r source-map-support/register ./dist/bin/www",
     "build": "tsc -sourcemap && gulp",
     "clean": "rm -rf ./dist",
     "test": "npx jest"

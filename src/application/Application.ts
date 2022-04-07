@@ -36,14 +36,14 @@ export class Application {
         this.app.use(express.urlencoded({ extended: false }))
         this.app.use(cookieParser())
         this.app.use(express.static(path.join(__dirname, '../public')))
-
+console.log(path.join(__dirname, 'public'))
         // where nunjucks templates should resolve to
         const viewPath = path.join(__dirname, "../views");
 
         // set up the template engine
         nunjucks.configure([
             viewPath,
-            path.join(__dirname, "../../../node_modules/govuk-frontend/"),
+            path.join(__dirname, "../../node_modules/govuk-frontend/"),
         ], {
             autoescape: true,
             express: this.app
