@@ -6,7 +6,7 @@ const sass = gulpSass(dartSass);
 
 function compileStylesheets(cb: () => void) {
     src([
-        "./src/public/**/*"
+        "./src/public/**/*.scss"
     ])
         .pipe(sass().on("error", sass.logError))
         .pipe(dest("./dist/public"));

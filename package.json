@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node -r source-map-support/register ./dist/bin/www",
+    "start": "NODE_ENV=production node -r source-map-support/register ./dist/bin/www",
+    "standalone": "NODE_ENV=development node -r source-map-support/register ./dist/bin/www",
     "build": "tsc -sourcemap && gulp",
     "clean": "rm -rf ./dist",
     "test": "npx jest"
@@ -11,6 +12,7 @@
   "dependencies": {
     "@companieshouse/node-session-handler": "~4.1.6",
     "@types/nunjucks": "^3.2.1",
+    "govuk-frontend": "^4.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.17.3",
@@ -28,7 +30,6 @@
     "@types/jest": "^27.4.1",
     "@types/node": "^11.15.54",
     "@types/sass": "^1.43.1",
-    "govuk-frontend": "^4.0.1",
     "gulp": "^4.0.2",
     "gulp-sass": "^5.1.0",
     "jest": "^27.5.1",

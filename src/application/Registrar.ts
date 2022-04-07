@@ -10,8 +10,8 @@ export class Registrar {
     }
 
     public start(): void {
-        this.app.bindGet('/orders-admin/hello', this.helloController.render.bind(this.helloController), this.middlewareProvider.middlewareables)
+        this.app.bindGet("/orders-admin/hello", this.helloController.render.bind(this.helloController), this.middlewareProvider.middlewareables);
 
-        this.app.start()
+        this.app.start();
     }
 }
