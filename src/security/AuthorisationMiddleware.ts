@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from "express";
-import { Middlewareable } from "../application/Middlewareable";
+import { NextFunction, Request, Response } from "express"
+import { Middlewareable } from "../application/Middlewareable"
 import { Service } from "typedi"
-import 'reflect-metadata'
+import "reflect-metadata"
 
 @Service()
 export class AuthorisationMiddleware implements Middlewareable {
