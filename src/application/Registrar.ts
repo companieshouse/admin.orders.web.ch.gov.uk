@@ -1,8 +1,8 @@
-import { Application } from "./Application"
-import { HelloController } from "../hello/HelloController"
-import { Service } from "typedi"
-import "reflect-metadata"
-import { MiddlewareProvider } from "../security/MiddlewareProvider"
+import { Application } from "./Application";
+import { HelloController } from "../hello/HelloController";
+import { Service } from "typedi";
+import "reflect-metadata";
+import { MiddlewareProvider } from "../security/MiddlewareProvider";
 
 @Service()
 export class Registrar {
@@ -10,7 +10,7 @@ export class Registrar {
     }
 
     public start(): void {
-        this.app.bindGet("/hello", this.helloController.render.bind(this.helloController), this.middlewareProvider.middlewareables)
-        this.app.start()
+        this.app.bindGet("/hello", this.helloController.render.bind(this.helloController), this.middlewareProvider.middlewareables);
+        this.app.start();
     }
 }
