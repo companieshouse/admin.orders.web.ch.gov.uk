@@ -2,7 +2,7 @@
 
 ## Summary
 
-* Internal Admin web application tool used to examine orders.
+* Web application used to examine and inspect orders.
 * Examiners will be able to inspect details of paid orders 
 for further processing.
 
@@ -13,12 +13,14 @@ for further processing.
 
 ## Architecture
 
-* The admin orders web app has been developed using [ExpressJS](https://expressjs.com/) and [TypeScript](https://www.typescriptlang.org/).
+* The admin orders web app has been developed using [ExpressJS](https://expressjs.com/) and 
+[TypeScript](https://www.typescriptlang.org/).
 * The template engine used is [Nunjucks](https://mozilla.github.io/nunjucks/), 
 to follow the standards set by the [GovUK Design System](https://design-system.service.gov.uk/).
 * Unit tests use the [Jest](https://jestjs.io/) testing framework and [Mocha](https://mochajs.org/).
-* Integration tests use [CucumberJS](https://cucumber.io/docs/installation/javascript/), [Gherkin](https://cucumber.io/docs/gherkin/), 
-Jest & [TestContainers](https://github.com/testcontainers/testcontainers-node).
+* Integration tests use [CucumberJS](https://cucumber.io/docs/installation/javascript/), 
+[Gherkin](https://cucumber.io/docs/gherkin/), Jest, [Chai](https://www.chaijs.com/),
+[TestContainers](https://github.com/testcontainers/testcontainers-node).
 
 
 ## Environment variables
@@ -27,12 +29,12 @@ Jest & [TestContainers](https://github.com/testcontainers/testcontainers-node).
 
 |Variable                                      |Description                                                  |Example            |
 |----------------------------------------------|-------------------------------------------------------------|-------------------|
-| To be added.                                 | To be added.                                                | To be added.      |    
+| PORT                                         | The port number in which the service is hosted.             | 3000              |    
 
 
 ## Building the docker image
 
-    mvn compile jib:dockerBuild -Dimage=169942020521.dkr.ecr.eu-west-1.amazonaws.com/local/admin.orders.web.ch.gov.uk
+    DOCKER_BUILDKIT=0 docker build --build-arg SSH_PRIVATE_KEY="$(cat ~/.ssh/id_rsa)" --build-arg SSH_PRIVATE_KEY_PASSPHRASE -t 169942020521.dkr.ecr.eu-west-1.amazonaws.com/local/admin.orders.web.ch.gov.uk:latest . 
 
 ## Running Locally using Docker
 
