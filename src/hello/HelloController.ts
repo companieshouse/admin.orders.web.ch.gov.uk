@@ -6,6 +6,6 @@ import "reflect-metadata";
 export class HelloController {
     public async render(req: Request, res: Response, next: NextFunction): Promise<void> {
         console.log("Hello");
-        res.render("hello/index", { title: "Express" });
+        res.render("hello/hello", { title: "Express" });
     }
 }
