@@ -27,9 +27,9 @@ to follow the standards set by the [GovUK Design System](https://design-system.s
 
 * List of environment variables required to be configured for the application to run.
 
-|Variable                                      |Description                                                  |Example            |
-|----------------------------------------------|-------------------------------------------------------------|-------------------|
-| PORT                                         | The port number in which the service is hosted.             | 3000              |    
+|Variable   |Description                                      |Example  |
+|-----------|-------------------------------------------------|---------|
+|PORT       |The port number in which the service is hosted.  | 3000    |    
 
 
 ## Building the docker image
