@@ -41,7 +41,7 @@ to follow the standards set by the [GovUK Design System](https://design-system.s
 1. Clone [Docker CHS Development](https://github.com/companieshouse/docker-chs-development) and follow the steps in the
    README.
 
-1. Enable the `admin-orders` module
+1. Enable the `orders` module
 
 1. Run `tilt up` and wait for all services to start
 
@@ -50,7 +50,7 @@ to follow the standards set by the [GovUK Design System](https://design-system.s
 Development mode is available for this service
 in [Docker CHS Development](https://github.com/companieshouse/docker-chs-development).
 
-    ./bin/chs-dev development enable admin-orders
+    ./bin/chs-dev development enable admin.orders.web.ch.gov.uk
 
 This will clone the admin orders web app into the repositories folder. Any changes to the code, or resources will
 automatically trigger a rebuild and reluanch.
