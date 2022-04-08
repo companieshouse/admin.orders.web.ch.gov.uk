@@ -11,17 +11,12 @@ export interface GreetingPage {
 }
 
 export class NoPage implements GreetingPage {
-    private _greetingSteps: GreetingSteps;
-    private _interactor: BrowserAgent;
-
-    public constructor(_greetingSteps: GreetingSteps, _interactor: BrowserAgent) {
-        this._greetingSteps = _greetingSteps;
-        this._interactor = _interactor;
+    public constructor(private greetingSteps: GreetingSteps, private interactor: BrowserAgent) {
     }
 
     public async openHelloPage(): Promise<void> {
-        await this._interactor.openPage("/hello");
-        this._greetingSteps.currentPage = this._greetingSteps.helloPageState;
+        await this.interactor.openPage("/hello");
+        this.greetingSteps.currentPage = this.greetingSteps.helloPageState;
     }
 
     public async clickGoodbye(): Promise<void> {
@@ -38,12 +33,7 @@ export class NoPage implements GreetingPage {
 }
 
 export class HelloPage implements GreetingPage {
-    private _greetingSteps: GreetingSteps;
-    private _interactor: BrowserAgent;
-
-    public constructor(_greetingSteps: GreetingSteps, _interactor: BrowserAgent) {
-        this._greetingSteps = _greetingSteps;
-        this._interactor = _interactor;
+    public constructor(private greetingSteps: GreetingSteps, private interactor: BrowserAgent) {
     }
 
     public async openHelloPage(): Promise<void> {
@@ -51,8 +41,8 @@ export class HelloPage implements GreetingPage {
     }
 
     public async clickGoodbye(): Promise<void> {
-        await this._interactor.clickElement("#link");
-        this._greetingSteps.currentPage = this._greetingSteps.goodbyePageState;
+        await this.interactor.clickElement("#link");
+        this.greetingSteps.currentPage = this.greetingSteps.goodbyePageState;
     }
 
     public async clickHello(): Promise<void> {
@@ -60,18 +50,13 @@ export class HelloPage implements GreetingPage {
     }
 
     public async verify(): Promise<void> {
-        const headingText = await this._interactor.getElementText("h1");
+        const headingText = await this.interactor.getElementText("h1");
         expect(headingText).equals("Hello!");
     }
 }
 
 export class GoodbyePage implements GreetingPage {
-    private _greetingSteps: GreetingSteps;
-    private _interactor: BrowserAgent;
-
-    public constructor(_greetingSteps: GreetingSteps, _interactor: BrowserAgent) {
-        this._greetingSteps = _greetingSteps;
-        this._interactor = _interactor;
+    public constructor(private greetingSteps: GreetingSteps, private interactor: BrowserAgent) {
     }
 
     public async openHelloPage(): Promise<void> {
@@ -83,12 +68,12 @@ export class GoodbyePage implements GreetingPage {
     }
 
     public async clickHello(): Promise<void> {
-        await this._interactor.clickElement("#link");
-        this._greetingSteps.currentPage = this._greetingSteps.helloPageState;
+        await this.interactor.clickElement("#link");
+        this.greetingSteps.currentPage = this.greetingSteps.helloPageState;
     }
 
     public async verify(): Promise<void> {
-        const headingText = await this._interactor.getElementText("h1");
+        const headingText = await this.interactor.getElementText("h1");
         expect(headingText).equals("Goodbye!");
     }
 }
