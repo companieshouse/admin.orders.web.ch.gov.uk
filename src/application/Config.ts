@@ -1,15 +1,16 @@
 import { Service } from "typedi";
-import "reflect-metadata";
+import { NunjucksConfigurator } from "./NunjucksConfigurator";
+import { StaticAssetsConfigurator } from "./StaticAssetsConfigurator";
+import { ExpressConfigurator } from "./ExpressConfigurator";
+import { PortConfig } from "./PortConfig";
 
 @Service()
 export class Config {
-    public port() {
-        const port = parseInt((process.env.PORT === "0" ? "0" : process.env.PORT || "3000"), 10);
+    public readonly expressConfigurators: ExpressConfigurator[];
 
-        if (isNaN(port)) {
-            throw Error("Port number not provided by environment");
-        }
-
-        return port;
+    constructor(public readonly portConfig: PortConfig,
+                private nunjucksConfigurator: NunjucksConfigurator,
+                private staticAssetsConfigurator: StaticAssetsConfigurator) {
+        this.expressConfigurators = [ nunjucksConfigurator, staticAssetsConfigurator ];
     }
 }

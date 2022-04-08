@@ -1,6 +1,6 @@
 import {AfterAll, BeforeAll} from '@cucumber/cucumber';
 import {SeleniumBrowserAgent} from "./SeleniumBrowserAgent";
-import {Registrar} from "../../../dist/src/application/Registrar";
+import {Registrar} from "../../../dist/application/Registrar";
 import {Container} from "typedi";
 
 BeforeAll(async function () {

@@ -15,7 +15,7 @@ export class NoPage implements GreetingPage {
     }
 
     public async openHelloPage(): Promise<void> {
-        await this.interactor.openPage("/hello");
+        await this.interactor.openPage("/orders-admin/hello");
         this.greetingSteps.currentPage = this.greetingSteps.helloPageState;
     }
 

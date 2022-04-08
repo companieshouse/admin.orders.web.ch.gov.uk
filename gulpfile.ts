@@ -6,31 +6,31 @@ const sass = gulpSass(dartSass);
 
 function compileStylesheets(cb: () => void) {
     src([
-        "./src/public/**/*"
+        "./src/public/**/*.scss"
     ])
         .pipe(sass().on("error", sass.logError))
-        .pipe(dest("./dist/src/public"));
+        .pipe(dest("./dist/public"));
     cb();
 }
 
 function copyAssets(cb: () => void) {
     src([
         "./node_modules/govuk-frontend/govuk/assets/**/*",
-    ]).pipe(dest("./dist/src/public/assets"));
+    ]).pipe(dest("./dist/public/assets"));
     cb();
 }
 
 function copyScript(cb: () => void) {
     src([
         "./node_modules/govuk-frontend/govuk/all.js"
-    ]).pipe(dest("./dist/src/public/scripts"));
+    ]).pipe(dest("./dist/public/scripts"));
     cb();
 }
 
 function copyViews(cb: () => void) {
     src([
         "./src/views/**/*"
-    ]).pipe(dest("./dist/src/views"));
+    ]).pipe(dest("./dist/views"));
     cb();
 }
 
