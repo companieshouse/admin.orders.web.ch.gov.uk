@@ -1,19 +1,19 @@
 {% extends "govuk/template.njk" %}
 {% block head %}
 <!--[if !IE 8]><!-->
-<link rel="stylesheet" type="text/css" media="all" href="{{ CONTEXT_PATH }}/stylesheets/app.css" />
-<link rel="stylesheet" type="text/css" media="all" href="{{ CONTEXT_PATH }}/stylesheets/footer.css" />
+<link rel="stylesheet" type="text/css" media="all" href="{{ contextPath }}/stylesheets/app.css" />
+<link rel="stylesheet" type="text/css" media="all" href="{{ contextPath }}/stylesheets/footer.css" />
 <!--<![endif]-->
 
 {# For Internet Explorer 8, you need to compile specific stylesheet #}
 {# see https://frontend.design-system.service.gov.uk/supporting-ie8/#support-internet-explorer-8 #}
 <!--[if IE 8]>
-<link href="{{ CONTEXT_PATH }}/stylesheets/all-ie8.css" rel="stylesheet">
+<link href="{{ contextPath }}/stylesheets/all-ie8.css" rel="stylesheet">
 <![endif]-->
 
 {# For older browsers to allow them to recognise HTML5 elements such as `<header>` #}
 <!--[if lt IE 9]>
-<script src="{{ CONTEXT_PATH }}/scripts/html5-shiv/html5shiv.js"></script>
+<script src="{{ contextPath }}/scripts/html5-shiv/html5shiv.js"></script>
 <![endif]-->
 {% endblock %}
 
@@ -23,6 +23,6 @@ TODO
 
 {% block bodyEnd %}
 {# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}
-<script src="{{ CONTEXT_PATH }}/scripts/all.js"></script>
+<script src="{{ contextPath }}/scripts/all.js"></script>
 <script>window.GOVUKFrontend.initAll()</script>
 {% endblock %}

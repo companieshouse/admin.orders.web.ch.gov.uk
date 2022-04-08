@@ -1,9 +1,7 @@
-import nunjucks from "nunjucks";
 import http from "http";
 import express, { Express, NextFunction, Request, Response, Router } from "express";
 import { Middlewareable } from "application/Middlewareable";
 import { Service } from "typedi";
-import "reflect-metadata";
 import { Config } from "./Config";
 
 const createError = require("http-errors");
@@ -16,47 +14,33 @@ type Process = () => void
 
 @Service()
 export class Application {
-    private readonly app: Express;
-    private readonly router: Router;
+    private readonly express: Express = express();
+    private readonly router: Router = Router();
     private readonly routerBindings: Process[] = [];
+    private readonly port: number;
 
     constructor(private readonly config: Config) {
-        this.router = Router();
-
-        this.app = express();
-
-        // Port
-        this.app.set("port", this.config.port());
-
-        this.app.engine("njk", nunjucks.render);
-        this.app.set("view engine", "njk");
+        this.port = config.portConfig.port;
+        this.express.set("port", this.port);
     }
 
     public start(): void {
-        this.app.use(express.json());
-        this.app.use(express.urlencoded({ extended: false }));
-        this.app.use(cookieParser());
+        this.express.use(express.json());
+        this.express.use(express.urlencoded({ extended: false }));
+        this.express.use(cookieParser());
 
-        // serve static assets at web context path
-        this.app.use(this.config.webContextPath, express.static(this.config.staticResourcePath));
+        // Custom configuration e.g. template engine, static routes etc.
+        this.config.expressConfigurators.forEach(configurator => configurator.configure(this.express));
 
-        // set up the template engine
-        const nunjucksEnv = nunjucks.configure(this.config.templatePaths, {
-            autoescape: true,
-            express: this.app
-        });
-        nunjucksEnv.addGlobal("CONTEXT_PATH", this.config.webContextPath); // Root of stylesheets, scripts etc
-        nunjucksEnv.addGlobal("assetPath", this.config.gdsAssetPath); // GDS assets path
-
-        this.app.use("/", this.router);
+        this.express.use("/", this.router);
 
         // catch 404 and forward to error handler
-        this.app.use(function (req: any, res: any, next: (arg0: any) => void) {
+        this.express.use(function (req: any, res: any, next: (arg0: any) => void) {
             next(createError(404));
         });
 
         // error handler
-        this.app.use(function (err: { message: any; status: any; }, req: { app: { get: (arg0: string) => string; }; }, res: { locals: { message: any; error: any; }; status: (arg0: any) => void; render: (arg0: string) => void; }) {
+        this.express.use(function (err: { message: any; status: any; }, req: { app: { get: (arg0: string) => string; }; }, res: { locals: { message: any; error: any; }; status: (arg0: any) => void; render: (arg0: string) => void; }) {
             // set locals, only providing error in development
             res.locals.message = err.message;
             res.locals.error = req.app.get("env") !== "development" ? {} : err;
@@ -70,10 +54,10 @@ export class Application {
         this.routerBindings.forEach(routerBinding => routerBinding());
 
         // Create HTTP server.
-        const server = http.createServer(this.app);
+        const server = http.createServer(this.express);
 
         // Listen on provided port, on all network interfaces.
-        server.listen(this.config.port());
+        server.listen(this.port);
         server.on("error", this.onError.bind(this));
         server.on("listening", this.onListening.bind(this));
     }
@@ -82,7 +66,7 @@ export class Application {
     public bindGet(uriPath: string, handlerFunction: HandlerFunction, applicationMiddlewareables: Middlewareable[]): void {
         // Bind path to application middleware
         for (let applicationMiddlewareable of applicationMiddlewareables) {
-            this.app.get(uriPath, applicationMiddlewareable.handler);
+            this.express.get(uriPath, applicationMiddlewareable.handler);
         }
 
         // NB: router middleware must be bound last after all application middleware; i.e. in start() above.
@@ -99,11 +83,11 @@ export class Application {
         // handle specific listen errors with friendly messages
         switch (error.code) {
             case "EACCES":
-                console.error("Port " + this.config.port() + " requires elevated privileges");
+                console.error("Port " + this.port + " requires elevated privileges");
                 process.exit(1);
                 break;
             case "EADDRINUSE":
-                console.error("Port " + this.config.port() + " is already in use");
+                console.error("Port " + this.port + " is already in use");
                 process.exit(1);
                 break;
             default:
@@ -113,6 +97,6 @@ export class Application {
 
     // Event listener for HTTP server "listening" event.
     private onListening(): void {
-        console.debug("Listening on port " + this.config.port());
+        console.debug("Listening on port " + this.port);
     }
 }
