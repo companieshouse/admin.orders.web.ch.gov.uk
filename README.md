@@ -22,14 +22,20 @@ to follow the standards set by the [GovUK Design System](https://design-system.s
 [Gherkin](https://cucumber.io/docs/gherkin/), Jest, [Chai](https://www.chaijs.com/),
 [TestContainers](https://github.com/testcontainers/testcontainers-node).
 
+## Build, run and test the application locally
 
+* Run `make` to install required dependencies and build the application.
+* Run `npm run start` to start the application.
+* Run `npm run test` to run both unit and integration tests.  
+* Run `npm run test-automation` to run integration tests over selenium-webdriver.
+    
 ## Environment variables
 
 * List of environment variables required to be configured for the application to run.
 
 |Variable   |Description                                      |Example  |
 |-----------|-------------------------------------------------|---------|
-|PORT       |The port number in which the service is hosted.  | 3000    |    
+|PORT       |The port number in which the service is hosted.  | 8741    |    
 
 
 ## Building the docker image
