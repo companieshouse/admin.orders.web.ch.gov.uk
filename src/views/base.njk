@@ -1,9 +1,10 @@
 {% extends "govuk/template.njk" %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+
 {% block head %}
 <!--[if !IE 8]><!-->
 <link rel="stylesheet" type="text/css" media="all" href="{{ contextPath }}/stylesheets/app.css" />
 <link rel="stylesheet" type="text/css" media="all" href="{{ contextPath }}/stylesheets/footer.css" />
-{% block pageTitle %}{{ title }}{% endblock %}
 <!--<![endif]-->
 
 {# For Internet Explorer 8, you need to compile specific stylesheet #}
@@ -19,7 +20,16 @@
 {% endblock %}
 
 {% block content %}
-TODO
+
+{% block header %}
+<!-- TODO: find out homepage url -->
+{{ govukHeader({
+    homepageUrl: "#",
+    serviceName: "Internal systems",
+    serviceUrl: "#"
+}) }}
+{% endblock %}
+
 {% endblock %}
 
 {% block bodyEnd %}

@@ -2,7 +2,10 @@
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% set title = "Search for an order" %}
+<!-- TODO: Clarify the title for this page -->
+{% block pageTitle %}
+    Search for an order
+{% endblock %}
 {% block content %}
 <form method="POST">
 {{
