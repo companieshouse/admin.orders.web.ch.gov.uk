@@ -6,13 +6,15 @@ import { MiddlewareProvider } from "../security/MiddlewareProvider";
 import {GoodbyeController} from "../hello/GoodbyeController";
 import {NextFunction, Request, Response} from "express";
 import { ServerPaths } from "./ServerPaths";
+import {SearchController} from "../search/SearchController";
 
 @Service()
 export class Registrar {
     constructor(private readonly app: Application, private readonly middlewareProvider: MiddlewareProvider,
                 private readonly serverPaths: ServerPaths,
                 private readonly helloController: HelloController,
-                private readonly goodbyeController: GoodbyeController) {
+                private readonly goodbyeController: GoodbyeController,
+                private readonly searchController: SearchController) {
     }
 
     public start(): void {
@@ -21,6 +23,7 @@ export class Registrar {
         }, this.middlewareProvider.middlewareables);
         this.app.bindGet(this.serverPaths.webContextPath + "/hello", this.helloController.render.bind(this.helloController), this.middlewareProvider.middlewareables);
         this.app.bindGet(this.serverPaths.webContextPath + "/goodbye", this.goodbyeController.render.bind(this.goodbyeController), this.middlewareProvider.middlewareables);
+        this.app.bindGet(this.serverPaths.webContextPath + "/search", this.searchController.render.bind(this.searchController), this.middlewareProvider.middlewareables);
         this.app.start();
     }
 
