@@ -23,7 +23,8 @@ export class Registrar {
         }, this.middlewareProvider.middlewareables);
         this.app.bindGet(this.serverPaths.webContextPath + "/hello", this.helloController.render.bind(this.helloController), this.middlewareProvider.middlewareables);
         this.app.bindGet(this.serverPaths.webContextPath + "/goodbye", this.goodbyeController.render.bind(this.goodbyeController), this.middlewareProvider.middlewareables);
-        this.app.bindGet(this.serverPaths.webContextPath + "/search", this.searchController.render.bind(this.searchController), this.middlewareProvider.middlewareables);
+        this.app.bindGet(this.serverPaths.webContextPath + "/search", this.searchController.handleGet.bind(this.searchController), this.middlewareProvider.middlewareables);
+        this.app.bindPost(this.serverPaths.webContextPath + "/search", this.searchController.handlePost.bind(this.searchController), this.middlewareProvider.middlewareables);
         this.app.start();
     }
 
