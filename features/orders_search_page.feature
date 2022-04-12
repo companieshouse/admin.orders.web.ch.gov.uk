@@ -1,6 +1,6 @@
 Feature: Navigating the orders page
 
-    Scenario: Search by Order ID
+  Scenario: Search by Order ID
       Given I am at the Orders Search Page
       And   I have entered a valid Order-ID that matches the order-id of an existing order
       When  I click search
