@@ -1,10 +1,10 @@
-import {BrowserAgent} from "./BrowserAgent";
+import {AgentService, BrowserAgent} from "./BrowserAgent";
 import {Service} from "typedi";
 import "reflect-metadata";
 import {Builder, By, WebDriver} from "selenium-webdriver";
 
-@Service()
-export class SeleniumBrowserAgent implements BrowserAgent {
+@Service("selenium")
+export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
 
     private driver: WebDriver | null = null;
     private baseUri: string | null = null;
