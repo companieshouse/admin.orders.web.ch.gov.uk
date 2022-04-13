@@ -1,5 +1,8 @@
 artifact_name       := admin.orders.web.ch.gov.uk
 
+.PHONY: all
+all: build
+
 .PHONY: build
 build: clean init build-app
 
@@ -23,11 +26,19 @@ gulp-install:
 init: npm-install gulp-install
 
 .PHONY: test
-test: test-unit
+test: test-unit test-integration
 
 .PHONY: test-unit
 test-unit:
 	npm run test
+
+.PHONY: test-integration
+test-integration:
+	npm run test-integration
+
+.PHONY: test-automation
+test-automation:
+	npm run test-automation
 
 .PHONY: package
 package: build
