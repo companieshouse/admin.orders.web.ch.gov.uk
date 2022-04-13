@@ -27,16 +27,17 @@ describe("PageFactory", () => {
         // given
         const pageFactory = new PageFactory();
         const searchCriteria = new SearchCriteria("ORD-123123-123123", "demo@ch.gov.uk", "12345678");
-        const orderSummary = new OrderSummary(
-            "ORD-234234-234234",
-            "/link/to/order",
-            "demo@ch.gov.uk",
-            "Certificate",
-            "01/01/2022",
-            "Paid",
-            undefined,
-            new Map<string, string>([["companyNumber", "12345678"]])
-        );
+        const orderSummary: OrderSummary = {
+            id: "ORD-234234-234234",
+            detailHref: "/link/to/order",
+            email: "demo@ch.gov.uk",
+            productLine: "Certificate",
+            orderDate: "01/01/2022",
+            paymentStatus: "Paid",
+            extraProperties: {
+                companyNumber: "12345678"
+            }
+        };
 
         // when
         const actual = pageFactory.buildSearchPageWithResults(searchCriteria, [orderSummary]);
