@@ -17,9 +17,9 @@ for further processing.
 [TypeScript](https://www.typescriptlang.org/).
 * The template engine used is [Nunjucks](https://mozilla.github.io/nunjucks/), 
 to follow the standards set by the [GovUK Design System](https://design-system.service.gov.uk/).
-* Unit tests use the [Jest](https://jestjs.io/) testing framework and [Mocha](https://mochajs.org/).
-* Integration tests use [CucumberJS](https://cucumber.io/docs/installation/javascript/), 
-[Gherkin](https://cucumber.io/docs/gherkin/), Jest, [Chai](https://www.chaijs.com/),
+* Unit tests has been written using the [Jest](https://jestjs.io/) testing framework and [Mocha](https://mochajs.org/).
+* Integration tests has been written using [CucumberJS](https://cucumber.io/docs/installation/javascript/), 
+[Gherkin](https://cucumber.io/docs/gherkin/), Jest, [Chai](https://www.chaijs.com/) and
 [TestContainers](https://github.com/testcontainers/testcontainers-node).
 
 ## Build, run and test the application locally
