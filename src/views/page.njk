@@ -1,0 +1,77 @@
+{% extends "govuk/template.njk" %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/footer/macro.njk" import govukFooter %}
+
+{% block head %}
+<!--[if !IE 8]><!-->
+<link rel="stylesheet" type="text/css" media="all" href="{{ contextPath }}/stylesheets/app.css" />
+<link rel="stylesheet" type="text/css" media="all" href="{{ contextPath }}/stylesheets/footer.css" />
+<!--<![endif]-->
+
+{# For Internet Explorer 8, you need to compile specific stylesheet #}
+{# see https://frontend.design-system.service.gov.uk/supporting-ie8/#support-internet-explorer-8 #}
+<!--[if IE 8]>
+<link href="{{ contextPath }}/stylesheets/all-ie8.css" rel="stylesheet">
+<![endif]-->
+
+{# For older browsers to allow them to recognise HTML5 elements such as `<header>` #}
+<!--[if lt IE 9]>
+<script src="{{ contextPath }}/scripts/html5-shiv/html5shiv.js"></script>
+<![endif]-->
+{% endblock %}
+
+{% block header %}
+    <!-- TODO: find out homepage url -->
+    {{ govukHeader({
+        homepageUrl: "javascript:void(0)",
+        serviceName: "Internal systems",
+        serviceUrl: "javascript:void(0)"
+    }) }}
+{% endblock %}
+
+{% block pageTitle %}
+    {{ control.data.title }}
+{% endblock %}
+
+{% block content %}
+    {% for control in control.controls %}
+        {% include control.template %}
+    {% endfor %}
+{% endblock %}
+
+{% block footer %}
+    {{ govukFooter({
+        meta: {
+            items: [
+                {
+                    href: "http://resources.companieshouse.gov.uk/serviceInformation.shtml",
+                    text: "Policies"
+                },
+                {
+                    href: "https://beta.companieshouse.gov.uk/help/cookies",
+                    text: "Cookies"
+                },
+                {
+                    href: "https://www.gov.uk/government/organisations/companies-house#org-contacts",
+                    target: "_blank",
+                    text: "Contact us"
+                },
+                {
+                    href: "/help/accessibility-statement",
+                    text: "Accessibility statement"
+                },
+                {
+                    href: "https://developer.companieshouse.gov.uk/api/docs/",
+                    text: "Developers"
+                }
+            ],
+            html: 'Built by <a class="govuk-footer__link" href="https://www.gov.uk/government/organisations/companies-house">Companies House</a>'
+        }
+    }) }}
+{% endblock %}
+
+{% block bodyEnd %}
+{# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}
+<script src="{{ contextPath }}/scripts/all.js"></script>
+<script>window.GOVUKFrontend.initAll()</script>
+{% endblock %}

@@ -4,16 +4,18 @@
   "private": true,
   "scripts": {
     "start": "NODE_ENV=production node -r source-map-support/register ./dist/bin/www",
-    "standalone": "NODE_ENV=development node -r source-map-support/register ./dist/bin/www",
+    "standalone": "NODE_ENV=development SERVICE_IMPLEMENTATION=fake node -r source-map-support/register ./dist/bin/www",
     "build": "tsc -sourcemap && gulp",
     "clean": "rm -rf ./dist",
-    "test": "npx jest",
+    "test": "npx jest --verbose",
+    "coverage": "npx jest --verbose --coverage",
     "test-integration": "agent=zombie npx cucumber-js",
     "test-automation": "agent=selenium npx cucumber-js",
     "sonarqube": "sonar-scanner"
   },
   "dependencies": {
     "@companieshouse/node-session-handler": "~4.1.6",
+    "@companieshouse/structured-logging-node": "^1.0.4",
     "@types/nunjucks": "^3.2.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
