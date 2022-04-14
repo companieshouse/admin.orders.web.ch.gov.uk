@@ -7,9 +7,12 @@ import {SearchCriteria} from "./SearchCriteria";
 import "reflect-metadata";
 import {PageFactory} from "./PageFactory";
 import {Status} from "../core/Status";
+import {createLogger} from "@companieshouse/structured-logging-node";
 
 @Service()
 export class SearchController {
+    private static readonly logger = createLogger("SearchController");
+
     private readonly service: SearchService;
     private readonly limit: number;
     private readonly pageFactory: PageFactory;
@@ -21,13 +24,16 @@ export class SearchController {
     }
 
     public async handleGet(req: Request, res: Response, next: NextFunction): Promise<void> {
+        SearchController.logger.trace("GET request received");
         const model = this.pageFactory.buildInitialSearchPage();
         res.render(model.template, {
             control: model
         });
+        SearchController.logger.trace("Finished processing GET request");
     }
 
     public async handlePost(req: Request, res: Response, next: NextFunction): Promise<void> {
+        SearchController.logger.trace("POST request received");
         const searchCriteria = new SearchCriteria(
             req.body.orderNumber,
             req.body.email,
@@ -46,5 +52,6 @@ export class SearchController {
         res.render(model.template, {
             control: model
         });
+        SearchController.logger.trace("Finished processing POST request");
     }
 }
