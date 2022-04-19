@@ -12,7 +12,7 @@ export class ServerPaths {
         // Application root directory
         if (process.env.NODE_ENV === "production") {
             console.log("***Production mode***");
-            this.applicationRootDir = "/app";
+            this.applicationRootDir = path.join(__dirname, "..");
         } else {
             console.log("***Development mode***");
             this.applicationRootDir = path.join(__dirname, "../..");
