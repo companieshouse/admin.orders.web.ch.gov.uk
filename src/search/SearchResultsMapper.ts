@@ -1,11 +1,11 @@
-import {SearchResponse} from "../../../api-sdk-node/src/services/order/search";
+import {SearchResponse} from "@companieshouse/api-sdk-node/dist/services/order/search";
 import {SearchResults} from "./SearchResults";
-import {ApiResponse, ApiResult} from "../../../api-sdk-node/dist/services/resource";
+import {ApiResponse, ApiResult} from "@companieshouse/api-sdk-node/dist/services/resource";
 import {Service} from "typedi";
 import "reflect-metadata";
 import {Status} from "../core/Status";
 import {OrderSummary} from "./OrderSummary";
-import {OrderSummary as OrderSummaryResource} from "../../../api-sdk-node/src/services/order/search/types";
+import {OrderSummary as OrderSummaryResource} from "@companieshouse/api-sdk-node/dist/services/order/search/types";
 import {createLogger} from "@companieshouse/structured-logging-node";
 
 @Service()

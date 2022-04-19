@@ -3,19 +3,17 @@ import "reflect-metadata";
 import {SearchService} from "./SearchService";
 import {OrderSearchParameters} from "./OrderSearchParameters";
 import {SearchResults} from "./SearchResults";
-import {
-    OrderSearchService as OrderSearchClient,
-    SearchRequest
-} from "@companieshouse/api-sdk-node/src/services/order/search";
 import {SearchResultsMapper} from "./SearchResultsMapper";
+import {ApiClientFactory} from "../client/ApiClientFactory";
 
 @Service()
 export class OrderSearchService implements SearchService {
-    constructor(private searchClient: OrderSearchClient, private resultsMapper: SearchResultsMapper) {
+    constructor(private apiClientFactory: ApiClientFactory, private resultsMapper: SearchResultsMapper) {
     }
 
     async findOrders(searchParameters: OrderSearchParameters): Promise<SearchResults> {
-        const response = await this.searchClient.search({...searchParameters.searchCriteria} as SearchRequest);
+        const apiClient = this.apiClientFactory.newApiClient();
+        const response = await apiClient.orderSearchService.search({...searchParameters.searchCriteria});
         return this.resultsMapper.map(response);
     }
 }
