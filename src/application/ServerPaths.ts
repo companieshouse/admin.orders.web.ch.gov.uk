@@ -10,13 +10,7 @@ export class ServerPaths {
 
     constructor() {
         // Application root directory
-        if (process.env.NODE_ENV === "production") {
-            console.log("***Production mode***");
-            this.applicationRootDir = path.join(__dirname, "..");
-        } else {
-            console.log("***Development mode***");
-            this.applicationRootDir = path.join(__dirname, "../..");
-        }
+        this.applicationRootDir = path.join(__dirname, "../..");
         console.log("Application root directory: " + this.applicationRootDir);
 
         this.publicAssetsDir = path.join(this.applicationRootDir, "dist/public");
