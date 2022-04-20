@@ -17,26 +17,49 @@ describe("SearchResultsMapper", () => {
                     id: "ORD-123123-123123",
                     email: "demo@ch.gov.uk",
                     companyNumber: "12345678",
-                    productLine: "Certificate",
-                    orderDate: "01/01/2022",
+                    productLine: "item#certificate",
+                    orderDate: "2022-01-01T12:00:00.000",
                     paymentStatus: "paid",
-                    resourceLink: "/link/to/order"
+                    links: {
+                        self: {
+                            link: "/orders/ORD-123123-123123"
+                        }
+                    }
                 }, {
                     id: "ORD-321321-321321",
                     email: "demo2@ch.gov.uk",
                     companyNumber: "87654321",
-                    productLine: "Missing Image",
-                    orderDate: "05/05/2021",
+                    productLine: "item#missing-image-delivery",
+                    orderDate: "2021-05-05T12:00:00.000",
                     paymentStatus: "paid",
-                    resourceLink: "/link/to/order"
+                    links: {
+                        self: {
+                            link: "/orders/ORD-321321-321321"
+                        }
+                    }
                 }, {
                     id: "ORD-121212-121212",
                     email: "demo3@ch.gov.uk",
                     companyNumber: "12121212",
-                    productLine: "Certificate",
-                    orderDate: "12/02/2020",
+                    productLine: "item#certificate",
+                    orderDate: "2020-02-12T12:00:00.000",
                     paymentStatus: "not-paid-for",
-                    resourceLink: "/link/to/order"
+                    links: {
+                        self: {
+                            link: "/orders/ORD-121212-121212"
+                        }
+                    }
+                }, {
+                    id: "ORD-323232-323232",
+                    email: "demo4@ch.gov.uk",
+                    companyNumber: "32323232",
+                    productLine: "item#certified-copy",
+                    orderDate: "2021-12-21T12:00:00.000",
+                    paymentStatus: "paid"
+                }, {
+                    id: "ORD-230230-230230",
+                    email: "demo5@ch.gov.uk",
+                    companyNumber: "23023023"
                 }] as OrderSummaryResource[]
             } as SearchResponse
         });
@@ -66,9 +89,10 @@ describe("SearchResultsMapper", () => {
                     extraProperties: {
                         companyNumber: "87654321"
                     },
-                    productLine: "Missing Image",
+                    productLine: "Missing image",
                     orderDate: "05/05/2021",
-                    paymentStatus: "Paid"
+                    paymentStatus: "Paid",
+                    detailHref: ""
                 },
                 {
                     id: "ORD-121212-121212",
@@ -78,7 +102,30 @@ describe("SearchResultsMapper", () => {
                     },
                     productLine: "Certificate",
                     orderDate: "12/02/2020",
-                    paymentStatus: "Not paid for"
+                    paymentStatus: "Unknown",
+                    detailHref: ""
+                },
+                {
+                    id: "ORD-323232-323232",
+                    email: "demo4@ch.gov.uk",
+                    extraProperties: {
+                        companyNumber: "32323232"
+                    },
+                    productLine: "Certified copy",
+                    orderDate: "21/12/2021",
+                    paymentStatus: "Paid",
+                    detailHref: ""
+                },
+                {
+                    id: "ORD-230230-230230",
+                    email: "demo5@ch.gov.uk",
+                    extraProperties: {
+                        companyNumber: "23023023"
+                    },
+                    productLine: "Unknown",
+                    orderDate: "Unknown",
+                    paymentStatus: "Unknown",
+                    detailHref: ""
                 }
             ] as OrderSummary[]
         } as SearchResults);

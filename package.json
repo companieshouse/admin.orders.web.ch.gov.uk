@@ -14,13 +14,14 @@
     "sonarqube": "sonar-scanner"
   },
   "dependencies": {
-    "@companieshouse/api-sdk-node": "^1.0.100",
+    "@companieshouse/api-sdk-node": "^1.0.101",
     "@companieshouse/node-session-handler": "~4.1.6",
     "@companieshouse/structured-logging-node": "^1.0.4",
     "@types/nunjucks": "^3.2.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.17.3",
+    "full-icu": "^1.4.0",
     "govuk-frontend": "^4.0.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",

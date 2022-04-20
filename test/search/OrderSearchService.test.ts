@@ -24,7 +24,11 @@ describe("OrderSearchService", () => {
                     productLine: "Certificate",
                     orderDate: "01/01/2022",
                     paymentStatus: "paid",
-                    resourceLink: "/link/to/order"
+                    links: {
+                        self: {
+                            link: "/link/to/order"
+                        }
+                    }
                 }] as OrderSummaryResource[]
             } as SearchResponse
         });
@@ -49,7 +53,11 @@ describe("OrderSearchService", () => {
                 productLine: "Certificate",
                 orderDate: "01/01/2022",
                 paymentStatus: "Paid",
-                detailHref: "/orders-admin/order/ORD-123123-123123",
+                links: {
+                    self: {
+                        link: "/link/to/order"
+                    }
+                }
             } as OrderSummary]
         };
         const resultsMapper: any = {};
@@ -65,7 +73,7 @@ describe("OrderSearchService", () => {
         expect(result).toBe(mappedResults);
         expect(apiClientFactory.newApiClient).toHaveBeenCalled();
         expect(searchClient.search).toHaveBeenCalledWith({
-            orderNumber: "ORD-123123-123123",
+            id: "ORD-123123-123123",
             email: "demo@ch.gov.uk",
             companyNumber: "12345678"
         } as SearchRequest);
