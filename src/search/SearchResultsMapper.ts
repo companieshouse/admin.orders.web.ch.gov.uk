@@ -6,6 +6,7 @@ import "reflect-metadata";
 import {Status} from "../core/Status";
 import {OrderSummary as OrderSummaryResource} from "@companieshouse/api-sdk-node/dist/services/order/search/types";
 import {createLogger} from "@companieshouse/structured-logging-node";
+import dayjs from "dayjs";
 
 const productLineMappings: {[key: string]: string} = {
     "item#certificate": "Certificate",
@@ -66,7 +67,7 @@ export class SearchResultsMapper {
             return "Unknown";
         }
         const date = Date.parse(summary.orderDate);
-        return new Intl.DateTimeFormat("en-GB").format(date);
+        return dayjs(date).format("DD/MM/YYYY");
     }
 
     private mapProductLine(summary: OrderSummaryResource): string {
