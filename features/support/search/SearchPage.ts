@@ -10,7 +10,7 @@ export interface SearchPage {
     enterOrderId(): Promise<void>
     enterEmail(): Promise<void>
     enterCompanyNumber(): Promise<void>
-    //clickSearch(): Promise<void>
+    clickSearch(): Promise<void>
     verify(): Promise<void>
 }
 
@@ -18,7 +18,7 @@ export class NoPage implements SearchPage {
     public constructor(private searchSteps: SearchSteps, private interactor: BrowserAgent) {
     }
 
-    public async openSeachPage(): Promise<void> {
+    public async openSearchPage(): Promise<void> {
        // await this.interactor.openPage("/orders-admin/hello"");
         this.searchSteps.currentPage = this.searchSteps.ordersSearchPageState;
     }
@@ -42,12 +42,15 @@ export class NoPage implements SearchPage {
     public async enterCompanyNumber(): Promise<void> {
         throw new Error("Invalid operation");
     }
+    
+    public async clickSearch(): Promise<void> {
+      throw new Error("Invalid operation");
+    }
 
-    //clickSearch(): Promise<void>
-
-   // public async verify(): Promise<void> {
-
-   // }
+    public async verify(): Promise<void> {
+      const headingText = await this.interactor.getElementText("h1");
+      //expect(headingText).equals("Orders Search!");
+    }
 }
 
 export class OrdersSearchPage implements SearchPage {
@@ -78,10 +81,14 @@ export class OrdersSearchPage implements SearchPage {
  
      }
  
-     //clickSearch(): Promise<void>
+     public async clickSearch(): Promise<void> {
+      await this.interactor.clickElement("#link");
+      //this.searchSteps.currentPage = this.searchSteps.helloPageState;
+      //
+     }
  
      public async verify(): Promise<void> {
-
+      throw new Error("Invalid operation");
      }
 }
 
@@ -114,10 +121,13 @@ export class NoSearchResultsPage implements SearchPage {
         throw new Error("Invalid operation");
      }
  
-     //clickSearch(): Promise<void>
+     public async clickSearch(): Promise<void> {
+      throw new Error("Invalid operation");
+     }
  
      public async verify(): Promise<void> {
-
+      const headingText = await this.interactor.getElementText("h1");
+      //expect(headingText).equals("No Search Results!");
      }
 }
 
@@ -150,11 +160,13 @@ export class SearchResultsPage implements SearchPage {
         throw new Error("Invalid operation");
      }
  
-     //clickSearch(): Promise<void>
+     public async clickSearch(): Promise<void> {
+      throw new Error("Invalid operation");
+     }
  
      public async verify(): Promise<void> {
-
-        
+      const headingText = await this.interactor.getElementText("h1");
+      //expect(headingText).equals("Results!");    
      }
 }
 

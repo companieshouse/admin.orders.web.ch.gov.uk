@@ -1,6 +1,7 @@
 import { given, when, then, binding } from "cucumber-tsflow";
 import { SearchPage, NoPage, OrdersSearchPage, NoSearchResultsPage, SearchResultsPage} from "./SearchPage";
 import Container from "typedi";
+import "reflect-metadata";
 import {SeleniumBrowserAgent} from "../core/SeleniumBrowserAgent";
 
 @binding()
@@ -15,6 +16,8 @@ export class SearchSteps {
 
     constructor(browserAgent: SeleniumBrowserAgent = Container.get(SeleniumBrowserAgent)) {
         this.ordersSearchPageState = new OrdersSearchPage(this, browserAgent);
+        this.noSearchResultsPageState = new NoSearchResultsPage(this, browserAgent);
+        this.searchResultsPageState = new SearchResultsPage(this, browserAgent);
         this._currentPage = new NoPage(this, browserAgent);
         this._memory = new Map<string, string>();
     }
@@ -25,7 +28,7 @@ export class SearchSteps {
     }
 
     @given(/^I have entered a valid Order-ID that matches the order-id of an existing order$/)
-
+    
 
     @when(/^I click search$/)
     public async clickSearch(): Promise<void> {
@@ -33,7 +36,9 @@ export class SearchSteps {
     }
 
     @then(/^The matching order should be displayed in the table of results$/)
-
+    public async verifyHelloPage(): Promise<void> {
+        await this._currentPage.verify();
+    }
     ///
     @given(/^I have entered a valid email address that matches the e-mail address of existing orders$/)
 
