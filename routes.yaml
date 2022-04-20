@@ -1,5 +1,5 @@
 app_name: admin.orders.web.ch.gov.uk
 group: web
-weight: 1000
+weight: 899
 routes:
   1: ^/orders-admin/.*
