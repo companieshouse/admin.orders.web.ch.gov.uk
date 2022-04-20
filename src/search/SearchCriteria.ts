@@ -1,4 +1,4 @@
 export class SearchCriteria {
-    constructor(public orderId?: string, public email?: string, public companyNumber?: string) {
+    constructor(public id?: string, public email?: string, public companyNumber?: string) {
     }
 }
