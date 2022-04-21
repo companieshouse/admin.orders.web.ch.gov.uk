@@ -1,12 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { Service } from "typedi";
 import "reflect-metadata";
-import { ServerPaths } from "../application/ServerPaths";
 
 @Service()
 export class HelloController {
     public async render(req: Request, res: Response, next: NextFunction): Promise<void> {
         console.log("Hello");
-        res.render("hello/hello");
+        res.render("hello/hello", {
+            user: req.query.user
+        });
     }
 }

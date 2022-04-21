@@ -5,6 +5,7 @@ import "reflect-metadata";
 
 export interface GreetingPage {
     openHelloPage(): Promise<void>
+    enterUsername(text: string): Promise<void>
     clickGoodbye(): Promise<void>
     clickHello(): Promise<void>
     verify(): Promise<void>
@@ -17,6 +18,10 @@ export class NoPage implements GreetingPage {
     public async openHelloPage(): Promise<void> {
         await this.interactor.openPage("/orders-admin/hello");
         this.greetingSteps.currentPage = this.greetingSteps.helloPageState;
+    }
+
+    public async enterUsername(text: string): Promise<void> {
+        throw new Error("Invalid operation");
     }
 
     public async clickGoodbye(): Promise<void> {
@@ -40,6 +45,10 @@ export class HelloPage implements GreetingPage {
         throw new Error("Invalid operation");
     }
 
+    public async enterUsername(text: string): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
     public async clickGoodbye(): Promise<void> {
         await this.interactor.clickElement("#link");
         this.greetingSteps.currentPage = this.greetingSteps.goodbyePageState;
@@ -55,6 +64,34 @@ export class HelloPage implements GreetingPage {
     }
 }
 
+export class HelloPageWithGreeting implements GreetingPage {
+    public constructor(private greetingSteps: GreetingSteps, private interactor: BrowserAgent) {
+    }
+
+    public async openHelloPage(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    public async enterUsername(text: string): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    public async clickGoodbye(): Promise<void> {
+        await this.interactor.clickElement("#link");
+        this.greetingSteps.currentPage = this.greetingSteps.goodbyePageState;
+    }
+
+    public async clickHello(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    public async verify(): Promise<void> {
+        const headingText = await this.interactor.getElementText("h1");
+        const expectedName = this.greetingSteps.getValue("name");
+        expect(headingText).equals(`Hello ${expectedName}!`);
+    }
+}
+
 export class GoodbyePage implements GreetingPage {
     public constructor(private greetingSteps: GreetingSteps, private interactor: BrowserAgent) {
     }
@@ -63,13 +100,22 @@ export class GoodbyePage implements GreetingPage {
         throw new Error("Invalid operation");
     }
 
+    public async enterUsername(text: string): Promise<void> {
+        await this.interactor.inputText("#user", text);
+        this.greetingSteps.setValue("name", text);
+    }
+
     public async clickGoodbye(): Promise<void> {
         throw new Error("Invalid operation");
     }
 
     public async clickHello(): Promise<void> {
-        await this.interactor.clickElement("#link");
-        this.greetingSteps.currentPage = this.greetingSteps.helloPageState;
+        await this.interactor.clickElement(".govuk-button");
+        if (this.greetingSteps.getValue("name")) {
+            this.greetingSteps.currentPage = this.greetingSteps.helloPageWithGreetingState;
+        } else {
+            this.greetingSteps.currentPage = this.greetingSteps.helloPageState;
+        }
     }
 
     public async verify(): Promise<void> {

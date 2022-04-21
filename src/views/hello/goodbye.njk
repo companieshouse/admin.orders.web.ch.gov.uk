@@ -1,5 +1,26 @@
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
 {% extends "base.njk" %}
 {% block content %}
 <h1 class="govuk-heading-xl">Goodbye!</h1>
-<a class="govuk-link" id="link" href="{{ contextPath }}/hello">Say hello</a>
+<form action="{{ contextPath }}/hello" method="GET">
+    {{
+        govukInput({
+            label: {
+                text: "User",
+                classes: "govuk-label",
+                isPageHeading: true
+            },
+            classes: "govuk-input--width-20",
+            id: "user",
+            name: "user"
+        })
+    }}
+    {{
+        govukButton({
+            text: "Say hello"
+        })
+    }}
+</form>
 {% endblock %}
