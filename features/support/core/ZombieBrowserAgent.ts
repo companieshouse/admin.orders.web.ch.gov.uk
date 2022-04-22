@@ -65,14 +65,14 @@ export class ZombieBrowserAgent implements BrowserAgent, AgentService {
             const rowData = new Map<string, string>();
             const data = await row.querySelectorAll("td");
             for(const [index, element] of data.entries()) {
-                const link = element.querySelector("a");
+                const link = await element.querySelector("a");
                 if (link) {
                     rowData.set(headingNames[index], link.innerHTML.trim());
                 } else {
                     rowData.set(headingNames[index], element.innerHTML.trim());
                 }
             }
-            tableRows.push(new SearchResultsRow(rowData, !! await data[0].querySelector("a")));
+            tableRows.push(new SearchResultsRow(rowData, !!await data[0].querySelector("a")));
         }
         return new SearchResultsTable(tableRows);
     }
@@ -98,13 +98,5 @@ export class ZombieBrowserAgent implements BrowserAgent, AgentService {
         }
         const element = await this.browser.querySelector(selector);
         return element.value;
-    }
-
-    async isAHyperlink(selector: string): Promise<boolean> {
-        if (this.browser == null) {
-            throw new Error("Driver not started");
-        }
-        const element = await this.browser.querySelector(selector);
-        return element.nodeName === "A";
     }
 }

@@ -110,12 +110,4 @@ export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
         const element = await this.driver.findElement(By.css(selector));
         return await element.getAttribute("value");
     }
-
-    public async isAHyperlink(selector: string): Promise<boolean> {
-        if (this.driver == null) {
-            throw new Error("Driver not started");
-        }
-        const element = await this.driver.findElement(By.css(selector));
-        return await element.getTagName() === "A";
-    }
 }
