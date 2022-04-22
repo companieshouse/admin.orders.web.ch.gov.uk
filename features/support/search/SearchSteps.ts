@@ -68,17 +68,23 @@ export class SearchSteps {
 
     ///
     @given(/^I have entered a search criteria$/)
+    public async enterCompanyNumber(text: string): Promise<void> {
+        await this._currentPage.enterCompanyNumber(text);
+
     @then(/^The search criteria should be preserved in the text boxes$/)
     ///
     @given(/^No results will match my criteria$/)
     @then(/^A message stating “No matches found” is displayed$/)
     public async verifyNoSearchResultsPage(): Promise<void> {
         await this._currentPage.verify();
+    }
     ///
     @given(/^The orders-api is unavailable$/)
     
     @then(/^A message is displayed stating “Service unavailable” is displayed$/)
-
+    public async verifyErrorPage(): Promise<void> {
+        await this._currentPage.verify();
+    }
 
     
     public getValue(key: string): string {
@@ -88,6 +94,7 @@ export class SearchSteps {
     public setValue(key: string, value: string): void {
         this._memory.set(key, value);
     }
+    
 
 }
 

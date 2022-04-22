@@ -52,4 +52,5 @@ export class GreetingSteps {
     public setValue(key: string, value: string): void {
         this._memory.set(key, value);
     }
+    
 }

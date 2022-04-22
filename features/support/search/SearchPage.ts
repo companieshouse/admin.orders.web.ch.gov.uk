@@ -71,7 +71,7 @@ export class OrdersSearchPage implements SearchPage {
 
     public async enterOrderId(text: string): Promise<void> {
         await this.interactor.inputText("#orderNumber", text);
-        this.searchSteps.setValue("order Id", text);
+        this.searchSteps.setValue("order_id", text);
     }
 
     public async enterEmail(text: string): Promise<void> {
@@ -81,7 +81,7 @@ export class OrdersSearchPage implements SearchPage {
 
     public async enterCompanyNumber(text: string): Promise<void> {
         await this.interactor.inputText("#companyNumber", text);
-        this.searchSteps.setValue("company number", text);
+        this.searchSteps.setValue("company_number", text);
     }
 
     //
@@ -89,9 +89,9 @@ export class OrdersSearchPage implements SearchPage {
         await this.interactor.clickElement("#main-content > form > button");
         this.searchSteps.currentPage = this.searchSteps.noSearchResultsPageState;
         await this.interactor.clickElement(".govuk-button");
-        if (this.searchSteps.getValue("order Id") === "nonexistent") {
+        if (this.searchSteps.getValue("order_id") === "nonexistent") {
             this.searchSteps.currentPage = this.searchSteps.noSearchResultsPageState;
-        } else if (this.searchSteps.getValue("order Id") === "error") {
+        } else if (this.searchSteps.getValue("order_id") === "error") {
             this.searchSteps.currentPage = this.searchSteps.errorPageState;
         } else {
             this.searchSteps.currentPage = this.searchSteps.searchResultsPageState;
@@ -156,7 +156,8 @@ export class SearchResultsPage implements SearchPage {
     }
 
     public async searchResultsExpected(): Promise<void> {
-
+        await this.interactor.openPage("/orders-admin/search");
+        this.searchSteps.currentPage = this.searchSteps.searchResultsPageState;
     }
 
     public async enterOrderId(text: string): Promise<void> {
