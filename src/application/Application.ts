@@ -77,6 +77,19 @@ export class Application {
         });
     }
 
+    // Bind uriPath POST to handlerFunction
+    public bindPost(uriPath: string, handlerFunction: HandlerFunction, applicationMiddlewareables: Middlewareable[]): void {
+        // Bind path to application middleware
+        for (let applicationMiddlewareable of applicationMiddlewareables) {
+            this.express.post(uriPath, applicationMiddlewareable.handler);
+        }
+
+        // NB: router middleware must be bound last after all application middleware; i.e. in start() above.
+        this.routerBindings.push(() => {
+            this.router.post(uriPath, handlerFunction);
+        });
+    }
+
     public stop(): void {
         if (this.server == null) {
             console.error("Server not started");

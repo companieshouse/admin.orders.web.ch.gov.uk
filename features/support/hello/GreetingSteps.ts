@@ -2,7 +2,7 @@ import { given, when, then, binding } from "cucumber-tsflow";
 import {GreetingPage, NoPage, HelloPage, GoodbyePage} from "./GreetingPage";
 import {Container} from "typedi";
 import "reflect-metadata";
-import {SeleniumBrowserAgent} from "../core/SeleniumBrowserAgent";
+import {BrowserAgent} from "../core/BrowserAgent";
 
 @binding()
 export class GreetingSteps {
@@ -12,7 +12,7 @@ export class GreetingSteps {
     private _currentPage: GreetingPage;
     private _memory: Map<string, string>;
 
-    constructor(browserAgent: SeleniumBrowserAgent = Container.get(SeleniumBrowserAgent)) {
+    constructor(browserAgent: BrowserAgent = Container.get(process.env.agent || "selenium")) {
         this.helloPageState = new HelloPage(this, browserAgent);
         this.goodbyePageState = new GoodbyePage(this, browserAgent);
         this._currentPage = new NoPage(this, browserAgent);
