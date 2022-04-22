@@ -1,4 +1,4 @@
-Feature: Navigating the orders page
+Feature: Orders search page
 
   Scenario: Search by criteria
     Given I have opened the search orders page
