@@ -29,7 +29,12 @@ export class ZombieBrowserAgent implements BrowserAgent, AgentService {
         if (this.browser == null) {
             throw new Error("Driver not started");
         }
-        await this.browser.click(selector);
+        const element = await this.browser.querySelector(selector);
+        if (element.nodeName === "BUTTON") {
+            await this.browser.pressButton(selector);
+        } else {
+            await this.browser.click(selector);
+        }
     }
 
     async getElementText(selector: string): Promise<string> {

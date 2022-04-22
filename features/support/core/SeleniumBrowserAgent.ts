@@ -52,6 +52,10 @@ export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
     }
 
     public async inputText(selector: string, value: string): Promise<void> {
-        throw new Error("Method not implemented");
+        if (this.driver == null) {
+            throw new Error("Driver not started");
+        }
+        const element = await this.driver.findElement(By.css(selector));
+        await element.sendKeys(value);
     }
 }
