@@ -54,6 +54,22 @@ export interface BrowserAgent {
      * @throws {Error} If the element cannot be found.
      */
     inputText(selector: string, value: string): Promise<void>;
+
+    /**
+     * Fetch the value of the form field referred to by the provided selector.
+     *
+     * @param selector A CSS selector corresponding to an element on the page.
+     * @throws {Error} If the element cannot be found.
+     */
+    getFieldValue(selector: string): Promise<string>;
+
+    /**
+     * Verify if the element referred to by the provided selector is a link or not.
+     *
+     * @param selector A CSS selector corresponding to an element on the page.
+     * @returns true if the element is a hyperlink otherwise false
+     */
+    isAHyperlink(selector: string): Promise<boolean>;
 }
 
 /**

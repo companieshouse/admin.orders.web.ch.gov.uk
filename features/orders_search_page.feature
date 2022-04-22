@@ -1,55 +1,24 @@
 Feature: Navigating the orders page
 
-  Scenario: Search by Order ID
-      Given I am at the Orders Search Page
-      And   I have entered a valid Order-ID that matches the order-id of an existing order
-      When  I click search
-      Then  The matching order should be displayed in the table of results
-
-  Scenario: Search by email-address
-    Given I am at the Orders Search Page
-    And   I have entered a valid email address that matches the e-mail address of existing orders
+  Scenario: Search by criteria
+    Given I have opened the search orders page
+    And   I have entered search criteria for order number, email and company number
+    And   An order placed for a certificate has been paid for
+    And   An order placed for a missing image delivery has been paid for
     When  I click search
-    Then  The first page of results should be displayed in the table of results
-    And   The results are displayed in date order (most recent to oldest)
-
-  Scenario: Search by company number
-    Given I am at the Orders Search Page
-    And   I have entered a company number that matches the company number of existing orders
-    When  I click search
-    Then  The first page of results should be displayed in the table of results
-    And   The results are displayed in date order  (most recent to oldest)
-
-  Scenario: Any search criteria with link results returned in date order recent to oldest
-    Given I am at the Orders Search page
-    And   The result set will contain an order where the payment status IS “paid” AND order type IS “Certificate”
-    When  I click search
-    Then  The first page of results should be displayed in the table of results
-    And   The matching order should have a hyperlink to the order details page for that order
-    And   The results are displayed in date order (most recent to oldest)
-
-  Scenario: Any search criteria without link results returned in date order recent to oldest
-    Given I am at the Orders Search page
-    And   The result set will contain an order where the where payment status is NOT “paid” AND/OR the order type IS NOT “Certificate”
-    When  I click search
-    Then  The first page of results should be displayed in the table of results
-    And   The matching order should not have a hyperlink to the order details page for that order
-    And   The results are displayed in date order (most recent to oldest)
-
-  Scenario: Preservation of search criteria
-    Given I am at the Orders Search page
-    And   I have entered a search criteria
-    When  I click search
-    Then  The search criteria should be preserved in the text boxes
+    Then  The following results should be returned:
+      | Order number      | Email          | Company number | Order type    | Order date | Payment status | Linkable |
+      | ORD-123123-123123 | demo@ch.gov.uk | 12345678       | Certificate   | 11/04/2022 | Paid           | true     |
+      | ORD-321321-321321 | demo@ch.gov.uk | 87654321       | Missing image | 11/04/2022 | Paid           | false    |
 
   Scenario: Results not found
-    Given I am at the Orders Search Page
+    Given I have opened the search orders page
     And   No results will match my criteria
     When  I click search
-    Then  A message stating “No matches found” is displayed
+    Then  No matches found should be displayed
 
   Scenario: Service unavailable
-    Given I am at the Orders Search Page
-    And   The orders-api is unavailable
+    Given I have opened the search orders page
+    And   Orders API is unavailable
     When  I click search
-    Then  A message is displayed stating “Service unavailable” is displayed
+    Then  The service unavailable page should be displayed

@@ -4,68 +4,67 @@ import { BrowserAgent } from "../core/BrowserAgent";
 import "reflect-metadata";
 
 export interface SearchPage {
-    openSearchPage(): Promise<void>
-    searchNoResultsExpected(): Promise<void>
-    searchResultsExpected(): Promise<void>
-    enterOrderId(text: string): Promise<void>
-    enterEmail(text: string): Promise<void>
-    enterCompanyNumber(text: string): Promise<void>
-    clickSearch(): Promise<void>
-    verify(): Promise<void>
+    openSearchPage(): Promise<void>;
+    enterOrderId(text: string): Promise<void>;
+    enterEmail(text: string): Promise<void>;
+    enterCompanyNumber(text: string): Promise<void>;
+    clickSearch(): Promise<void>;
+    verifyLayout(): Promise<void>;
+    verifyMatchingOrdersDisplayed(results: string[][]): Promise<void>;
+    verifySearchCriteriaPreserved(): Promise<void>;
 }
 
-export class NoPage implements SearchPage {
-    public constructor(private searchSteps: SearchSteps, private interactor: BrowserAgent) {
+export abstract class AbstractSearchPage implements SearchPage {
+    protected constructor(protected searchSteps: SearchSteps, protected interactor: BrowserAgent) {
+    }
+
+    clickSearch(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    enterCompanyNumber(text: string): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    enterEmail(text: string): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    enterOrderId(text: string): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    openSearchPage(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    verifyLayout(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    verifyMatchingOrdersDisplayed(results: any): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    verifySearchCriteriaPreserved(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+}
+
+export class NoPage extends AbstractSearchPage {
+    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent) {
+        super(searchSteps, interactor);
     }
 
     public async openSearchPage(): Promise<void> {
         await this.interactor.openPage("/orders-admin/search");
         this.searchSteps.currentPage = this.searchSteps.ordersSearchPageState;
     }
-
-    public async searchNoResultsExpected(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async searchResultsExpected(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async enterOrderId(text: string): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async enterEmail(text: string): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async enterCompanyNumber(text: string): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async clickSearch(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async verify(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
 }
 
-export class OrdersSearchPage implements SearchPage {
-    public constructor(private searchSteps: SearchSteps, private interactor: BrowserAgent) {
-    }
-
-    public async openSearchPage(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async searchNoResultsExpected(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async searchResultsExpected(): Promise<void> {
-        throw new Error("Invalid operation");
+export class OrdersSearchPage extends AbstractSearchPage {
+    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent) {
+        super(searchSteps, interactor);
     }
 
     public async enterOrderId(text: string): Promise<void> {
@@ -94,7 +93,7 @@ export class OrdersSearchPage implements SearchPage {
         }
     }
 
-    public async verify(): Promise<void> {
+    public async verifyLayout(): Promise<void> {
         const headingText = await this.interactor.getElementText("h1");
         expect(headingText).equals("Search for an order");
         expect(await this.interactor.elementExists("#orderNumber")).to.be.true;
@@ -102,149 +101,58 @@ export class OrdersSearchPage implements SearchPage {
         expect(await this.interactor.elementExists("#companyNumber")).to.be.true;
         expect(await this.interactor.elementExists("#main-content > form > button")).to.be.true;
     }
-}
 
-export class NoSearchResultsPage implements SearchPage {
-    public constructor(private searchSteps: SearchSteps, private interactor: BrowserAgent) {
-    }
-
-    public async openSearchPage(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async searchNoResultsExpected(): Promise<void> {
-        await this.interactor.openPage("/orders-admin/search");
-        this.searchSteps.currentPage = this.searchSteps.noSearchResultsPageState;
-    }
-
-    public async searchResultsExpected(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async enterOrderId(text: string): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async enterEmail(text: string): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async enterCompanyNumber(text: string): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async clickSearch(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async verify(): Promise<void> {
-        const pageHeadingText = await this.interactor.getElementText("h1");
-        const resultSummaryText = await this.interactor.getElementText("#main-content > p");
-        expect(pageHeadingText).equals("Search for an order");
-        expect(await this.interactor.elementExists("#orderNumber")).to.be.true;
-        expect(await this.interactor.elementExists("#email")).to.be.true;
-        expect(await this.interactor.elementExists("#companyNumber")).to.be.true;
-        expect(await this.interactor.elementExists("#main-content > form > button")).to.be.true;
-        expect(resultSummaryText).equals("No matches found");
-
+    public async verifySearchCriteriaPreserved(): Promise<void> {
+        const orderNumberValue = await this.interactor.getFieldValue("#orderNumber");
+        const emailValue = await this.interactor.getFieldValue("#email");
+        const companyNumberValue = await this.interactor.getFieldValue("#companyNumber");
+        expect(orderNumberValue).to.equal(this.searchSteps.getValue("order_id"));
+        expect(emailValue).to.equal(this.searchSteps.getValue("email"));
+        expect(companyNumberValue).to.equal(this.searchSteps.getValue("company_number"));
     }
 }
 
-export class SearchResultsPage implements SearchPage {
-    public constructor(private searchSteps: SearchSteps, private interactor: BrowserAgent) {
+export class NoSearchResultsPage extends OrdersSearchPage {
+    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent) {
+        super(searchSteps, interactor);
     }
 
-    public async openSearchPage(): Promise<void> {
-        throw new Error("Invalid operation");
+    public async verifyLayout(): Promise<void> {
+        await super.verifyLayout();
+        const resultSummaryText = await this.interactor.getElementText("#main-content p.govuk-body");
+        expect(resultSummaryText).to.equal("No matches found");
+    }
+}
+
+export class SearchResultsPage extends OrdersSearchPage {
+    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent) {
+        super(searchSteps, interactor);
     }
 
-    public async searchNoResultsExpected(): Promise<void> {
-        throw new Error("Invalid operation");
+    public async verifyLayout(): Promise<void> {
+        await super.verifyLayout();
+        const resultSummaryText = await this.interactor.getElementText("#main-content .govuk-hint");
+        expect(resultSummaryText).to.equal("Showing 2 of 2 results");
     }
 
-    public async searchResultsExpected(): Promise<void> {
-        await this.interactor.openPage("/orders-admin/search");
-        this.searchSteps.currentPage = this.searchSteps.searchResultsPageState;
-    }
-
-    public async enterOrderId(text: string): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async enterEmail(text: string): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async enterCompanyNumber(text: string): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async clickSearch(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async verify(): Promise<void> {
-        const pageHeadingText = await this.interactor.getElementText("h1");
+    public async verifyMatchingOrdersDisplayed(results: string[][]): Promise<void> {
         const resultsTable = await this.interactor.getTable(".govuk-table");
-
-        expect(pageHeadingText).equals("Search for an order");
-
-        expect(await this.interactor.elementExists("#orderNumber")).to.be.true;
-        expect(await this.interactor.elementExists("#email")).to.be.true;
-        expect(await this.interactor.elementExists("#companyNumber")).to.be.true;
-        expect(await this.interactor.elementExists("#main-content > form > button")).to.be.true;
-
-        expect(resultsTable.getRow(0).getData("Order number")).to.equal("ORD-123123-123123");
-        expect(resultsTable.getRow(0).getData("Email")).to.equal("demo@ch.gov.uk");
-        expect(resultsTable.getRow(0).getData("Company number")).to.equal("12345678");
-        expect(resultsTable.getRow(0).getData("Order type")).to.equal("Certificate");
-        expect(resultsTable.getRow(0).getData("Order date")).to.equal("11/04/2022");
-        expect(resultsTable.getRow(0).getData("Payment status")).to.equal("Paid");
-
-        expect(resultsTable.getRow(1).getData("Order number")).to.equal("ORD-321321-321321");
-        expect(resultsTable.getRow(1).getData("Email")).to.equal("demo@ch.gov.uk");
-        expect(resultsTable.getRow(1).getData("Company number")).to.equal("87654321");
-        expect(resultsTable.getRow(1).getData("Order type")).to.equal("Missing image");
-        expect(resultsTable.getRow(1).getData("Order date")).to.equal("11/04/2022");
-        expect(resultsTable.getRow(1).getData("Payment status")).to.equal("Paid");
+        for (const [index, element] of resultsTable.tableRows.entries()) {
+            const linkable = results[index].pop();
+            expect(element.getValues()).to.deep.equal(results[index]);
+            expect(linkable).to.equal(element.linkable.toString());
+        }
     }
 }
 
-export class ErrorPage implements SearchPage {
-    public constructor(private searchSteps: SearchSteps, private interactor: BrowserAgent) {
+export class ErrorPage extends AbstractSearchPage {
+    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent) {
+        super(searchSteps, interactor);
     }
 
-    public async openSearchPage(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async searchNoResultsExpected(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async searchResultsExpected(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async enterOrderId(text: string): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async enterEmail(text: string): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async enterCompanyNumber(text: string): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async clickSearch(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
-    public async verify(): Promise<void> {
+    public async verifyLayout(): Promise<void> {
         const headingText = await this.interactor.getElementText("h1");
-        const descriptionText = await this.interactor.getElementText("#main-content > .govuk-body");
+        const descriptionText = await this.interactor.getElementText("#main-content .govuk-body");
         expect(headingText).to.equal("Service unavailable");
         expect(descriptionText).to.equal("Try again later.");
     }

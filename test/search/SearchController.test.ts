@@ -89,7 +89,6 @@ describe("SearchController", () => {
         });
         const controller = new SearchController(serviceProvider, pageFactory);
         const response: any = {};
-        response.status = jest.fn();
         response.render = jest.fn();
 
         // when
@@ -97,7 +96,6 @@ describe("SearchController", () => {
 
         // then
         expect(pageFactory.buildServiceUnavailable).toHaveBeenCalled();
-        expect(response.status).toHaveBeenCalledWith(500);
         expect(response.render).toHaveBeenCalledWith("template1", {
             control: expectedViewModel
         });

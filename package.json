@@ -9,8 +9,8 @@
     "clean": "rm -rf ./dist",
     "test": "npx jest --verbose",
     "coverage": "npx jest --verbose --coverage",
-    "test-integration": "agent=zombie npx cucumber-js",
-    "test-automation": "agent=selenium npx cucumber-js",
+    "test-integration": "agent=zombie SERVICE_IMPLEMENTATION=fake npx cucumber-js",
+    "test-automation": "agent=selenium SERVICE_IMPLEMENTATION=fake npx cucumber-js",
     "sonarqube": "sonar-scanner"
   },
   "dependencies": {

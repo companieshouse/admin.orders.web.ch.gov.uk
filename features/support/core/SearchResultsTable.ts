@@ -1,5 +1,5 @@
 export class SearchResultsTable {
-    constructor(private tableRows: SearchResultsRow[]) {
+    constructor(public tableRows: SearchResultsRow[]) {
     }
 
     getRow(index: number): SearchResultsRow {
@@ -11,7 +11,15 @@ export class SearchResultsTable {
 }
 
 export class SearchResultsRow {
-    constructor(private row: Map<string, string>) {
+    constructor(private row: Map<string, string>, public linkable: boolean) {
+    }
+
+    getValues(): string[] {
+        const result = [];
+        for (const rowValue of this.row.values()) {
+            result.push(rowValue);
+        }
+        return result;
     }
 
     getData(heading: string): string {

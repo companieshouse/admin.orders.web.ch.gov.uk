@@ -60,8 +60,9 @@ export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
             throw new Error("Driver not started");
         }
         const table = await this.driver.findElement(By.css(selector));
-        if (await table.getTagName() !== "TABLE") {
-            throw new Error("Element " + selector + " is not a table.");
+        const tagName = await table.getTagName();
+        if (tagName !== "table") {
+            throw new Error("Expected " + selector + " to refer to a table but got: " + tagName);
         }
         const headingNames = [];
         const headings = await table.findElements(By.css("thead tr th"));
@@ -76,7 +77,12 @@ export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
             for(const [index, element] of data.entries()) {
                 rowData.set(headingNames[index], await element.getText());
             }
-            tableRows.push(new SearchResultsRow(rowData));
+            try {
+                await data[0].findElement(By.css("a"));
+                tableRows.push(new SearchResultsRow(rowData, true));
+            } catch (error) {
+                tableRows.push(new SearchResultsRow(rowData, false));
+            }
         }
         return new SearchResultsTable(tableRows);
     }
@@ -95,5 +101,21 @@ export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
         }
         const element = await this.driver.findElement(By.css(selector));
         await element.sendKeys(value);
+    }
+
+    public async getFieldValue(selector: string): Promise<string> {
+        if (this.driver == null) {
+            throw new Error("Driver not started");
+        }
+        const element = await this.driver.findElement(By.css(selector));
+        return await element.getAttribute("value");
+    }
+
+    public async isAHyperlink(selector: string): Promise<boolean> {
+        if (this.driver == null) {
+            throw new Error("Driver not started");
+        }
+        const element = await this.driver.findElement(By.css(selector));
+        return await element.getTagName() === "A";
     }
 }

@@ -2,7 +2,8 @@ import { given, when, then, binding } from "cucumber-tsflow";
 import { SearchPage, NoPage, OrdersSearchPage, NoSearchResultsPage, SearchResultsPage, ErrorPage} from "./SearchPage";
 import Container from "typedi";
 import "reflect-metadata";
-import {SeleniumBrowserAgent} from "../core/SeleniumBrowserAgent";
+import {BrowserAgent} from "../core/BrowserAgent";
+import {DataTable} from "@cucumber/cucumber";
 
 @binding()
 export class SearchSteps {
@@ -15,7 +16,7 @@ export class SearchSteps {
 
     private memory: Map<string, string>;
 
-    constructor(browserAgent: SeleniumBrowserAgent = Container.get(SeleniumBrowserAgent)) {
+    constructor(browserAgent: BrowserAgent = Container.get(process.env.agent || "selenium")) {
         this.ordersSearchPageState = new OrdersSearchPage(this, browserAgent);
         this.noSearchResultsPageState = new NoSearchResultsPage(this, browserAgent);
         this.searchResultsPageState = new SearchResultsPage(this, browserAgent);
@@ -24,14 +25,31 @@ export class SearchSteps {
         this.memory = new Map<string, string>();
     }
 
-    @given(/^I am at the Orders Search Page$/)
+    @given(/^I have opened the search orders page$/)
     public async navigateToOrdersSearchPage(): Promise<void> {
         await this.currentPage.openSearchPage();
     }
 
-    @given(/^I have entered a valid Order-ID that matches the order-id of an existing order$/)
-    public async enterOrderId(text: string): Promise<void> {
-        await this.currentPage.enterOrderId(text);
+    @given(/^I have entered search criteria for order number, email and company number$/)
+    public async enterOrderId(): Promise<void> {
+        await this.currentPage.enterOrderId("ORD-123123-123123");
+        await this.currentPage.enterEmail("demo@ch.gov.uk");
+        await this.currentPage.enterCompanyNumber("12345678");
+    }
+
+    @given(/^No results will match my criteria$/)
+    public async noMatchingResults(): Promise<void> {
+        await this.currentPage.enterOrderId("nonexistent");
+    }
+
+    @given(/^Orders API is unavailable$/)
+    public async orderApiUnavailable(): Promise<void> {
+        await this.currentPage.enterOrderId("error");
+    }
+
+    @given(/^An order placed for a certificate has been paid for$/)
+    @given(/^An order placed for a missing image delivery has been paid for$/)
+    public async noop(): Promise<void> {
     }
 
     @when(/^I click search$/)
@@ -39,47 +57,21 @@ export class SearchSteps {
         await this.currentPage.clickSearch();
     }
 
-    @then(/^The matching order should be displayed in the table of results$/)
-    public async verifySearchResultsPage(): Promise<void> {
-        await this.currentPage.verify();
-    }
-    ///
-    @given(/^I have entered a valid email address that matches the e-mail address of existing orders$/)
-    public async enterEmail(text: string): Promise<void> {
-        await this.currentPage.enterEmail(text);
+    @then(/^The search criteria should be preserved$/)
+    public async verifySearchCriteriaPreserved(): Promise<void> {
+        await this.currentPage.verifySearchCriteriaPreserved();
     }
 
-    @then(/^The first page of results should be displayed in the table of results$/)
-
-    @then(/^The results are displayed in date order (most recent to oldest)$/)
-
-    ///
-    @given(/^I have entered a search criteria$/)
-    @given(/^I have entered a company number that matches the company number of existing orders$/)
-    public async enterCompanyNumber(text: string): Promise<void> {
-        await this.currentPage.enterCompanyNumber(text);
+    @then(/^No matches found should be displayed$/)
+    @then(/^The service unavailable page should be displayed$/)
+    public async verifyLayout(): Promise<void> {
+        await this.currentPage.verifyLayout();
     }
-    ///
-    @given(/^The result set will contain an order where the payment status IS “paid” AND order type IS “Certificate”$/)
-    @then(/^The matching order should have a hyperlink to the order details page for that order$/)
 
-    ///
-    @given(/^The result set will contain an order where the where payment status is NOT "paid" AND\/OR the order type IS NOT "Certificate"$/)
-    @then(/^ The matching order should not have a hyperlink to the order details page for that order$/)
-
-    @then(/^The search criteria should be preserved in the text boxes$/)
-    ///
-    @given(/^No results will match my criteria$/)
-    @then(/^A message stating “No matches found” is displayed$/)
-    public async verifyNoSearchResultsPage(): Promise<void> {
-        await this.currentPage.verify();
-    }
-    ///
-    @given(/^The orders-api is unavailable$/)
-
-    @then(/^A message is displayed stating “Service unavailable” is displayed$/)
-    public async verifyErrorPage(): Promise<void> {
-        await this.currentPage.verify();
+    @then(/^The following results should be returned:$/)
+    public async verifyResults(results: DataTable): Promise<void> {
+        await this.currentPage.verifyLayout();
+        await this.currentPage.verifyMatchingOrdersDisplayed(results.rows());
     }
 
     public getValue(key: string): string {

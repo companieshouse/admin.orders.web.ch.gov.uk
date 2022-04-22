@@ -42,7 +42,6 @@ export class SearchController {
         const results = await this.service.findOrders(new OrderSearchParameters(searchCriteria));
         if (results.status !== Status.SUCCESS) {
             const model = this.pageFactory.buildServiceUnavailable();
-            res.status(500);
             res.render(model.template, {
                 control: model
             });

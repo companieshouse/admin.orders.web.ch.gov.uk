@@ -3,7 +3,6 @@ import {Service} from "typedi";
 import "reflect-metadata";
 import { URL } from "url";
 import {SearchResultsRow, SearchResultsTable} from "./SearchResultsTable";
-import {By} from "selenium-webdriver";
 const Browser = require("zombie");
 
 @Service("zombie")
@@ -66,14 +65,17 @@ export class ZombieBrowserAgent implements BrowserAgent, AgentService {
             const rowData = new Map<string, string>();
             const data = await row.querySelectorAll("td");
             for(const [index, element] of data.entries()) {
-                rowData.set(headingNames[index], element.innerHTML.trim());
+                const link = element.querySelector("a");
+                if (link) {
+                    rowData.set(headingNames[index], link.innerHTML.trim());
+                } else {
+                    rowData.set(headingNames[index], element.innerHTML.trim());
+                }
             }
-            tableRows.push(new SearchResultsRow(rowData));
+            tableRows.push(new SearchResultsRow(rowData, !! await data[0].querySelector("a")));
         }
         return new SearchResultsTable(tableRows);
     }
-
-
 
     async getElementText(selector: string): Promise<string> {
         if (this.browser == null) {
@@ -88,5 +90,21 @@ export class ZombieBrowserAgent implements BrowserAgent, AgentService {
             throw new Error("Driver not started");
         }
         await this.browser.fill(selector, value);
+    }
+
+    async getFieldValue(selector: string): Promise<string> {
+        if (this.browser == null) {
+            throw new Error("Driver not started");
+        }
+        const element = await this.browser.querySelector(selector);
+        return element.value;
+    }
+
+    async isAHyperlink(selector: string): Promise<boolean> {
+        if (this.browser == null) {
+            throw new Error("Driver not started");
+        }
+        const element = await this.browser.querySelector(selector);
+        return element.nodeName === "A";
     }
 }
