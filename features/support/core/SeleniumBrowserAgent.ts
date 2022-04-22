@@ -27,12 +27,12 @@ export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
         await this.driver.quit();
     }
 
-    public async openPage(url: string): Promise<void> {
+    public async openPage(path: string): Promise<void> {
         if (this.driver == null) {
             console.warn("Driver not started");
             return;
         }
-        await this.driver.get(this.baseUri + url);
+        await this.driver.get(this.baseUri + path);
     }
 
     public async clickElement(selector: string): Promise<void> {
