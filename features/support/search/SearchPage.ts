@@ -2,12 +2,19 @@ import { SearchSteps } from "./SearchSteps";
 import { expect } from "chai";
 import { BrowserAgent } from "../core/BrowserAgent";
 import "reflect-metadata";
+import {StubApiClientFactory} from "../../../dist/client/StubApiClientFactory";
+import resultsJson from "../stubbing/success_with_results.json";
+import noResultsJson from "../stubbing/success_no_results.json";
+import failureJson from "../stubbing/failure.json";
 
 export interface SearchPage {
     openSearchPage(): Promise<void>;
     enterOrderId(text: string): Promise<void>;
     enterEmail(text: string): Promise<void>;
     enterCompanyNumber(text: string): Promise<void>;
+    harnessOrdersApiWithResults(): void;
+    harnessOrdersApiWithNoResults(): void;
+    harnessOrdersApiWithError(): void;
     clickSearch(): Promise<void>;
     verifyLayout(): Promise<void>;
     verifyMatchingOrdersDisplayed(results: string[][]): Promise<void>;
@@ -49,6 +56,18 @@ export abstract class AbstractSearchPage implements SearchPage {
     verifySearchCriteriaPreserved(): Promise<void> {
         throw new Error("Invalid operation");
     }
+
+    harnessOrdersApiWithError(): void {
+        throw new Error("Invalid operation");
+    }
+
+    harnessOrdersApiWithNoResults(): void {
+        throw new Error("Invalid operation");
+    }
+
+    harnessOrdersApiWithResults(): void {
+        throw new Error("Invalid operation");
+    }
 }
 
 export class NoPage extends AbstractSearchPage {
@@ -63,7 +82,7 @@ export class NoPage extends AbstractSearchPage {
 }
 
 export class OrdersSearchPage extends AbstractSearchPage {
-    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent) {
+    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent, private clientFactory: StubApiClientFactory) {
         super(searchSteps, interactor);
     }
 
@@ -84,13 +103,6 @@ export class OrdersSearchPage extends AbstractSearchPage {
 
     public async clickSearch(): Promise<void> {
         await this.interactor.clickElement("#main-content > form > button");
-        if (this.searchSteps.getValue("order_id") === "nonexistent") {
-            this.searchSteps.currentPage = this.searchSteps.noSearchResultsPageState;
-        } else if (this.searchSteps.getValue("order_id") === "error") {
-            this.searchSteps.currentPage = this.searchSteps.errorPageState;
-        } else {
-            this.searchSteps.currentPage = this.searchSteps.searchResultsPageState;
-        }
     }
 
     public async verifyLayout(): Promise<void> {
@@ -110,11 +122,59 @@ export class OrdersSearchPage extends AbstractSearchPage {
         expect(emailValue).to.equal(this.searchSteps.getValue("email"));
         expect(companyNumberValue).to.equal(this.searchSteps.getValue("company_number"));
     }
+
+    harnessOrdersApiWithResults(): void {
+        this.clientFactory.willReturnSuccessfulResponse(resultsJson);
+        this.searchSteps.currentPage = this.searchSteps.anticipateResultsPageState;
+    }
+
+    harnessOrdersApiWithNoResults(): void {
+        this.clientFactory.willReturnSuccessfulResponse(noResultsJson);
+        this.searchSteps.currentPage = this.searchSteps.anticipateNoResultsPageState;
+    }
+
+    harnessOrdersApiWithError(): void {
+        this.clientFactory.willReturnFailureResponse(500, failureJson);
+        this.searchSteps.currentPage = this.searchSteps.anticipateErrorPageState;
+    }
+}
+
+export class AnticipateResultsPage extends OrdersSearchPage {
+    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent, clientFactory: StubApiClientFactory) {
+        super(searchSteps, interactor, clientFactory);
+    }
+
+    async clickSearch(): Promise<void> {
+        await super.clickSearch();
+        this.searchSteps.currentPage = this.searchSteps.searchResultsPageState;
+    }
+}
+
+export class AnticipateNoResultsPage extends OrdersSearchPage {
+    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent, clientFactory: StubApiClientFactory) {
+        super(searchSteps, interactor, clientFactory);
+    }
+
+    async clickSearch(): Promise<void> {
+        await super.clickSearch();
+        this.searchSteps.currentPage = this.searchSteps.noSearchResultsPageState;
+    }
+}
+
+export class AnticipateErrorPage extends OrdersSearchPage {
+    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent, clientFactory: StubApiClientFactory) {
+        super(searchSteps, interactor, clientFactory);
+    }
+
+    async clickSearch(): Promise<void> {
+        await super.clickSearch();
+        this.searchSteps.currentPage = this.searchSteps.errorPageState;
+    }
 }
 
 export class NoSearchResultsPage extends OrdersSearchPage {
-    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent) {
-        super(searchSteps, interactor);
+    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent, clientFactory: StubApiClientFactory) {
+        super(searchSteps, interactor, clientFactory);
     }
 
     public async verifyLayout(): Promise<void> {
@@ -125,14 +185,14 @@ export class NoSearchResultsPage extends OrdersSearchPage {
 }
 
 export class SearchResultsPage extends OrdersSearchPage {
-    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent) {
-        super(searchSteps, interactor);
+    public constructor(searchSteps: SearchSteps, interactor: BrowserAgent, clientFactory: StubApiClientFactory) {
+        super(searchSteps, interactor, clientFactory);
     }
 
     public async verifyLayout(): Promise<void> {
         await super.verifyLayout();
         const resultSummaryText = await this.interactor.getElementText("#main-content .govuk-hint");
-        expect(resultSummaryText).to.equal("Showing 2 of 2 results");
+        expect(resultSummaryText).to.equal("Showing 4 of 4 results");
     }
 
     public async verifyMatchingOrdersDisplayed(results: string[][]): Promise<void> {

@@ -1,13 +1,25 @@
 import { given, when, then, binding } from "cucumber-tsflow";
-import { SearchPage, NoPage, OrdersSearchPage, NoSearchResultsPage, SearchResultsPage, ErrorPage} from "./SearchPage";
+import {
+    SearchPage,
+    NoPage,
+    OrdersSearchPage,
+    NoSearchResultsPage,
+    SearchResultsPage,
+    ErrorPage,
+    AnticipateResultsPage, AnticipateNoResultsPage, AnticipateErrorPage
+} from "./SearchPage";
 import Container from "typedi";
 import "reflect-metadata";
 import {BrowserAgent} from "../core/BrowserAgent";
 import {DataTable} from "@cucumber/cucumber";
+import {StubApiClientFactory} from "../../../dist/client/StubApiClientFactory";
 
 @binding()
 export class SearchSteps {
     readonly ordersSearchPageState: OrdersSearchPage;
+    readonly anticipateResultsPageState: AnticipateResultsPage;
+    readonly anticipateNoResultsPageState: AnticipateNoResultsPage;
+    readonly anticipateErrorPageState: AnticipateErrorPage;
     readonly noSearchResultsPageState: NoSearchResultsPage;
     readonly searchResultsPageState: SearchResultsPage;
     readonly errorPageState: ErrorPage;
@@ -16,10 +28,13 @@ export class SearchSteps {
 
     private memory: Map<string, string>;
 
-    constructor(browserAgent: BrowserAgent = Container.get(process.env.agent || "selenium")) {
-        this.ordersSearchPageState = new OrdersSearchPage(this, browserAgent);
-        this.noSearchResultsPageState = new NoSearchResultsPage(this, browserAgent);
-        this.searchResultsPageState = new SearchResultsPage(this, browserAgent);
+    constructor(browserAgent: BrowserAgent = Container.get(process.env.agent || "selenium"), apiFactory: StubApiClientFactory = Container.get("stub.client")) {
+        this.ordersSearchPageState = new OrdersSearchPage(this, browserAgent, apiFactory);
+        this.anticipateResultsPageState = new AnticipateResultsPage(this, browserAgent, apiFactory);
+        this.anticipateNoResultsPageState = new AnticipateNoResultsPage(this, browserAgent, apiFactory);
+        this.anticipateErrorPageState = new AnticipateErrorPage(this, browserAgent, apiFactory);
+        this.noSearchResultsPageState = new NoSearchResultsPage(this, browserAgent, apiFactory);
+        this.searchResultsPageState = new SearchResultsPage(this, browserAgent, apiFactory);
         this.errorPageState = new ErrorPage(this, browserAgent);
         this.currentPage = new NoPage(this, browserAgent);
         this.memory = new Map<string, string>();
@@ -43,13 +58,23 @@ export class SearchSteps {
     }
 
     @given(/^Orders API is unavailable$/)
-    public async orderApiUnavailable(): Promise<void> {
+    public async ordersApiUnavailable(): Promise<void> {
         await this.currentPage.enterOrderId("error");
     }
 
-    @given(/^An order placed for a certificate has been paid for$/)
-    @given(/^An order placed for a missing image delivery has been paid for$/)
-    public async noop(): Promise<void> {
+    @given(/^Orders API will return results$/)
+    public async ordersApiWillReturnResults(): Promise<void> {
+        await this.currentPage.harnessOrdersApiWithResults();
+    }
+
+    @given(/^Orders API will return no results$/)
+    public async ordersApiWillReturnNoResults(): Promise<void> {
+        await this.currentPage.harnessOrdersApiWithNoResults();
+    }
+
+    @given(/^Orders API will return an error$/)
+    public async ordersApiWillReturnError(): Promise<void> {
+        await this.currentPage.harnessOrdersApiWithError();
     }
 
     @when(/^I click search$/)
@@ -68,7 +93,7 @@ export class SearchSteps {
         await this.currentPage.verifyLayout();
     }
 
-    @then(/^The following results should be returned:$/)
+    @then(/^The following orders should be displayed:$/)
     public async verifyResults(results: DataTable): Promise<void> {
         await this.currentPage.verifyLayout();
         await this.currentPage.verifyMatchingOrdersDisplayed(results.rows());
