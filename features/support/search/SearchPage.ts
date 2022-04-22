@@ -48,13 +48,12 @@ export class NoPage implements SearchPage {
     }
 
     public async verify(): Promise<void> {
-        const headingText = await this.interactor.getElementText("h1");
-        expect(headingText).equals("Search for an order");
+        throw new Error("Invalid operation");
     }
 }
 
 export class OrdersSearchPage implements SearchPage {
-    public constructor(private searchSteps: SearchPage, private interactor: BrowserAgent) {
+    public constructor(private searchSteps: SearchSteps, private interactor: BrowserAgent) {
     }
 
     public async openSearchPage(): Promise<void> {
@@ -84,11 +83,8 @@ export class OrdersSearchPage implements SearchPage {
         this.searchSteps.setValue("company_number", text);
     }
 
-    //
     public async clickSearch(): Promise<void> {
         await this.interactor.clickElement("#main-content > form > button");
-        this.searchSteps.currentPage = this.searchSteps.noSearchResultsPageState;
-        await this.interactor.clickElement(".govuk-button");
         if (this.searchSteps.getValue("order_id") === "nonexistent") {
             this.searchSteps.currentPage = this.searchSteps.noSearchResultsPageState;
         } else if (this.searchSteps.getValue("order_id") === "error") {
@@ -99,12 +95,17 @@ export class OrdersSearchPage implements SearchPage {
     }
 
     public async verify(): Promise<void> {
-        throw new Error("Invalid operation");
+        const headingText = await this.interactor.getElementText("h1");
+        expect(headingText).equals("Search for an order");
+        expect(await this.interactor.elementExists("#orderNumber")).to.be.true;
+        expect(await this.interactor.elementExists("#email")).to.be.true;
+        expect(await this.interactor.elementExists("#companyNumber")).to.be.true;
+        expect(await this.interactor.elementExists("#main-content > form > button")).to.be.true;
     }
 }
 
 export class NoSearchResultsPage implements SearchPage {
-    public constructor(private searchSteps: SearchPage, private interactor: BrowserAgent) {
+    public constructor(private searchSteps: SearchSteps, private interactor: BrowserAgent) {
     }
 
     public async openSearchPage(): Promise<void> {
@@ -137,14 +138,20 @@ export class NoSearchResultsPage implements SearchPage {
     }
 
     public async verify(): Promise<void> {
-        const headingText = await this.interactor.getElementText("#main-content > p");
-        expect(headingText).equals("No matches found");
+        const pageHeadingText = await this.interactor.getElementText("h1");
+        const resultSummaryText = await this.interactor.getElementText("#main-content > p");
+        expect(pageHeadingText).equals("Search for an order");
+        expect(await this.interactor.elementExists("#orderNumber")).to.be.true;
+        expect(await this.interactor.elementExists("#email")).to.be.true;
+        expect(await this.interactor.elementExists("#companyNumber")).to.be.true;
+        expect(await this.interactor.elementExists("#main-content > form > button")).to.be.true;
+        expect(resultSummaryText).equals("No matches found");
 
     }
 }
 
 export class SearchResultsPage implements SearchPage {
-    public constructor(private searchSteps: SearchPage, private interactor: BrowserAgent) {
+    public constructor(private searchSteps: SearchSteps, private interactor: BrowserAgent) {
     }
 
     public async openSearchPage(): Promise<void> {
@@ -177,8 +184,29 @@ export class SearchResultsPage implements SearchPage {
     }
 
     public async verify(): Promise<void> {
-        const headingText = await this.interactor.getElementText("#main-content > table > thead > tr > th:nth-child(1)");
-        expect(headingText).equals("Order number");
+        const pageHeadingText = await this.interactor.getElementText("h1");
+        const resultsTable = await this.interactor.getTable(".govuk-table");
+
+        expect(pageHeadingText).equals("Search for an order");
+
+        expect(await this.interactor.elementExists("#orderNumber")).to.be.true;
+        expect(await this.interactor.elementExists("#email")).to.be.true;
+        expect(await this.interactor.elementExists("#companyNumber")).to.be.true;
+        expect(await this.interactor.elementExists("#main-content > form > button")).to.be.true;
+
+        expect(resultsTable.getRow(0).getData("Order number")).to.equal("ORD-123123-123123");
+        expect(resultsTable.getRow(0).getData("Email")).to.equal("demo@ch.gov.uk");
+        expect(resultsTable.getRow(0).getData("Company number")).to.equal("12345678");
+        expect(resultsTable.getRow(0).getData("Order type")).to.equal("Certificate");
+        expect(resultsTable.getRow(0).getData("Order date")).to.equal("11/04/2022");
+        expect(resultsTable.getRow(0).getData("Payment status")).to.equal("Paid");
+
+        expect(resultsTable.getRow(1).getData("Order number")).to.equal("ORD-321321-321321");
+        expect(resultsTable.getRow(1).getData("Email")).to.equal("demo@ch.gov.uk");
+        expect(resultsTable.getRow(1).getData("Company number")).to.equal("87654321");
+        expect(resultsTable.getRow(1).getData("Order type")).to.equal("Missing image");
+        expect(resultsTable.getRow(1).getData("Order date")).to.equal("11/04/2022");
+        expect(resultsTable.getRow(1).getData("Payment status")).to.equal("Paid");
     }
 }
 
@@ -216,8 +244,8 @@ export class ErrorPage implements SearchPage {
 
     public async verify(): Promise<void> {
         const headingText = await this.interactor.getElementText("h1");
-        expect(headingText).equals("Search for an order");
+        const descriptionText = await this.interactor.getElementText("#main-content > .govuk-body");
+        expect(headingText).to.equal("Service unavailable");
+        expect(descriptionText).to.equal("Try again later.");
     }
 }
-
-

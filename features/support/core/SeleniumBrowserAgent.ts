@@ -2,6 +2,7 @@ import {AgentService, BrowserAgent} from "./BrowserAgent";
 import {Service} from "typedi";
 import "reflect-metadata";
 import {Builder, By, WebDriver} from "selenium-webdriver";
+import {SearchResultsRow, SearchResultsTable} from "./SearchResultsTable";
 
 @Service("selenium")
 export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
@@ -29,10 +30,21 @@ export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
 
     public async openPage(path: string): Promise<void> {
         if (this.driver == null) {
-            console.warn("Driver not started");
-            return;
+            throw new Error("Driver not started");
         }
         await this.driver.get(this.baseUri + path);
+    }
+
+    public async elementExists(selector: string): Promise<boolean> {
+        if (this.driver == null) {
+            throw new Error("Driver not started");
+        }
+        try {
+            await this.driver.findElement(By.css(selector));
+            return true;
+        } catch(error) {
+            return false;
+        }
     }
 
     public async clickElement(selector: string): Promise<void> {
@@ -41,6 +53,32 @@ export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
         }
         const element = await this.driver.findElement(By.css(selector));
         await element.click();
+    }
+
+    public async getTable(selector: string): Promise<SearchResultsTable> {
+        if (this.driver == null) {
+            throw new Error("Driver not started");
+        }
+        const table = await this.driver.findElement(By.css(selector));
+        if (await table.getTagName() !== "TABLE") {
+            throw new Error("Element " + selector + " is not a table.");
+        }
+        const headingNames = [];
+        const headings = await table.findElements(By.css("thead tr th"));
+        for(const element of headings) {
+            headingNames.push(await element.getText());
+        }
+        const tableRows = [];
+        const rows = await table.findElements(By.css("tbody tr"));
+        for(const row of rows) {
+            const rowData = new Map<string, string>();
+            const data = await row.findElements(By.css("td"));
+            for(const [index, element] of data.entries()) {
+                rowData.set(headingNames[index], await element.getText());
+            }
+            tableRows.push(new SearchResultsRow(rowData));
+        }
+        return new SearchResultsTable(tableRows);
     }
 
     public async getElementText(selector: string): Promise<string> {
