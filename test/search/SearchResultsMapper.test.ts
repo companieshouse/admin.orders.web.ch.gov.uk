@@ -12,7 +12,7 @@ describe("SearchResultsMapper", () => {
         const serverResponse = new Success<ApiResponse<SearchResponse>, ApiErrorResponse>({
             httpStatusCode: 200,
             resource: {
-                totalOrders: 1,
+                totalOrders: 10,
                 orderSummaries: [{
                     id: "ORD-123123-123123",
                     email: "demo@ch.gov.uk",
@@ -71,6 +71,7 @@ describe("SearchResultsMapper", () => {
         // then
         expect(result).toEqual({
             status: "SUCCESS",
+            totalOrders: 10,
             orderSummaries: [
                 {
                     id: "ORD-123123-123123",

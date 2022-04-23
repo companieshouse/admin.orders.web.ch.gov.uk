@@ -16,7 +16,7 @@ describe("OrderSearchService", () => {
         const searchResponse = new Success<ApiResponse<SearchResponse>, ApiErrorResponse>({
             httpStatusCode: 200,
             resource: {
-                totalOrders: 1,
+                totalOrders: 10,
                 orderSummaries: [{
                     id: "ORD-123123-123123",
                     email: "demo@ch.gov.uk",
@@ -44,6 +44,7 @@ describe("OrderSearchService", () => {
         });
         const mappedResults: SearchResults = {
             status: Status.SUCCESS,
+            totalOrders: 10,
             orderSummaries: [{
                 id: "ORD-123123-123123",
                 email: "demo@ch.gov.uk",
