@@ -67,7 +67,7 @@ describe("OrderSearchService", () => {
         const service = new OrderSearchService(apiClientFactory, resultsMapper);
 
         // when
-        const result = await service.findOrders(new OrderSearchParameters(new SearchCriteria("ORD-123123-123123", "demo@ch.gov.uk", "12345678")));
+        const result = await service.findOrders(new OrderSearchParameters(new SearchCriteria("ORD-123123-123123", "demo@ch.gov.uk", "12345678"), 1000));
 
         // then
         expect(result).toBe(mappedResults);
@@ -75,7 +75,8 @@ describe("OrderSearchService", () => {
         expect(searchClient.search).toHaveBeenCalledWith({
             id: "ORD-123123-123123",
             email: "demo@ch.gov.uk",
-            companyNumber: "12345678"
+            companyNumber: "12345678",
+            pageSize: 1000
         } as SearchRequest);
         expect(resultsMapper.map).toHaveBeenCalledWith(searchResponse);
     });

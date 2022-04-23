@@ -37,7 +37,8 @@ describe("SearchController", () => {
         // given
         const service: any = {};
         const serviceProvider: any = {
-            service: service
+            service: service,
+            maximumResults: 1000
         };
         service.findOrders = jest.fn(async () => {
             return new SearchResults(Status.SUCCESS, expectedSearchResults);
@@ -66,7 +67,7 @@ describe("SearchController", () => {
         await controller.handlePost(request, response, {} as NextFunction);
 
         // then
-        expect(service.findOrders).toHaveBeenCalledWith(new OrderSearchParameters(expectedSearchCriteria));
+        expect(service.findOrders).toHaveBeenCalledWith(new OrderSearchParameters(expectedSearchCriteria, 1000));
         expect(pageFactory.buildSearchPageWithResults).toHaveBeenCalledWith(expectedSearchCriteria, expectedSearchResults);
         expect(response.render).toHaveBeenCalledWith("template1", {
             control: expectedViewModel

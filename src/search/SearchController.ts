@@ -39,7 +39,7 @@ export class SearchController {
             req.body.email,
             req.body.companyNumber
         );
-        const results = await this.service.findOrders(new OrderSearchParameters(searchCriteria));
+        const results = await this.service.findOrders(new OrderSearchParameters(searchCriteria, this.limit));
         if (results.status !== Status.SUCCESS) {
             const model = this.pageFactory.buildServiceUnavailable();
             res.status(500);
