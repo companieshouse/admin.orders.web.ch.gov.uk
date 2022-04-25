@@ -1,6 +1,6 @@
 import {SearchCriteria} from "./SearchCriteria";
 
 export class OrderSearchParameters {
-    constructor(public searchCriteria: SearchCriteria) {
+    constructor(public searchCriteria: SearchCriteria, public pageSize: number) {
     }
 }

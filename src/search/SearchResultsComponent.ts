@@ -3,24 +3,22 @@ import {SearchResultComponent} from "./SearchResultComponent";
 import {ViewModel} from "../core/ViewModel";
 
 export class SearchResultsComponent extends AbstractViewComponent {
-    private readonly limit: number;
-    private readonly size: number;
+    private readonly pageSize: number;
 
     constructor(results: SearchResultComponent[],
-                private readonly noResultsTemplate: string = "search/no_results_found.njk",
-                limit: number = 1000) {
+                private readonly total: number,
+                private readonly noResultsTemplate: string = "search/no_results_found.njk") {
         super("search/search_results.njk", results);
-        this.limit = Math.min(results.length, limit);
-        this.size = results.length;
+        this.pageSize = results.length;
     }
 
     render(): ViewModel {
         const result = super.render();
-        if (this.size == 0) {
+        if (this.total == 0) {
             result.template = this.noResultsTemplate;
         }
-        result.data.limit = this.limit;
-        result.data.size = this.size;
+        result.data.pageSize = this.pageSize;
+        result.data.total = this.total;
         return result;
     }
 }

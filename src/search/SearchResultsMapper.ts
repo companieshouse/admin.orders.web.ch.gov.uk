@@ -32,6 +32,7 @@ export class SearchResultsMapper {
         if (response.isSuccess()) {
             return {
                 status: Status.SUCCESS,
+                totalOrders: response.value.resource?.totalOrders || 0,
                 orderSummaries: (response.value.resource?.orderSummaries.map(summary => {
                     return {
                         id: summary.id,

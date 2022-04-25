@@ -13,7 +13,10 @@ export class OrderSearchService implements SearchService {
 
     async findOrders(searchParameters: OrderSearchParameters): Promise<SearchResults> {
         const apiClient = this.apiClientFactory.newApiClient();
-        const response = await apiClient.orderSearchService.search({...searchParameters.searchCriteria});
+        const response = await apiClient.orderSearchService.search({
+            ...searchParameters.searchCriteria,
+            pageSize: searchParameters.pageSize
+        });
         return this.resultsMapper.map(response);
     }
 }
