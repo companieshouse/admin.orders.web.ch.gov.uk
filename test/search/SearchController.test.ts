@@ -37,10 +37,15 @@ describe("SearchController", () => {
         // given
         const service: any = {};
         const serviceProvider: any = {
-            service: service
+            service: service,
+            maximumResults: 1000
         };
+        const expectedSearchResults = [{
+            id: "ORD-123123-123123"
+        } as OrderSummary];
+        const expectedResults = new SearchResults(Status.SUCCESS, expectedSearchResults, 10);
         service.findOrders = jest.fn(async () => {
-            return new SearchResults(Status.SUCCESS, expectedSearchResults);
+            return expectedResults;
         });
         const pageFactory: any = {};
         const expectedViewModel = new ViewModel("template1", [{
@@ -57,17 +62,15 @@ describe("SearchController", () => {
         const response: any = {};
         response.render = jest.fn();
         const expectedSearchCriteria = new SearchCriteria("ORD-123123-123123");
+        const expectedSearchParameters = new OrderSearchParameters(expectedSearchCriteria, 1000)
         const controller = new SearchController(serviceProvider, pageFactory);
-        const expectedSearchResults = [{
-            id: "ORD-123123-123123"
-        } as OrderSummary];
 
         // when
         await controller.handlePost(request, response, {} as NextFunction);
 
         // then
-        expect(service.findOrders).toHaveBeenCalledWith(new OrderSearchParameters(expectedSearchCriteria));
-        expect(pageFactory.buildSearchPageWithResults).toHaveBeenCalledWith(expectedSearchCriteria, expectedSearchResults);
+        expect(service.findOrders).toHaveBeenCalledWith(expectedSearchParameters);
+        expect(pageFactory.buildSearchPageWithResults).toHaveBeenCalledWith(expectedSearchParameters, expectedResults);
         expect(response.render).toHaveBeenCalledWith("template1", {
             control: expectedViewModel
         });
@@ -85,7 +88,9 @@ describe("SearchController", () => {
             return expectedViewModel;
         });
         service.findOrders = jest.fn(async () => {
-            return new SearchResults(Status.SERVER_ERROR, []);
+            return {
+                status: Status.SERVER_ERROR
+            };
         });
         const controller = new SearchController(serviceProvider, pageFactory);
         const response: any = {};

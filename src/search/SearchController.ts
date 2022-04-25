@@ -34,12 +34,12 @@ export class SearchController {
 
     public async handlePost(req: Request, res: Response, next: NextFunction): Promise<void> {
         SearchController.logger.trace("POST request received");
-        const searchCriteria = new SearchCriteria(
+        const searchCriteria = new OrderSearchParameters(new SearchCriteria(
             req.body.orderNumber,
             req.body.email,
             req.body.companyNumber
-        );
-        const results = await this.service.findOrders(new OrderSearchParameters(searchCriteria));
+        ), this.limit);
+        const results = await this.service.findOrders(searchCriteria);
         if (results.status !== Status.SUCCESS) {
             const model = this.pageFactory.buildServiceUnavailable();
             res.render(model.template, {
@@ -47,7 +47,7 @@ export class SearchController {
             });
             return;
         }
-        const model = this.pageFactory.buildSearchPageWithResults(searchCriteria, results.orderSummaries);
+        const model = this.pageFactory.buildSearchPageWithResults(searchCriteria, results);
         res.render(model.template, {
             control: model
         });
