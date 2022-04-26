@@ -8,8 +8,8 @@ export class DefaultApiClientFactory {
     constructor(private apiUrl: string = process.env.API_URL || "", private apiKey: string = process.env.CHS_API_KEY || "") {
     }
 
-    newApiClient(apiUrl: string, apiKey: string): ApiClient {
-        return createApiClient(apiKey, undefined, apiUrl);
+    newApiClient(): ApiClient {
+        return createApiClient(this.apiKey, undefined, this.apiUrl);
     }
 }
 
