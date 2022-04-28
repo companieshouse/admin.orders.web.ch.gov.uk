@@ -1,13 +1,15 @@
 import { Application } from "./Application";
-import { Service } from "typedi";
+import {Inject, Service} from "typedi";
 import "reflect-metadata";
-import { MiddlewareProvider } from "../security/MiddlewareProvider";
+import {MiddlewareProvider} from "../security/MiddlewareProvider";
 import { ServerPaths } from "./ServerPaths";
 import {SearchController} from "../search/SearchController";
+import "../security/MiddlewareProvider";
 
 @Service()
 export class Registrar {
-    constructor(private readonly app: Application, private readonly middlewareProvider: MiddlewareProvider,
+    constructor(private readonly app: Application,
+                @Inject(process.env.MIDDLEWARE_PROVIDER || "production.middleware") private readonly middlewareProvider: MiddlewareProvider,
                 private readonly serverPaths: ServerPaths,
                 private readonly searchController: SearchController) {
     }
