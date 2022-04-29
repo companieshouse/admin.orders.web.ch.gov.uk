@@ -3,11 +3,12 @@ import {ViewModel} from "../../src/core/ViewModel";
 import {OrderSearchParameters} from "../../src/search/OrderSearchParameters";
 import {SearchResults} from "../../src/search/SearchResults";
 import {Status} from "../../src/core/Status";
+import {GlobalPageFactory} from "../../src/core/GlobalPageFactory";
 
 describe("PageFactory", () => {
     it("Builds the initial search page", () => {
         // given
-        const pageFactory = new PageFactory();
+        const pageFactory = new PageFactory(new GlobalPageFactory());
 
         // when
         const actual = pageFactory.buildInitialSearchPage();
@@ -26,7 +27,7 @@ describe("PageFactory", () => {
 
     it("Builds the search page with results", () => {
         // given
-        const pageFactory = new PageFactory();
+        const pageFactory = new PageFactory(new GlobalPageFactory());
         const searchCriteria = {
             id: "ORD-123123-123123",
             email: "demo@ch.gov.uk",
@@ -73,7 +74,7 @@ describe("PageFactory", () => {
 
     it("Builds the search page with no results", () => {
         // given
-        const pageFactory = new PageFactory();
+        const pageFactory = new PageFactory(new GlobalPageFactory());
         const searchCriteria = {
             id: "ORD-123123-123123",
             email: "demo@ch.gov.uk",
@@ -106,7 +107,7 @@ describe("PageFactory", () => {
 
     it("Builds a service unavailable page", () => {
         // given
-        const pageFactory = new PageFactory();
+        const pageFactory = new PageFactory(new GlobalPageFactory());
 
         // when
         const actual = pageFactory.buildServiceUnavailable();
@@ -116,6 +117,21 @@ describe("PageFactory", () => {
             new ViewModel("service_unavailable.njk", [])
         ], {
             title: "Service unavailable"
+        }));
+    });
+
+    it("Builds an unauthorised page", () => {
+        // given
+        const pageFactory = new PageFactory(new GlobalPageFactory());
+
+        // when
+        const actual = pageFactory.buildUnauthorised();
+
+        // then
+        expect(actual).toEqual(new ViewModel("page", [
+            new ViewModel("unauthorised.njk", [])
+        ], {
+            title: "Unauthorised"
         }));
     });
 });

@@ -5,14 +5,17 @@ import {SearchResultComponent} from "./SearchResultComponent";
 import {Service} from "typedi";
 import "reflect-metadata";
 import {ViewModel} from "../core/ViewModel";
-import {ServiceUnavailableComponent} from "../core/ServiceUnavailableComponent";
 import {OrderSearchParameters} from "./OrderSearchParameters";
 import {SearchResults} from "./SearchResults";
+import {GlobalPageFactory} from "../core/GlobalPageFactory";
+import {ErrorPageBuildable} from "../core/ErrorPageBuildable";
 
 @Service()
-export class PageFactory {
+export class PageFactory implements ErrorPageBuildable {
     public static readonly SEARCH_PAGE_TITLE = "Search for an order";
-    public static readonly ERROR_PAGE_TITLE = "Service unavailable";
+
+    constructor(private globalPageFactory: GlobalPageFactory) {
+    }
 
     public buildInitialSearchPage(): ViewModel {
         const page = new SearchPage(PageFactory.SEARCH_PAGE_TITLE);
@@ -30,9 +33,11 @@ export class PageFactory {
         return page.render();
     }
 
-    public buildServiceUnavailable(): ViewModel {
-        const page = new SearchPage(PageFactory.ERROR_PAGE_TITLE);
-        page.add(new ServiceUnavailableComponent());
-        return page.render();
+    buildServiceUnavailable(): ViewModel {
+        return this.globalPageFactory.buildServiceUnavailable();
+    }
+
+    buildUnauthorised(): ViewModel {
+        return this.globalPageFactory.buildUnauthorised();
     }
 }
