@@ -1,6 +1,4 @@
 import {AuthenticationMiddleware} from "../../src/security/AuthenticationMiddleware";
-import {SessionKey} from "@companieshouse/node-session-handler/lib/session/keys/SessionKey";
-import {SignInInfoKeys} from "@companieshouse/node-session-handler/lib/session/keys/SignInInfoKeys";
 
 describe("AuthenticationMiddleware", () => {
     it("Passes the request to the next middleware handler if user is authenticated", async () => {
@@ -8,12 +6,13 @@ describe("AuthenticationMiddleware", () => {
         const authenticationMiddleware = new AuthenticationMiddleware();
         const nextFunction = jest.fn();
         const request = {
-            session: {
-                data: {
-                    [SessionKey.SignInInfo]: {
-                        [SignInInfoKeys.SignedIn]: 1
-                    }
-                }
+            orderAdminSession: {
+                isUserSignedIn: jest.fn(() => {
+                    return true;
+                }),
+                getUserId: jest.fn(() => {
+                    return "F00DFACE"
+                })
             }
         };
 
@@ -22,12 +21,19 @@ describe("AuthenticationMiddleware", () => {
 
         // then
         expect(nextFunction).toHaveBeenCalled();
+        expect(request.orderAdminSession.isUserSignedIn).toHaveBeenCalled();
+        expect(request.orderAdminSession.getUserId).toHaveBeenCalled();
     });
 
     it("Redirects the user agent to the sign in page if user is unauthenticated", async () => {
         // given
         const authenticationMiddleware = new AuthenticationMiddleware();
         const request: any = {
+            orderAdminSession: {
+                isUserSignedIn: jest.fn(() => {
+                    return false;
+                })
+            },
             path: "/path/to/service"
         };
         const redirector = jest.fn();
@@ -41,6 +47,7 @@ describe("AuthenticationMiddleware", () => {
 
         // then
         expect(redirector).toHaveBeenCalledWith("/signin?return_to=/path/to/service");
+        expect(request.orderAdminSession.isUserSignedIn).toHaveBeenCalled();
         expect(nextFunction).toHaveBeenCalledTimes(0);
     });
 });

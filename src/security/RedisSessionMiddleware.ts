@@ -6,6 +6,7 @@ import "reflect-metadata";
 import "@companieshouse/node-session-handler/lib/session/store/SessionStore";
 import "../config/ApplicationCookieConfig";
 import Redis from "ioredis";
+import {SessionModel} from "../session/SessionModel";
 
 @Service()
 export class RedisSessionMiddleware implements Middlewareable {
@@ -16,6 +17,8 @@ export class RedisSessionMiddleware implements Middlewareable {
     }
 
     public async handler(req: Request, res: Response, next: NextFunction): Promise<void> {
-        await this.sessionMiddleware(req, res, next);
+        await this.sessionMiddleware(req, res, () => {});
+        req.orderAdminSession = new SessionModel(req.session);
+        next();
     }
 }
