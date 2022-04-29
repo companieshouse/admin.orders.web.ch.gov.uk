@@ -30,4 +30,11 @@ export class SessionModel {
             [SignInInfoKeys.UserProfile]?.
             [UserProfileKeys.UserId] || "";
     }
+
+    getAccessToken(): string {
+        return this.session?.data?.
+            [SessionKey.SignInInfo]?.
+            [SignInInfoKeys.AccessToken]?.
+            [SignInInfoKeys.AccessToken] || "";
+    }
 }
