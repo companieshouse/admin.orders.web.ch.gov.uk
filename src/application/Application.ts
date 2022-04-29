@@ -18,6 +18,7 @@ export class Application {
     private readonly express: Express = express();
     private readonly router: Router = Router();
     private readonly routerBindings: Process[] = [];
+    private readonly middlewareBindings: Process[] = [];
     private readonly requestedPort: number;
     private server: Server | null = null;
 
@@ -53,6 +54,7 @@ export class Application {
         });
 
         // Late binding to router middleware must occur after application middleware binding
+        this.middlewareBindings.forEach(middlewareBinding => middlewareBinding());
         this.routerBindings.forEach(routerBinding => routerBinding());
 
         // Create HTTP server.
@@ -68,10 +70,11 @@ export class Application {
     public bindGet(uriPath: string, handlerFunction: HandlerFunction, applicationMiddlewareables: Middlewareable[]): void {
         // Bind path to application middleware
         for (let applicationMiddlewareable of applicationMiddlewareables) {
-            this.express.get(uriPath, applicationMiddlewareable.handler);
+            this.middlewareBindings.push(() => {
+                this.router.get(uriPath, applicationMiddlewareable.handler.bind(applicationMiddlewareable));
+            });
         }
 
-        // NB: router middleware must be bound last after all application middleware; i.e. in start() above.
         this.routerBindings.push(() => {
             this.router.get(uriPath, handlerFunction);
         });
@@ -81,7 +84,9 @@ export class Application {
     public bindPost(uriPath: string, handlerFunction: HandlerFunction, applicationMiddlewareables: Middlewareable[]): void {
         // Bind path to application middleware
         for (let applicationMiddlewareable of applicationMiddlewareables) {
-            this.express.post(uriPath, applicationMiddlewareable.handler);
+            this.middlewareBindings.push(() => {
+                this.router.post(uriPath, applicationMiddlewareable.handler.bind(applicationMiddlewareable));
+            });
         }
 
         // NB: router middleware must be bound last after all application middleware; i.e. in start() above.
