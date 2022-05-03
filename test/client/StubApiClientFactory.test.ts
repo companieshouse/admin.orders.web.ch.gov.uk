@@ -11,7 +11,7 @@ describe("StubApiClientFactory", () => {
             "greeting": "hello"
         };
         factory.willReturnSuccessfulResponse(expectedResponse);
-        const client = factory.newApiClient();
+        const client = factory.newApiClient("F00DFACE");
 
         // when
         const result = await client.orderSearchService.search({ pageSize: 1000 }) as Success<ApiResponse<SearchResponse>, ApiErrorResponse>;
@@ -30,7 +30,7 @@ describe("StubApiClientFactory", () => {
             "greeting": "hello"
         };
         factory.willReturnFailureResponse(400, expectedResponse);
-        const client = factory.newApiClient();
+        const client = factory.newApiClient("F00DFACE");
 
         // when
         const result = await client.orderSearchService.search({ pageSize: 1000 }) as Failure<ApiResponse<SearchResponse>, ApiErrorResponse>;
@@ -45,7 +45,7 @@ describe("StubApiClientFactory", () => {
     it("Returns a default response if no stubbing performed", async () => {
         // given
         const factory = new StubApiClientFactory();
-        const client = factory.newApiClient();
+        const client = factory.newApiClient("F00DFACE");
 
         // when
         const result = await client.orderSearchService.search({ pageSize: 1000 }) as Success<ApiResponse<SearchResponse>, ApiErrorResponse>;

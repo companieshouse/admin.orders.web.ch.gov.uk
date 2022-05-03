@@ -1,44 +1,39 @@
 import {DefaultApiClientFactory} from "../../src/client/ApiClientFactory";
+import {ApiClientConfiguration} from "../../src/config/ApiClientConfiguration";
 
 describe("DefaultApiClientFactory", () => {
-    it("Constructs a new ApiClient instance using apiUrl and apiKey field values", () => {
+    it("Constructs a new ApiClient instance using a valid base url and token", () => {
         // given
         const expectedBaseUrl = "http://0.0.0.0";
-        const expectedApiKey = "F00DFACE";
-        const factory = new DefaultApiClientFactory(expectedBaseUrl, expectedApiKey);
+        const expectedToken = "F00DFACE";
+        const factory = new DefaultApiClientFactory(new ApiClientConfiguration(expectedBaseUrl));
 
         // when
-        const actual = factory.newApiClient();
+        const actual = factory.newApiClient(expectedToken);
         const apiClient: any = actual.apiClient;
 
         // then
         expect(apiClient.options.baseUrl).toEqual(expectedBaseUrl);
-        expect(apiClient.options.apiKey).toEqual(expectedApiKey);
+        expect(apiClient.headers["Authorization"]).toEqual(`Bearer ${expectedToken}`);
     });
 
-    it("Constructs a new ApiClient instance using environment variables as default values", () => {
+    it("Throws an error if no base url specified", () => {
         // given
-        process.env.API_URL = "http://localhost";
-        process.env.CHS_API_KEY = "API_KEY";
-        const factory = new DefaultApiClientFactory();
+        const factory = new DefaultApiClientFactory(new ApiClientConfiguration(""));
 
         // when
-        const actual = factory.newApiClient();
-        const apiClient: any = actual.apiClient;
+        const execution = () => factory.newApiClient("");
 
         // then
-        expect(apiClient.options.baseUrl).toEqual("http://localhost");
-        expect(apiClient.options.apiKey).toEqual("API_KEY");
+        expect(execution).toThrowError();
     });
 
-    it("Throws an error if apiUrl or apiKey are falsy", () => {
+    it("Throws an error if no token specified", () => {
         // given
-        process.env.API_URL = "";
-        process.env.CHS_API_KEY = "";
-        const factory = new DefaultApiClientFactory();
+        const factory = new DefaultApiClientFactory(new ApiClientConfiguration("http://0.0.0.0"));
 
         // when
-        const execution = () => factory.newApiClient();
+        const execution = () => factory.newApiClient("");
 
         // then
         expect(execution).toThrowError();

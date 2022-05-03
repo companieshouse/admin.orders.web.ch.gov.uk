@@ -68,7 +68,7 @@ describe("OrderSearchService", () => {
         const service = new OrderSearchService(apiClientFactory, resultsMapper);
 
         // when
-        const result = await service.findOrders(new OrderSearchParameters(new SearchCriteria("ORD-123123-123123", "demo@ch.gov.uk", "12345678"), 1000));
+        const result = await service.findOrders(new OrderSearchParameters(new SearchCriteria(1000, "ORD-123123-123123", "demo@ch.gov.uk", "12345678"), "F00DFACE"));
 
         // then
         expect(result).toBe(mappedResults);

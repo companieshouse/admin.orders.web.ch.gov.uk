@@ -1,6 +1,5 @@
 import {PageFactory} from "../../src/search/PageFactory";
 import {ViewModel} from "../../src/core/ViewModel";
-import {OrderSearchParameters} from "../../src/search/OrderSearchParameters";
 import {SearchResults} from "../../src/search/SearchResults";
 import {Status} from "../../src/core/Status";
 import {GlobalPageFactory} from "../../src/core/GlobalPageFactory";
@@ -31,10 +30,7 @@ describe("PageFactory", () => {
         const searchCriteria = {
             id: "ORD-123123-123123",
             email: "demo@ch.gov.uk",
-            companyNumber: "12345678"
-        };
-        const searchParameters: OrderSearchParameters = {
-            searchCriteria: searchCriteria,
+            companyNumber: "12345678",
             pageSize: 5
         };
         const orderSummary = {
@@ -55,7 +51,7 @@ describe("PageFactory", () => {
         };
 
         // when
-        const actual = pageFactory.buildSearchPageWithResults(searchParameters, searchResults);
+        const actual = pageFactory.buildSearchPageWithResults(searchCriteria, searchResults);
 
         // then
         expect(actual).toEqual(new ViewModel("page", [
@@ -78,10 +74,7 @@ describe("PageFactory", () => {
         const searchCriteria = {
             id: "ORD-123123-123123",
             email: "demo@ch.gov.uk",
-            companyNumber: "12345678"
-        };
-        const searchParameters: OrderSearchParameters = {
-            searchCriteria: searchCriteria,
+            companyNumber: "12345678",
             pageSize: 5
         };
         const searchResults: SearchResults = {
@@ -91,7 +84,7 @@ describe("PageFactory", () => {
         };
 
         // when
-        const actual = pageFactory.buildSearchPageWithResults(searchParameters, searchResults);
+        const actual = pageFactory.buildSearchPageWithResults(searchCriteria, searchResults);
 
         // then
         expect(actual).toEqual(new ViewModel("page", [
