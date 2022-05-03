@@ -7,7 +7,7 @@ import {GlobalPageFactory} from "../core/GlobalPageFactory";
 
 @Service()
 export class AuthorisationMiddleware implements Middlewareable {
-    private static readonly logger = createLogger("AuthenticationMiddleware");
+    private static readonly logger = createLogger("AuthorisationMiddleware");
 
     constructor(private pageFactory: GlobalPageFactory) {
     }
