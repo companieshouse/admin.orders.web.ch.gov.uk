@@ -3,3 +3,12 @@
 
 // the govuk frontend
 @import "../../../node_modules/govuk-frontend/govuk/all";
+
+.sign-out-link {
+    display: block;
+    float: right;
+}
+
+.sign-out-divider {
+    clear: right;
+}
