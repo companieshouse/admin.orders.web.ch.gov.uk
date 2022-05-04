@@ -3,6 +3,7 @@ import {Service} from "typedi";
 import "reflect-metadata";
 import {Builder, By, WebDriver} from "selenium-webdriver";
 import {SearchResultsRow, SearchResultsTable} from "./SearchResultsTable";
+import { URL } from "url";
 
 @Service("selenium")
 export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
@@ -109,5 +110,14 @@ export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
         }
         const element = await this.driver.findElement(By.css(selector));
         return await element.getAttribute("value");
+    }
+
+    public async getLocation(): Promise<string> {
+        if (this.driver == null) {
+            throw new Error("Driver not started");
+        }
+        const url = await this.driver.getCurrentUrl();
+        const urlModel = new URL(url);
+        return urlModel.pathname;
     }
 }

@@ -15,6 +15,7 @@ export class Registrar {
     }
 
     public start(): void {
+        this.app.bindGet("/signout", async (req, res, next): Promise<void> => { res.status(200).send(); }, []);
         this.app.bindGet(this.serverPaths.webContextPath + "/search", this.searchController.handleGet.bind(this.searchController), this.middlewareProvider.middlewareables);
         this.app.bindPost(this.serverPaths.webContextPath + "/search", this.searchController.handlePost.bind(this.searchController), this.middlewareProvider.middlewareables);
         this.app.start();

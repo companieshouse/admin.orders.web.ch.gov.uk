@@ -62,6 +62,13 @@ export interface BrowserAgent {
      * @throws {Error} If the element cannot be found.
      */
     getFieldValue(selector: string): Promise<string>;
+
+    /**
+     * Returns the current location of the browser agent.
+     *
+     * @returns {Promise<string>} The path of the browser agent's current location.
+     */
+    getLocation(): Promise<string>;
 }
 
 /**

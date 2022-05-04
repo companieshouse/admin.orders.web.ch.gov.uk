@@ -25,3 +25,8 @@ Feature: Orders search page
     And   Orders API will return an error
     When  I click search
     Then  The service unavailable page should be displayed
+
+  Scenario: User signout
+    Given I have opened the search orders page
+    When I click sign out
+    Then I should be taken to the signout handler

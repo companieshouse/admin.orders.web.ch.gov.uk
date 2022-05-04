@@ -99,4 +99,13 @@ export class ZombieBrowserAgent implements BrowserAgent, AgentService {
         const element = await this.browser.querySelector(selector);
         return element.value;
     }
+
+    async getLocation(): Promise<string> {
+        if (this.browser == null) {
+            throw new Error("Driver not started");
+        }
+        const url = this.browser.location.href;
+        const urlModel = new URL(url);
+        return urlModel.pathname;
+    }
 }
