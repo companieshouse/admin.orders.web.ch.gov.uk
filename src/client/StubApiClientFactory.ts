@@ -57,7 +57,7 @@ export class StubApiClientFactory implements ApiClientFactory {
         });
     }
 
-    newApiClient(): ApiClient {
+    newApiClient(token: string): ApiClient {
         const self = this;
         return {
             orderSearchService: {

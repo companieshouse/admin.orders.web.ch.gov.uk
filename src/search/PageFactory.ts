@@ -5,10 +5,10 @@ import {SearchResultComponent} from "./SearchResultComponent";
 import {Service} from "typedi";
 import "reflect-metadata";
 import {ViewModel} from "../core/ViewModel";
-import {OrderSearchParameters} from "./OrderSearchParameters";
 import {SearchResults} from "./SearchResults";
 import {GlobalPageFactory} from "../core/GlobalPageFactory";
 import {ErrorPageBuildable} from "../core/ErrorPageBuildable";
+import {SearchCriteria} from "./SearchCriteria";
 
 @Service()
 export class PageFactory implements ErrorPageBuildable {
@@ -23,9 +23,9 @@ export class PageFactory implements ErrorPageBuildable {
         return page.render();
     }
 
-    public buildSearchPageWithResults(searchParameters: OrderSearchParameters, results: SearchResults): ViewModel {
+    public buildSearchPageWithResults(searchCriteria: SearchCriteria, results: SearchResults): ViewModel {
         const page = new SearchPage(PageFactory.SEARCH_PAGE_TITLE);
-        const searchControls = new SearchComponent(searchParameters.searchCriteria);
+        const searchControls = new SearchComponent(searchCriteria);
         const resultEntries = results.orderSummaries.map(result => new SearchResultComponent(result));
         const resultsViewContainer = new SearchResultsComponent(resultEntries, results.totalOrders);
         page.add(searchControls);

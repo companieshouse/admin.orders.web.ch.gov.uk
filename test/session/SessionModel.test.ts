@@ -109,4 +109,39 @@ describe("SessionModel", () => {
         // then
         expect(actual).toEqual("");
     });
+
+    it("Returns the user's access token", () => {
+        // given
+        const session = new Session({
+            [SessionKey.SignInInfo]: {
+                [SignInInfoKeys.AccessToken]: {
+                    [SignInInfoKeys.AccessToken]: "F00DFACE"
+                }
+            }
+        });
+        const sessionModel = new SessionModel(session);
+
+        // when
+        const actual = sessionModel.getAccessToken();
+
+        // then
+        expect(actual).toEqual("F00DFACE");
+    });
+
+    it("Returns an empty string if access token nonexistent", () => {
+        // given
+        const session = new Session({
+            [SessionKey.SignInInfo]: {
+                [SignInInfoKeys.AccessToken]: {
+                }
+            }
+        });
+        const sessionModel = new SessionModel(session);
+
+        // when
+        const actual = sessionModel.getAccessToken();
+
+        // then
+        expect(actual).toEqual("");
+    });
 });

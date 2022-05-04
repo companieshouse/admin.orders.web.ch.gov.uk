@@ -9,7 +9,7 @@ import "../security/MiddlewareProvider";
 @Service()
 export class Registrar {
     constructor(private readonly app: Application,
-                @Inject(process.env.MIDDLEWARE_PROVIDER || "production.middleware") private readonly middlewareProvider: MiddlewareProvider,
+                @Inject((process.env.ADMIN_ORDERS_DEVELOPMENT_MODE === "true" ? "noop.middleware" : "production.middleware")) private readonly middlewareProvider: MiddlewareProvider,
                 private readonly serverPaths: ServerPaths,
                 private readonly searchController: SearchController) {
     }

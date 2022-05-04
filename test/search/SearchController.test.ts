@@ -57,23 +57,31 @@ describe("SearchController", () => {
         const request: any = {
             body: {
                 orderNumber: "ORD-123123-123123"
+            },
+            orderAdminSession: {
+                getAccessToken: jest.fn(() => {
+                    return "F00DFACE";
+                })
             }
         };
         const response: any = {};
         response.render = jest.fn();
-        const expectedSearchCriteria = new SearchCriteria("ORD-123123-123123");
-        const expectedSearchParameters = new OrderSearchParameters(expectedSearchCriteria, 1000)
+        const expectedSearchCriteria = new SearchCriteria(1000, "ORD-123123-123123");
+        const expectedSearchParameters = new OrderSearchParameters(expectedSearchCriteria, "F00DFACE");
         const controller = new SearchController(serviceProvider, pageFactory);
+        const nextFunction = jest.fn();
 
         // when
-        await controller.handlePost(request, response, {} as NextFunction);
+        await controller.handlePost(request, response, nextFunction);
 
         // then
+        expect(request.orderAdminSession.getAccessToken).toHaveBeenCalled();
         expect(service.findOrders).toHaveBeenCalledWith(expectedSearchParameters);
-        expect(pageFactory.buildSearchPageWithResults).toHaveBeenCalledWith(expectedSearchParameters, expectedResults);
+        expect(pageFactory.buildSearchPageWithResults).toHaveBeenCalledWith(expectedSearchCriteria, expectedResults);
         expect(response.render).toHaveBeenCalledWith("template1", {
             control: expectedViewModel
         });
+        expect(nextFunction).toHaveBeenCalledTimes(0);
     });
 
     it("Renders service unavailable if error returned by service", async () => {
@@ -92,17 +100,30 @@ describe("SearchController", () => {
                 status: Status.SERVER_ERROR
             };
         });
+        const expectedSearchParameters = new OrderSearchParameters({} as SearchCriteria, "F00DFACE");
         const controller = new SearchController(serviceProvider, pageFactory);
+        const request: any = {
+            body: {},
+            orderAdminSession: {
+                getAccessToken: jest.fn(() => {
+                    return "F00DFACE";
+                })
+            }
+        }
         const response: any = {};
         response.render = jest.fn();
+        const nextFunction = jest.fn();
 
         // when
-        await controller.handlePost({body: {}} as any, response, {} as any);
+        await controller.handlePost(request, response, nextFunction);
 
         // then
+        expect(request.orderAdminSession.getAccessToken).toHaveBeenCalled();
+        expect(service.findOrders).toHaveBeenCalledWith(expectedSearchParameters);
         expect(pageFactory.buildServiceUnavailable).toHaveBeenCalled();
         expect(response.render).toHaveBeenCalledWith("template1", {
             control: expectedViewModel
         });
+        expect(nextFunction).toHaveBeenCalledTimes(0);
     });
 })

@@ -34,12 +34,14 @@ export class SearchController {
 
     public async handlePost(req: Request, res: Response, next: NextFunction): Promise<void> {
         SearchController.logger.trace("POST request received");
-        const searchCriteria = new OrderSearchParameters(new SearchCriteria(
+        const searchCriteria = new SearchCriteria(
+            this.limit,
             req.body.orderNumber,
             req.body.email,
             req.body.companyNumber
-        ), this.limit);
-        const results = await this.service.findOrders(searchCriteria);
+        );
+        const searchParameters = new OrderSearchParameters(searchCriteria, req.orderAdminSession?.getAccessToken() || "");
+        const results = await this.service.findOrders(searchParameters);
         if (results.status !== Status.SUCCESS) {
             const model = this.pageFactory.buildServiceUnavailable();
             res.render(model.template, {
