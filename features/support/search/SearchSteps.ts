@@ -82,6 +82,11 @@ export class SearchSteps {
         await this.currentPage.clickSearch();
     }
 
+    @when(/^I click sign out$/)
+    public async clickSignOut(): Promise<void> {
+        await this.currentPage.clickSignOut();
+    }
+
     @then(/^The search criteria should be preserved$/)
     public async verifySearchCriteriaPreserved(): Promise<void> {
         await this.currentPage.verifySearchCriteriaPreserved();
@@ -97,6 +102,11 @@ export class SearchSteps {
     public async verifyResults(results: DataTable): Promise<void> {
         await this.currentPage.verifyLayout();
         await this.currentPage.verifyMatchingOrdersDisplayed(results.rows());
+    }
+
+    @then(/^I should be taken to the signout handler$/)
+    public async verifySignInHandler() {
+        await this.currentPage.verifyLocation("/signout");
     }
 
     public getValue(key: string): string {

@@ -16,9 +16,11 @@ export interface SearchPage {
     harnessOrdersApiWithNoResults(): void;
     harnessOrdersApiWithError(): void;
     clickSearch(): Promise<void>;
+    clickSignOut(): Promise<void>;
     verifyLayout(): Promise<void>;
     verifyMatchingOrdersDisplayed(results: string[][]): Promise<void>;
     verifySearchCriteriaPreserved(): Promise<void>;
+    verifyLocation(path: string): Promise<void>;
 }
 
 export abstract class AbstractSearchPage implements SearchPage {
@@ -27,6 +29,10 @@ export abstract class AbstractSearchPage implements SearchPage {
 
     clickSearch(): Promise<void> {
         throw new Error("Invalid operation");
+    }
+
+    async clickSignOut(): Promise<void> {
+        await this.interactor.clickElement(".sign-out-link");
     }
 
     enterCompanyNumber(text: string): Promise<void> {
@@ -55,6 +61,11 @@ export abstract class AbstractSearchPage implements SearchPage {
 
     verifySearchCriteriaPreserved(): Promise<void> {
         throw new Error("Invalid operation");
+    }
+
+    async verifyLocation(path: string): Promise<void> {
+        const location = await this.interactor.getLocation();
+        expect(location).to.equal(path);
     }
 
     harnessOrdersApiWithError(): void {

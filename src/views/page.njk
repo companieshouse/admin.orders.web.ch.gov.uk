@@ -32,7 +32,9 @@
 {% block pageTitle %}
     {{ control.data.title }}
 {% endblock %}
-
+{% block beforeContent %}
+    {% include "logout.njk" %}
+{% endblock %}
 {% block content %}
     {% for control in control.controls %}
         {% include control.template %}
