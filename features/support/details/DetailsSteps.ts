@@ -80,7 +80,7 @@ export class DetailsSteps {
         await this.currentPage.validateLocation(path);
     }
 
-    @then(/^Not found should be displayed$/)
+    @then(/^Not found should be displayed (Invalid)$/)
     async validateInvalidOrderError(): Promise<void> {
         await this.currentPage.validateInvalidOrderError();
     }

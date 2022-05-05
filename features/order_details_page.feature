@@ -16,7 +16,7 @@ Feature: View order details
   Scenario: Invalid order
     Given The checkout endpoint will return an order that is not a paid certificate
     When I view order details
-    Then Not found should be displayed
+    Then Not found should be displayed (Invalid)
 
   Scenario: Order not found
     Given The checkout endpoint will return HTTP 404 Not Found
