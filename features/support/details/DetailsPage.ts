@@ -9,7 +9,7 @@ export interface DetailsPage {
     anticipateValidOrder(): Promise<void>;
     anticipateInvalidOrder(): void;
     anticipateOrderNotFound(): void;
-    anticipateServiceUnavailable(): Promise<void>;
+    anticipateServiceUnavailable(): void;
     clickBrowserBack(): Promise<void>;
     validateOrderDetails(data: string[][]): Promise<void>;
     validateDeliveryDetails(data: string[][]): Promise<void>;
@@ -40,7 +40,7 @@ export abstract class AbstractDetailsPage implements DetailsPage {
         throw new Error("Invalid operation");
     }
 
-    anticipateServiceUnavailable(): Promise<void> {
+    anticipateServiceUnavailable(): void {
         throw new Error("Invalid operation");
     }
 
@@ -101,8 +101,9 @@ export class DetailsPageNotLoaded extends AbstractDetailsPage {
         this.detailsSteps.currentPage = this.detailsSteps.detailsPageNotFound;
     }
 
-    anticipateServiceUnavailable(): Promise<void> {
-        throw new Error("Invalid operation");
+    anticipateServiceUnavailable(): void {
+        this.apiClientFactory.willReturnFailureResponse(503, failureJson);
+        this.detailsSteps.currentPage = this.detailsSteps.detailsPageServiceUnavailable;
     }
 }
 
@@ -159,7 +160,8 @@ export class DetailsPageServiceUnavailable extends AbstractDetailsPage {
         super(detailsSteps, browserAgent, apiClientFactory);
     }
 
-    validateServiceUnavailableError(): Promise<void> {
-        throw new Error("Invalid operation");
+    public async validateServiceUnavailableError(): Promise<void> {
+        const headingText = await this.browserAgent.getElementText("h1");
+        expect(headingText).to.equal("Sorry, this service is unavailable");
     }
 }
