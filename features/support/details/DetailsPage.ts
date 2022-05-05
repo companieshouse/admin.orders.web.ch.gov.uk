@@ -7,7 +7,7 @@ import { expect } from "chai";
 export interface DetailsPage {
     openPage(): Promise<void>;
     anticipateValidOrder(): Promise<void>;
-    anticipateInvalidOrder(): Promise<void>;
+    anticipateInvalidOrder(): void;
     anticipateOrderNotFound(): void;
     anticipateServiceUnavailable(): Promise<void>;
     clickBrowserBack(): Promise<void>;
@@ -32,7 +32,7 @@ export abstract class AbstractDetailsPage implements DetailsPage {
         throw new Error("Invalid operation");
     }
 
-    anticipateInvalidOrder(): Promise<void> {
+    anticipateInvalidOrder(): void {
         throw new Error("Invalid operation");
     }
 
@@ -91,8 +91,9 @@ export class DetailsPageNotLoaded extends AbstractDetailsPage {
         throw new Error("Invalid operation");
     }
 
-    anticipateInvalidOrder(): Promise<void> {
-        throw new Error("Invalid operation");
+    anticipateInvalidOrder(): void {
+        this.apiClientFactory.willReturnFailureResponse(404, failureJson);
+        this.detailsSteps.currentPage = this.detailsSteps.detailsPageInvalidOrder;
     }
 
     anticipateOrderNotFound(): void {
@@ -132,8 +133,11 @@ export class DetailsPageInvalidOrder extends AbstractDetailsPage {
         super(detailsSteps, browserAgent, apiClientFactory);
     }
 
-    validateInvalidOrderError(): Promise<void> {
-        throw new Error("Invalid operation");
+    public async validateInvalidOrderError(): Promise<void> {
+        const headingText = await this.browserAgent.getElementText("h1");
+        const bodyText = await this.browserAgent.getElementText("#invalid-not-found-body");
+        expect(headingText).to.equal("This page cannot be found");
+        expect(bodyText).to.equal("Check that you have entered the correct web address or try using the search.");
     }
 }
 
