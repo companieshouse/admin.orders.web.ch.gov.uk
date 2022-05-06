@@ -22,27 +22,33 @@ export class OrderDetailsMapper {
                 status: Status.SUCCESS,
                 model: {
                     orderNumber: response.value.resource?.reference,
-                    orderedBy: response.value.resource?.checkedOutBy.email,
-                    companyName: item?.companyName,
-                    companyNumber: item?.companyNumber,
-                    certificateType: this.mapCertificateType(itemOptions.certificateType),
-                    statementOfGoodStanding: this.isOptionSelected(itemOptions.includeGoodStandingInformation),
-                    registeredOfficeAddress: this.mapAddressOption(itemOptions.registeredOfficeAddressDetails?.includeAddressRecordsType),
-                    principalPlaceOfBusiness: this.mapAddressOption(itemOptions.principalPlaceOfBusinessDetails?.includeAddressRecordsType),
-                    directors: this.mapDirectorOptions(itemOptions.directorDetails),
-                    secretaries: this.mapSecretaryOptions(itemOptions.secretaryDetails),
-                    designatedMembers: this.mapMembersOptions("Including designated members':", itemOptions.designatedMemberDetails),
-                    members: this.mapMembersOptions("Including members':", itemOptions.memberDetails),
-                    generalPartners: this.isOptionSelected(itemOptions.generalPartnerDetails?.includeBasicInformation),
-                    limitedPartners: this.isOptionSelected(itemOptions.limitedPartnerDetails?.includeBasicInformation),
-                    generalNatureOfBusiness: this.isOptionSelected(itemOptions.includeGeneralNatureOfBusinessInformation),
-                    companyObjects: this.isOptionSelected(itemOptions.includeCompanyObjectsInformation),
-                    liquidators: this.isOptionSelected(itemOptions.liquidatorsDetails?.includeBasicInformation),
-                    administrators: this.isOptionSelected(itemOptions.administratorsDetails?.includeBasicInformation),
-                    deliveryMethod: this.mapDeliveryMethod(itemOptions),
-                    deliveryDetails: this.mapDeliveryDetails(response.value.resource?.deliveryDetails),
-                    paymentReference: response.value.resource?.paymentReference,
-                    fee: this.prependCurrencySymbol(response.value.resource?.totalOrderCost)
+                    certificateDetails: {
+                        orderedBy: response.value.resource?.checkedOutBy.email,
+                        companyName: item?.companyName,
+                        companyNumber: item?.companyNumber,
+                        certificateType: this.mapCertificateType(itemOptions.certificateType),
+                        statementOfGoodStanding: this.isOptionSelected(itemOptions.includeGoodStandingInformation),
+                        registeredOfficeAddress: this.mapAddressOption(itemOptions.registeredOfficeAddressDetails?.includeAddressRecordsType),
+                        principalPlaceOfBusiness: this.mapAddressOption(itemOptions.principalPlaceOfBusinessDetails?.includeAddressRecordsType),
+                        directors: this.mapDirectorOptions(itemOptions.directorDetails),
+                        secretaries: this.mapSecretaryOptions(itemOptions.secretaryDetails),
+                        designatedMembers: this.mapMembersOptions("Including designated members':", itemOptions.designatedMemberDetails),
+                        members: this.mapMembersOptions("Including members':", itemOptions.memberDetails),
+                        generalPartners: this.isOptionSelected(itemOptions.generalPartnerDetails?.includeBasicInformation),
+                        limitedPartners: this.isOptionSelected(itemOptions.limitedPartnerDetails?.includeBasicInformation),
+                        generalNatureOfBusiness: this.isOptionSelected(itemOptions.includeGeneralNatureOfBusinessInformation),
+                        companyObjects: this.isOptionSelected(itemOptions.includeCompanyObjectsInformation),
+                        liquidators: this.isOptionSelected(itemOptions.liquidatorsDetails?.includeBasicInformation),
+                        administrators: this.isOptionSelected(itemOptions.administratorsDetails?.includeBasicInformation),
+                    },
+                    deliveryInfo: {
+                        deliveryMethod: this.mapDeliveryMethod(itemOptions),
+                        deliveryDetails: this.mapDeliveryDetails(response.value.resource?.deliveryDetails),
+                    },
+                    paymentDetails: {
+                        paymentReference: response.value.resource?.paymentReference,
+                        fee: this.prependCurrencySymbol(response.value.resource?.totalOrderCost)
+                    }
                 } as OrderDetails
             } as OrderDetailsResults;
         } else {
