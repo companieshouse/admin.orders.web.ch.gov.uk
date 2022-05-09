@@ -1,6 +1,7 @@
 import { GlobalPageFactory } from "../../src/core/GlobalPageFactory";
 import { Status } from "../../src/core/Status";
 import { ViewModel } from "../../src/core/ViewModel";
+import { optionFilter } from "../../src/orderdetails/OptionFilter";
 import { OrderDetails } from "../../src/orderdetails/OrderDetails";
 import { OrderDetailsResults } from "../../src/orderdetails/OrderDetailsResults";
 import { PageFactory } from "../../src/orderdetails/PageFactory";
@@ -49,6 +50,7 @@ describe("PageFactory", () => {
                 statementOfGoodStanding: "Yes",
                 registeredOfficeAddress: "Current address",
                 designatedMembers: "Including designated members':<br><br>Appointment date<br>",
+                optionFilter: optionFilter
             }),
             new ViewModel("orderDetails/delivery_details_component.njk", [], {
                 deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",

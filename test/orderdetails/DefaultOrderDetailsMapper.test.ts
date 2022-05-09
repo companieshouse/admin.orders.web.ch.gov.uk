@@ -4,8 +4,9 @@ import { Status } from "../../src/core/Status";
 import { Checkout } from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
 import { OrderDetailsMapper } from "../../src/orderdetails/OrderDetailsMapper";
 import { OrderDetails } from "../../src/orderdetails/OrderDetails";
+import { DefaultOrderDetailsMapper } from "../../src/orderdetails/DefaultOrderDetailsMapper";
 
-describe("OrderDetailsMapper", () => {
+describe("DefaultOrderDetailsMapper", () => {
     it("Maps a successful response for default company details", () => {
         // given
         const serverResponse = new Success<ApiResponse<Checkout>, ApiErrorResponse>({
@@ -63,7 +64,9 @@ describe("OrderDetailsMapper", () => {
                                 includeAddressRecordsType: "current"
                             },
                             secretaryDetails: {
-                                includeBasicInformation: true
+                                includeBasicInformation: true,
+                                includeAddress: false,
+                                includeAppointmentDate: false
                             }
                         },
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
@@ -93,7 +96,7 @@ describe("OrderDetailsMapper", () => {
                 }
             }
         });
-        const mapper = new OrderDetailsMapper();
+        const mapper = new DefaultOrderDetailsMapper();
 
         // when
         const result = mapper.map(serverResponse);
@@ -113,7 +116,14 @@ describe("OrderDetailsMapper", () => {
                     registeredOfficeAddress: "Current address",
                     directors: "Including directors':<br><br>Occupation<br>Nationality<br>",
                     secretaries: "Yes",
-                    companyObjects: "Yes"
+                    companyObjects: "Yes",
+                    liquidators: "No",
+                    administrators: "No",
+                    filterMappings: {
+                        administrators: false,
+                        liquidators: false,
+                        statementOfGoodStanding: true
+                    }
                 },
                 deliveryInfo: {
                     deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
@@ -127,7 +137,7 @@ describe("OrderDetailsMapper", () => {
         });
     });
 
-    it("Maps a successful response for LLP company details", () => {
+    it("Maps a successful response for default company details no directors", () => {
         // given
         const serverResponse = new Success<ApiResponse<Checkout>, ApiErrorResponse>({
             httpStatusCode: 200,
@@ -173,16 +183,11 @@ describe("OrderDetailsMapper", () => {
                             forename: "John",
                             surname: "Test",
                             certificateType: "incorporation-with-all-name-changes",
-                            designatedMemberDetails: {
-                                includeBasicInformation: true,
-                                includeAppointmentDate: true
-                            },
-                            includeGoodStandingInformation: true,
                             registeredOfficeAddressDetails: {
                                 includeAddressRecordsType: "current"
                             },
-                            memberDetails: {
-                            }
+                            directorDetails: {},
+                            secretaryDetails: {}
                         },
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
@@ -211,7 +216,7 @@ describe("OrderDetailsMapper", () => {
                 }
             }
         });
-        const mapper = new OrderDetailsMapper();
+        const mapper = new DefaultOrderDetailsMapper();
 
         // when
         const result = mapper.map(serverResponse);
@@ -227,9 +232,18 @@ describe("OrderDetailsMapper", () => {
                     companyName: "TestDefault",
                     companyNumber: "TT000056",
                     certificateType: "Incorporation with all company name changes",
-                    statementOfGoodStanding: "Yes",
+                    statementOfGoodStanding: "No",
                     registeredOfficeAddress: "Current address",
-                    designatedMembers: "Including designated members':<br><br>Appointment date<br>",
+                    directors: "No",
+                    secretaries: "No",
+                    companyObjects: "No",
+                    liquidators: "No",
+                    administrators: "No",
+                    filterMappings: {
+                        administrators: false,
+                        liquidators: false,
+                        statementOfGoodStanding: true
+                    }
                 },
                 deliveryInfo: {
                     deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
@@ -243,7 +257,7 @@ describe("OrderDetailsMapper", () => {
         });
     });
 
-    it("Maps a successful response for limited partnership company details", () => {
+    it("Maps a successful response for default company in liquidation", () => {
         // given
         const serverResponse = new Success<ApiResponse<Checkout>, ApiErrorResponse>({
             httpStatusCode: 200,
@@ -282,18 +296,25 @@ describe("OrderDetailsMapper", () => {
                             }
                         ],
                         itemOptions: {
-                            companyStatus: "active",
-                            companyType: "limited partnerhship",
+                            companyStatus: "liquidation",
+                            companyType: "plc",
                             deliveryMethod: "postal",
                             deliveryTimescale: "standard",
                             forename: "John",
                             surname: "Test",
                             certificateType: "incorporation-with-all-name-changes",
-                            includeGoodStandingInformation: true,
-                            principalPlaceOfBusinessDetails: {
-                                includeAddressRecordsType: "current"
+                            registeredOfficeAddressDetails: {},
+                            directorDetails: {
+                                includeBasicInformation: true,
+                                includeAddress: false,
+                                includeAppointmentDate: false,
+                                includeCountryOfResidence: false,
+                                includeNationality: false,
+                                includeOccupation: false
                             },
-                            generalPartnerDetails: {
+                            secretaryDetails: {},
+                            includeCompanyObjectsInformation: true,
+                            liquidatorsDetails: {
                                 includeBasicInformation: true
                             }
                         },
@@ -324,7 +345,7 @@ describe("OrderDetailsMapper", () => {
                 }
             }
         });
-        const mapper = new OrderDetailsMapper();
+        const mapper = new DefaultOrderDetailsMapper();
 
         // when
         const result = mapper.map(serverResponse);
@@ -340,9 +361,141 @@ describe("OrderDetailsMapper", () => {
                     companyName: "TestDefault",
                     companyNumber: "TT000056",
                     certificateType: "Incorporation with all company name changes",
-                    statementOfGoodStanding: "Yes",
-                    principalPlaceOfBusiness: "Current address",
-                    generalPartners: "Yes",
+                    statementOfGoodStanding: "No",
+                    registeredOfficeAddress: "No",
+                    directors: "Yes",
+                    secretaries: "No",
+                    companyObjects: "Yes",
+                    liquidators: "Yes",
+                    administrators: "No",
+                    filterMappings: {
+                        administrators: false,
+                        liquidators: true,
+                        statementOfGoodStanding: false
+                    }
+                },
+                deliveryInfo: {
+                    deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
+                    deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
+                },
+                paymentDetails: {
+                    paymentReference: "somereference",
+                    fee: "£15"
+                }
+            } as OrderDetails
+        });
+    });
+
+    it("Maps a successful response for default company in administration", () => {
+        // given
+        const serverResponse = new Success<ApiResponse<Checkout>, ApiErrorResponse>({
+            httpStatusCode: 200,
+            resource: {
+                paidAt: "sometime",
+                paymentReference: "somereference",
+                etag: "133c845078fc928fc38d409b9ffd732b2356f594",
+                deliveryDetails: {
+                    poBox: "poBox",
+                    country: "UK",
+                    forename: "John",
+                    locality: "Cardiff",
+                    postalCode: "CF14 3UZ",
+                    region: "Cardiff",
+                    surname: "Test",
+                    addressLine1: "1 Crown Way",
+                    addressLine2: "Maindy"
+                },
+                items: [
+                    {
+                        id: "CRT-102416-028334",
+                        companyName: "TestDefault",
+                        companyNumber: "TT000056",
+                        description: "certificate for company TT000056",
+                        descriptionIdentifier: "certificate",
+                        descriptionValues: {
+                            certificate: "certificate for company TT000056",
+                            companyNumber: "TT000056"
+                        },
+                        itemCosts: [
+                            {
+                                discountApplied: "0",
+                                itemCost: "15",
+                                calculatedCost: "15",
+                                productType: "certificate"
+                            }
+                        ],
+                        itemOptions: {
+                            companyStatus: "administration",
+                            companyType: "plc",
+                            deliveryMethod: "postal",
+                            deliveryTimescale: "standard",
+                            forename: "John",
+                            surname: "Test",
+                            certificateType: "incorporation-with-all-name-changes",
+                            registeredOfficeAddressDetails: {},
+                            directorDetails: {},
+                            secretaryDetails: {
+                                includeBasicInformation: true,
+                                includeAddress: true,
+                                includeAppointmentDate: false
+                            },
+                            administratorsDetails: {}
+                        },
+                        etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
+                        kind: "item#certificate",
+                        links: {
+                            self: "/orderable/certificates/CRT-102416-028334"
+                        },
+                        quantity: 1,
+                        itemUri: "/orderable/certificates/CRT-102416-028334",
+                        status: "unknown",
+                        postageCost: "0",
+                        totalItemCost: "15",
+                        postalDelivery: true
+                    }
+                ],
+                kind: "order",
+                totalOrderCost: "15",
+                reference: "ORD-957216-028332",
+                checkedOutBy: {
+                    email: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
+                    id: "zXUYdFHZPxwoUcWVEWaoGJkEAfK"
+                },
+                status: "failed",
+                links: {
+                    self: "/basket/checkouts/ORD-957216-028332",
+                    payment: "/basket/checkouts/ORD-957216-028332/payment"
+                }
+            }
+        });
+        const mapper = new DefaultOrderDetailsMapper();
+
+        // when
+        const result = mapper.map(serverResponse);
+
+        console.log(result)
+        // then
+        expect(result).toEqual({
+            status: "SUCCESS",
+            model:  {
+                certificateDetails: {
+                    orderNumber: "ORD-957216-028332",
+                    orderedBy: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
+                    companyName: "TestDefault",
+                    companyNumber: "TT000056",
+                    certificateType: "Incorporation with all company name changes",
+                    statementOfGoodStanding: "No",
+                    registeredOfficeAddress: "No",
+                    directors: "No",
+                    secretaries: "Including secretaries':<br><br>Correspondence address<br>",
+                    companyObjects: "No",
+                    liquidators: "No",
+                    administrators: "No",
+                    filterMappings: {
+                        administrators: true,
+                        liquidators: false,
+                        statementOfGoodStanding: false
+                    }
                 },
                 deliveryInfo: {
                     deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
@@ -366,7 +519,7 @@ describe("OrderDetailsMapper", () => {
                 error: "Something else went wrong"
             }]
         });
-        const mapper = new OrderDetailsMapper();
+        const mapper = new DefaultOrderDetailsMapper();
 
         // when
         const actual = mapper.map(serverResponse);
