@@ -2,11 +2,12 @@ import {DetailsSteps} from "./DetailsSteps";
 import {BrowserAgent} from "../core/BrowserAgent";
 import {StubApiClientFactory} from "../../../dist/client/StubApiClientFactory";
 import failureJson from "../stubbing/failure.json";
+import orderPageJson from "../stubbing/success_page.json"
 import { expect } from "chai";
 
 export interface DetailsPage {
     openPage(): Promise<void>;
-    anticipateValidOrder(): Promise<void>;
+    anticipateValidOrder(): void;
     anticipateInvalidOrder(): void;
     anticipateOrderNotFound(): void;
     anticipateServiceUnavailable(): void;
@@ -28,7 +29,7 @@ export abstract class AbstractDetailsPage implements DetailsPage {
         throw new Error("Invalid operation");
     }
 
-    anticipateValidOrder(): Promise<void> {
+    anticipateValidOrder(): void {
         throw new Error("Invalid operation");
     }
 
@@ -87,8 +88,9 @@ export class DetailsPageNotLoaded extends AbstractDetailsPage {
         this.detailsSteps.currentPage = this.detailsSteps.detailsPageLoaded;
     }
 
-    anticipateValidOrder(): Promise<void> {
-        throw new Error("Invalid operation");
+    anticipateValidOrder(): void {
+        this.apiClientFactory.willReturnSuccessfulResponse(orderPageJson);
+        this.detailsSteps.currentPage = this.detailsSteps.detailsPageLoaded;
     }
 
     anticipateInvalidOrder(): void {
@@ -112,20 +114,34 @@ export class DetailsPageLoaded extends AbstractDetailsPage {
         super(detailsSteps, browserAgent, apiClientFactory);
     }
 
+    // TODO 
     clickBrowserBack(): Promise<void> {
         throw new Error("Invalid operation");
     }
 
-    validateOrderDetails(data: string[][]): Promise<void> {
-        throw new Error("Invalid operation");
+    public async validateOrderDetails(data: string[][]): Promise<void> {
+        const resultList = await this.browserAgent.getList("#orderList");
+        for (const [index, element] of resultList.dataRows.entries()) {
+            data[index].pop();
+            expect(element.getValues()).to.deep.equal(data[index]);
+            // TODO: Check headings as well
+        };
     }
 
-    validateDeliveryDetails(data: string[][]): Promise<void> {
-        throw new Error("Invalid operation");
+    public async validateDeliveryDetails(data: string[][]): Promise<void> {
+        const resultList = await this.browserAgent.getList("#deliveryList");
+        for (const [index, element] of resultList.dataRows.entries()) {
+            data[index].pop();
+            expect(element.getValues()).to.deep.equal(data[index]);
+        };
     }
 
-    validatePaymentDetails(data: string[][]): Promise<void> {
-        throw new Error("Invalid operation");
+    public async validatePaymentDetails(data: string[][]): Promise<void> {
+        const resultList = await this.browserAgent.getList("#paymentList");
+        for (const [index, element] of resultList.dataRows.entries()) {
+            data[index].pop();
+            expect(element.getValues()).to.deep.equal(data[index]);
+        };
     }
 }
 

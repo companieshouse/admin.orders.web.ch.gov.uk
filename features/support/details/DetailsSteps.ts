@@ -1,4 +1,4 @@
-import {binding, given, then, when, and} from "cucumber-tsflow/dist";
+import {binding, given, then, when} from "cucumber-tsflow/dist";
 import "reflect-metadata";
 import {
     DetailsPage,
@@ -49,9 +49,6 @@ export class DetailsSteps {
     async anticipateServiceUnavailable(): Promise<void> {
         await this.currentPage.anticipateServiceUnavailable();
     }
-
-    @given(/^I have opened an order$/)
-    async 
 
     @when(/^I view order details$/)
     async openPage(): Promise<void> {

@@ -3,6 +3,7 @@ import {Service} from "typedi";
 import "reflect-metadata";
 import { URL } from "url";
 import {SearchResultsRow, SearchResultsTable} from "./SearchResultsTable";
+import {OrderDataRow, OrderDataList} from "./OrderDataList";
 const Browser = require("zombie");
 
 @Service("zombie")
@@ -75,6 +76,36 @@ export class ZombieBrowserAgent implements BrowserAgent, AgentService {
             tableRows.push(new SearchResultsRow(rowData, !!await data[0].querySelector("a")));
         }
         return new SearchResultsTable(tableRows);
+    }
+
+    async getList(selector: string): Promise<OrderDataList> {
+        if (this.browser == null) {
+            throw new Error("Driver not started");
+        }
+        const list = await this.browser.querySelector(selector);
+        if (list.nodeName !== "DL") {
+            throw new Error("Element " + selector + " is not a data list.");
+        }
+        const headingNames = [];
+        const headings = await list.querySelectorAll("dt");
+        for(const heading of headings) {
+            headingNames.push(heading.innerHTML.trim());
+        }
+
+        const dataValues = [];
+        const valuesList = await list.querySelectorAll("dd");
+        for(const value of valuesList) {
+            dataValues.push(value.innerHTML.trim());
+        }
+        const listData = [];
+
+        for (let i=0; i<headingNames.length; i++) {
+            const rowData = new Map<string, string>();
+            rowData.set(headingNames[i], dataValues[i]);
+            listData.push(new OrderDataRow(rowData));
+        }
+
+        return new OrderDataList(listData);
     }
 
     async getElementText(selector: string): Promise<string> {
