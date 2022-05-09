@@ -30,7 +30,7 @@ export class LPOrderDetailsMapper implements OrderDetailsMapper {
                         principalPlaceOfBusiness: CertificateTextMapper.mapAddressOption(itemOptions.principalPlaceOfBusinessDetails?.includeAddressRecordsType),
                         generalPartners: CertificateTextMapper.isOptionSelected(itemOptions.generalPartnerDetails?.includeBasicInformation),
                         limitedPartners: CertificateTextMapper.isOptionSelected(itemOptions.limitedPartnerDetails?.includeBasicInformation),
-                        generalNatureOfBusiness: CertificateTextMapper.isOptionSelected(itemOptions.includeGeneralNatureOfBusinessInformation),
+                        generalNatureOfBusiness: CertificateTextMapper.isOptionSelected(itemOptions.includeGeneralNatureOfBusinessInformation)
                     },
                     deliveryInfo: {
                         deliveryMethod: CertificateTextMapper.mapDeliveryMethod(itemOptions),

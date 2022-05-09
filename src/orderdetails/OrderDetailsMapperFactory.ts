@@ -6,7 +6,8 @@ import { OrderDetailsMapper } from "./OrderDetailsMapper";
 
 @Service()
 export class OrderDetailsMapperFactory {
-    constructor(private readonly mappers: Map<string, OrderDetailsMapper>) {
+    private readonly mappers: Map<string, OrderDetailsMapper>
+    constructor() {
         this.mappers = new Map<string, OrderDetailsMapper>();
         this.mappers.set("llp", new LLPOrderDetailsMapper());
         this.mappers.set("limited-partnership", new LPOrderDetailsMapper());

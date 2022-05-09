@@ -3,11 +3,11 @@ import {ApiErrorResponse, ApiResponse} from "@companieshouse/api-sdk-node/dist/s
 import { Status } from "../../src/core/Status";
 import { CertificateItemOptions, Checkout } from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
 import { OrderDetails } from "../../src/orderdetails/OrderDetails";
-import { DefaultOrderDetailsMapper } from "../../src/orderdetails/DefaultOrderDetailsMapper";
 import { OrderDetailsMapperFactory } from "../../src/orderdetails/OrderDetailsMapperFactory";
+import { LLPOrderDetailsMapper } from "../../src/orderdetails/LLPOrderDetailsMapper";
 
-describe("DefaultOrderDetailsMapper", () => {
-    it("Maps a successful response for default company details", () => {
+describe("LLPOrderDetailsMapper", () => {
+    it("Maps a successful response for llp company details", () => {
         // given
         const serverResponse = new Success<ApiResponse<Checkout>, ApiErrorResponse>({
             httpStatusCode: 200,
@@ -47,23 +47,21 @@ describe("DefaultOrderDetailsMapper", () => {
                         ],
                         itemOptions: {
                             companyStatus: "active",
-                            companyType: "plc",
+                            companyType: "llp",
                             deliveryMethod: "postal",
                             deliveryTimescale: "standard",
                             forename: "John",
                             surname: "Test",
                             certificateType: "incorporation-with-all-name-changes",
-                            directorDetails: {
+                            designatedMemberDetails: {
                                 includeBasicInformation: true,
-                                includeOccupation: true,
-                                includeNationality: true
+                                includeAddress: true
                             },
-                            includeCompanyObjectsInformation: true,
                             includeGoodStandingInformation: true,
                             registeredOfficeAddressDetails: {
                                 includeAddressRecordsType: "current"
                             },
-                            secretaryDetails: {
+                            memberDetails: {
                                 includeBasicInformation: true,
                                 includeAddress: false,
                                 includeAppointmentDate: false
@@ -115,9 +113,8 @@ describe("DefaultOrderDetailsMapper", () => {
                     certificateType: "Incorporation with all company name changes",
                     statementOfGoodStanding: "Yes",
                     registeredOfficeAddress: "Current address",
-                    directors: "Including directors':<br><br>Occupation<br>Nationality<br>",
-                    secretaries: "Yes",
-                    companyObjects: "Yes",
+                    designatedMembers: "Including designated members':<br><br>Correspondence address<br>",
+                    members: "Yes",
                     liquidators: "No",
                     administrators: "No",
                     filterMappings: {
@@ -138,7 +135,7 @@ describe("DefaultOrderDetailsMapper", () => {
         });
     });
 
-    it("Maps a successful response for default company details no directors", () => {
+    it("Maps a successful response for llp company details no designated members", () => {
         // given
         const serverResponse = new Success<ApiResponse<Checkout>, ApiErrorResponse>({
             httpStatusCode: 200,
@@ -178,7 +175,7 @@ describe("DefaultOrderDetailsMapper", () => {
                         ],
                         itemOptions: {
                             companyStatus: "active",
-                            companyType: "plc",
+                            companyType: "llp",
                             deliveryMethod: "postal",
                             deliveryTimescale: "standard",
                             forename: "John",
@@ -187,8 +184,8 @@ describe("DefaultOrderDetailsMapper", () => {
                             registeredOfficeAddressDetails: {
                                 includeAddressRecordsType: "current"
                             },
-                            directorDetails: {},
-                            secretaryDetails: {}
+                            designatedMemberDetails: {},
+                            memberDetails: {}
                         },
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
@@ -236,9 +233,8 @@ describe("DefaultOrderDetailsMapper", () => {
                     certificateType: "Incorporation with all company name changes",
                     statementOfGoodStanding: "No",
                     registeredOfficeAddress: "Current address",
-                    directors: "No",
-                    secretaries: "No",
-                    companyObjects: "No",
+                    designatedMembers: "No",
+                    members: "No",
                     liquidators: "No",
                     administrators: "No",
                     filterMappings: {
@@ -259,7 +255,7 @@ describe("DefaultOrderDetailsMapper", () => {
         });
     });
 
-    it("Maps a successful response for default company in liquidation", () => {
+    it("Maps a successful response for llp company in liquidation", () => {
         // given
         const serverResponse = new Success<ApiResponse<Checkout>, ApiErrorResponse>({
             httpStatusCode: 200,
@@ -299,23 +295,20 @@ describe("DefaultOrderDetailsMapper", () => {
                         ],
                         itemOptions: {
                             companyStatus: "liquidation",
-                            companyType: "plc",
+                            companyType: "llp",
                             deliveryMethod: "postal",
                             deliveryTimescale: "standard",
                             forename: "John",
                             surname: "Test",
                             certificateType: "incorporation-with-all-name-changes",
                             registeredOfficeAddressDetails: {},
-                            directorDetails: {
+                            designatedMemberDetails: {
                                 includeBasicInformation: true,
                                 includeAddress: false,
                                 includeAppointmentDate: false,
                                 includeCountryOfResidence: false,
-                                includeNationality: false,
-                                includeOccupation: false
                             },
-                            secretaryDetails: {},
-                            includeCompanyObjectsInformation: true,
+                            memberDetails: {},
                             liquidatorsDetails: {
                                 includeBasicInformation: true
                             }
@@ -366,9 +359,8 @@ describe("DefaultOrderDetailsMapper", () => {
                     certificateType: "Incorporation with all company name changes",
                     statementOfGoodStanding: "No",
                     registeredOfficeAddress: "No",
-                    directors: "Yes",
-                    secretaries: "No",
-                    companyObjects: "Yes",
+                    designatedMembers: "Yes",
+                    members: "No",
                     liquidators: "Yes",
                     administrators: "No",
                     filterMappings: {
@@ -389,7 +381,7 @@ describe("DefaultOrderDetailsMapper", () => {
         });
     });
 
-    it("Maps a successful response for default company in administration", () => {
+    it("Maps a successful response for llp company in administration", () => {
         // given
         const serverResponse = new Success<ApiResponse<Checkout>, ApiErrorResponse>({
             httpStatusCode: 200,
@@ -429,15 +421,15 @@ describe("DefaultOrderDetailsMapper", () => {
                         ],
                         itemOptions: {
                             companyStatus: "administration",
-                            companyType: "plc",
+                            companyType: "llp",
                             deliveryMethod: "postal",
                             deliveryTimescale: "standard",
                             forename: "John",
                             surname: "Test",
                             certificateType: "incorporation-with-all-name-changes",
                             registeredOfficeAddressDetails: {},
-                            directorDetails: {},
-                            secretaryDetails: {
+                            designatedMemberDetails: {},
+                            memberDetails: {
                                 includeBasicInformation: true,
                                 includeAddress: true,
                                 includeAppointmentDate: false
@@ -490,9 +482,8 @@ describe("DefaultOrderDetailsMapper", () => {
                     certificateType: "Incorporation with all company name changes",
                     statementOfGoodStanding: "No",
                     registeredOfficeAddress: "No",
-                    directors: "No",
-                    secretaries: "Including secretaries':<br><br>Correspondence address<br>",
-                    companyObjects: "No",
+                    designatedMembers: "No",
+                    members: "Including members':<br><br>Correspondence address<br>",
                     liquidators: "No",
                     administrators: "No",
                     filterMappings: {
@@ -523,7 +514,7 @@ describe("DefaultOrderDetailsMapper", () => {
                 error: "Something else went wrong"
             }]
         });
-        const mapper = new DefaultOrderDetailsMapper();
+        const mapper = new LLPOrderDetailsMapper();
 
         // when
         const actual = mapper.map(serverResponse);
