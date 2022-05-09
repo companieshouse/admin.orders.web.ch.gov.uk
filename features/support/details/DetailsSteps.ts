@@ -99,4 +99,9 @@ export class DetailsSteps {
     public async clickSignOut(): Promise<void> {
         await this.currentPage.clickSignOut();
     }
+
+    @then(/^I should be taken to the signout handler$/)
+    public async verifySignInHandler() {
+        await this.currentPage.verifyLocation("/signout");
+    }
 }

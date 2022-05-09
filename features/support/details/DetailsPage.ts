@@ -4,6 +4,7 @@ import {StubApiClientFactory} from "../../../dist/client/StubApiClientFactory";
 import failureJson from "../stubbing/failure.json";
 import orderPageJson from "../stubbing/success_page.json"
 import { expect } from "chai";
+import { Browser } from "selenium-webdriver";
 
 export interface DetailsPage {
     openPage(): Promise<void>;
@@ -12,6 +13,7 @@ export interface DetailsPage {
     anticipateOrderNotFound(): void;
     anticipateServiceUnavailable(): void;
     clickBrowserBack(): Promise<void>;
+    clickSignOut(): Promise<void>;
     validateOrderDetails(data: string[][]): Promise<void>;
     validateDeliveryDetails(data: string[][]): Promise<void>;
     validatePaymentDetails(data: string[][]): Promise<void>;
@@ -49,6 +51,10 @@ export abstract class AbstractDetailsPage implements DetailsPage {
         throw new Error("Invalid operation");
     }
 
+    public async clickSignOut(): Promise<void> {
+        await this.browserAgent.clickElement(".sign-out-link");
+    }
+
     validateOrderDetails(data: string[][]): Promise<void> {
         throw new Error("Invalid operation");
     }
@@ -61,8 +67,9 @@ export abstract class AbstractDetailsPage implements DetailsPage {
         throw new Error("Invalid operation");
     }
 
-    validateLocation(path: string): Promise<void> {
-        throw new Error("Invalid operation");
+    public async validateLocation(path: string): Promise<void> {
+        const location = await this.browserAgent.getLocation();
+        expect(location).to.equal(path);
     }
 
     validateInvalidOrderError(): Promise<void> {
