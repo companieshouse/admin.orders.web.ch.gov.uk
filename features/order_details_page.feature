@@ -29,6 +29,7 @@ Feature: View order details
     Then Service unavailable should be displayed
 
   Scenario: User signout
-    Given I have opened an order
-    When I click sign out
+    Given The checkout endpoint will return an order that is a paid certificate
+    When I view order details
+    And I click sign out
     Then I should be taken to the signout handler
