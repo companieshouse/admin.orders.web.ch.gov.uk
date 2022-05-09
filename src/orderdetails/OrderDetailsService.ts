@@ -5,10 +5,12 @@ import { OrderDetailsResults } from "./OrderDetailsResults";
 import { OrderDetailsMapperFactory } from "./OrderDetailsMapperFactory";
 import { CertificateItemOptions } from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
 import { Status } from "core/Status";
+import "reflect-metadata";
 
 @Service()
-export class OrderDetailsService implements OrderService {
-    constructor(@Inject((process.env.ADMIN_ORDERS_DEVELOPMENT_MODE === "true" ? "stub.client" : "default.client")) public apiClientFactory: ApiClientFactory, @Inject() private factory: OrderDetailsMapperFactory) {
+export class OrderDetailsService {
+    constructor(@Inject((process.env.ADMIN_ORDERS_DEVELOPMENT_MODE === "true" ? "stub.client" : "default.client")) public apiClientFactory: ApiClientFactory,
+                @Inject() public factory: OrderDetailsMapperFactory) {
     }
     async fetchOrder(orderDetailsParameters: OrderDetailsParameters): Promise<OrderDetailsResults> {
         const apiClient = this.apiClientFactory.newApiClient(orderDetailsParameters.token);
@@ -19,8 +21,4 @@ export class OrderDetailsService implements OrderService {
         } 
         return { status: Status.SERVER_ERROR } as OrderDetailsResults;
     }
-}
-
-export interface OrderService {
-    fetchOrder(orderDetailsParameters: OrderDetailsParameters): Promise<OrderDetailsResults>;
 }

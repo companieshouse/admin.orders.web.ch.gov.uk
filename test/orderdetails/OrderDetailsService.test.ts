@@ -112,11 +112,15 @@ describe("OrderDetailsService", () => {
                 orderNumber: "ORD-957216-028332"
             } as OrderDetails
         }
-        const resultsMapper: any = {};
-        resultsMapper.map = jest.fn(() => {
+        const mapper: any = {};
+        mapper.map = jest.fn(() => {
             return mappedResults;
+        })
+        const factory: any = {};
+        factory.getOrDefault = jest.fn(() => {
+            return mapper;
         });
-        const service = new OrderDetailsService(apiClientFactory, resultsMapper);
+        const service = new OrderDetailsService(apiClientFactory, factory);
 
         // when
         const result = await service.fetchOrder(new OrderDetailsParameters("ORD-957216-028332", "F00DFACE"));
@@ -125,6 +129,7 @@ describe("OrderDetailsService", () => {
         expect(result).toBe(mappedResults);
         expect(apiClientFactory.newApiClient).toHaveBeenCalled();
         expect(checkout.getCheckout).toHaveBeenCalledWith("ORD-957216-028332");
-        expect(resultsMapper.map).toHaveBeenCalledWith(checkoutResponse);
+        expect(mapper.map).toHaveBeenCalledWith(checkoutResponse);
+        expect(factory.getOrDefault).toHaveBeenCalledWith("plc");
     });
 });
