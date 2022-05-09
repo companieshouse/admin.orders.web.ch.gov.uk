@@ -12,7 +12,7 @@ import { OrderDetailsResults } from "./OrderDetailsResults";
 @Service()
 export class OrderDetailsMapper {
 
-    private static readonly logger = createLogger("SearchResultsMapper");
+    private static readonly logger = createLogger("OrderDetailsMapper");
 
     map(response: ApiResult<ApiResponse<Checkout>>): OrderDetailsResults {
         if (response.isSuccess()) {

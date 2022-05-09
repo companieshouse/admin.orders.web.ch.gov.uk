@@ -5,7 +5,7 @@ import {MiddlewareProvider} from "../security/MiddlewareProvider";
 import { ServerPaths } from "./ServerPaths";
 import {SearchController} from "../search/SearchController";
 import "../security/MiddlewareProvider";
-import { OrderDetailsController } from "orderdetails/OrderDetailsController";
+import { OrderDetailsController } from "../orderdetails/OrderDetailsController";
 
 @Service()
 export class Registrar {

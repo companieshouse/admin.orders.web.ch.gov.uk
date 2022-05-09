@@ -57,7 +57,7 @@ export class SearchResultsMapper {
 
     private mapLink(summary: OrderSummaryResource): string {
         if (summary.productLine === "item#certificate" && summary.paymentStatus === "paid") {
-            return `/orders-admin/order/${summary.id}`;
+            return `/orders-admin/orders/${summary.id}`;
         } else {
             return "";
         }
