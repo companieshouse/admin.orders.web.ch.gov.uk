@@ -11,11 +11,13 @@ import { PaymentDetailsComponent } from "./PaymentDetailsComponent";
 
 @Service()
 export class PageFactory implements ErrorPageBuildable {
+    private static readonly ORDER_DETAILS_PAGE_TITLE = "Order Details";
+
     constructor(private globalPageFactory: GlobalPageFactory) {
     }
 
     public buildOrderDetailsPage(results: OrderDetailsResults): ViewModel {
-        const page = new OrderDetailsPage(results.model.orderNumber);
+        const page = new OrderDetailsPage(PageFactory.ORDER_DETAILS_PAGE_TITLE);
         page.add(new OrderDetailsComponent(results.model));
         page.add(new DeliveryDetailsComponent(results.model));
         page.add(new PaymentDetailsComponent(results.model))

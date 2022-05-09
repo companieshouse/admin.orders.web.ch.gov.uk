@@ -1,3 +1,6 @@
+<h1 class="govuk-heading-xl">
+    {{ control.data.orderNumber }}
+</h1>
 <h2 class="govuk-heading-l">
     Order details
 </h2>
@@ -77,7 +80,7 @@
                 The names of all current company directors
             </dt>
             <dd class="govuk-summary-list__value">
-                {{ control.data.directors }}
+                {{ control.data.directors | striptags(true) | escape | nl2br }}
             </dd>
         </div>
     {% endif %}
@@ -88,7 +91,7 @@
                 The names of all current secretaries
             </dt>
             <dd class="govuk-summary-list__value">
-                {{ control.data.secretaries }}
+                {{ control.data.secretaries | striptags(true) | escape | nl2br }}
             </dd>
         </div>
     {% endif %}
@@ -99,7 +102,7 @@
                 The names of all current designated members
             </dt>
             <dd class="govuk-summary-list__value">
-                {{ control.data.designatedMembers }}
+                {{ control.data.designatedMembers | striptags(true) | escape | nl2br }}
             </dd>
         </div>
     {% endif %}
@@ -110,7 +113,7 @@
                 The names of all current members
             </dt>
             <dd class="govuk-summary-list__value">
-                {{ control.data.members }}
+                {{ control.data.members | striptags(true) | escape | nl2br }}
             </dd>
         </div>
     {% endif %}

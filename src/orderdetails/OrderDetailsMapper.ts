@@ -21,8 +21,8 @@ export class OrderDetailsMapper {
             return {
                 status: Status.SUCCESS,
                 model: {
-                    orderNumber: response.value.resource?.reference,
                     certificateDetails: {
+                        orderNumber: response.value.resource?.reference,
                         orderedBy: response.value.resource?.checkedOutBy.email,
                         companyName: item?.companyName,
                         companyNumber: item?.companyNumber,
@@ -266,7 +266,7 @@ export class OrderDetailsMapper {
         let htmlString: string = "";
 
         mappings.forEach((element) => {
-            htmlString += element + "<br>";
+            htmlString += element + "\n";
         });
         return htmlString;
     }

@@ -16,7 +16,7 @@
             Delivery details
         </dt>
         <dd class="govuk-summary-list__value">
-            {{ control.data.deliveryDetails }}
+            {{ control.data.deliveryDetails | striptags(true) | escape | nl2br }}
         </dd>
     </div>
 </dl>

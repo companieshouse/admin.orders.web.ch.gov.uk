@@ -103,8 +103,8 @@ describe("OrderDetailsMapper", () => {
         expect(result).toEqual({
             status: "SUCCESS",
             model: {
-                orderNumber: "ORD-957216-028332",
                 certificateDetails: {
+                    orderNumber: "ORD-957216-028332",
                     orderedBy: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
                     companyName: "TestDefault",
                     companyNumber: "TT000056",
@@ -221,8 +221,8 @@ describe("OrderDetailsMapper", () => {
         expect(result).toEqual({
             status: "SUCCESS",
             model: {
-                orderNumber: "ORD-957216-028332",
                 certificateDetails: {
+                    orderNumber: "ORD-957216-028332",
                     orderedBy: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
                     companyName: "TestDefault",
                     companyNumber: "TT000056",
@@ -334,8 +334,8 @@ describe("OrderDetailsMapper", () => {
         expect(result).toEqual({
             status: "SUCCESS",
             model:  {
-                orderNumber: "ORD-957216-028332",
                 certificateDetails: {
+                    orderNumber: "ORD-957216-028332",
                     orderedBy: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
                     companyName: "TestDefault",
                     companyNumber: "TT000056",
