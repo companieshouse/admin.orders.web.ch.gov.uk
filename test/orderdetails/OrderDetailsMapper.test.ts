@@ -102,21 +102,27 @@ describe("OrderDetailsMapper", () => {
         // then
         expect(result).toEqual({
             status: "SUCCESS",
-            model:  {
+            model: {
                 orderNumber: "ORD-957216-028332",
-                orderedBy: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
-                companyName: "TestDefault",
-                companyNumber: "TT000056",
-                certificateType: "Incorporation with all company name changes",
-                statementOfGoodStanding: "Yes",
-                registeredOfficeAddress: "Current address",
-                directors: "Including directors':<br><br>Occupation<br>Nationality<br>",
-                secretaries: "Yes",
-                companyObjects: "Yes",
-                deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
-                deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
-                paymentReference: "somereference",
-                fee: "£15"
+                certificateDetails: {
+                    orderedBy: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
+                    companyName: "TestDefault",
+                    companyNumber: "TT000056",
+                    certificateType: "Incorporation with all company name changes",
+                    statementOfGoodStanding: "Yes",
+                    registeredOfficeAddress: "Current address",
+                    directors: "Including directors':<br><br>Occupation<br>Nationality<br>",
+                    secretaries: "Yes",
+                    companyObjects: "Yes"
+                },
+                deliveryInfo: {
+                    deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
+                    deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
+                },
+                paymentDetails: {
+                    paymentReference: "somereference",
+                    fee: "£15"
+                }
             } as OrderDetails
         });
     });
@@ -214,19 +220,25 @@ describe("OrderDetailsMapper", () => {
         // then
         expect(result).toEqual({
             status: "SUCCESS",
-            model:  {
+            model: {
                 orderNumber: "ORD-957216-028332",
-                orderedBy: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
-                companyName: "TestDefault",
-                companyNumber: "TT000056",
-                certificateType: "Incorporation with all company name changes",
-                statementOfGoodStanding: "Yes",
-                registeredOfficeAddress: "Current address",
-                designatedMembers: "Including designated members':<br><br>Appointment date<br>",
-                deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
-                deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
-                paymentReference: "somereference",
-                fee: "£15"
+                certificateDetails: {
+                    orderedBy: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
+                    companyName: "TestDefault",
+                    companyNumber: "TT000056",
+                    certificateType: "Incorporation with all company name changes",
+                    statementOfGoodStanding: "Yes",
+                    registeredOfficeAddress: "Current address",
+                    designatedMembers: "Including designated members':<br><br>Appointment date<br>",
+                },
+                deliveryInfo: {
+                    deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
+                    deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
+                },
+                paymentDetails: {
+                    paymentReference: "somereference",
+                    fee: "£15"
+                }
             } as OrderDetails
         });
     });
@@ -323,17 +335,23 @@ describe("OrderDetailsMapper", () => {
             status: "SUCCESS",
             model:  {
                 orderNumber: "ORD-957216-028332",
-                orderedBy: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
-                companyName: "TestDefault",
-                companyNumber: "TT000056",
-                certificateType: "Incorporation with all company name changes",
-                statementOfGoodStanding: "Yes",
-                principalPlaceOfBusiness: "Current address",
-                generalPartners: "Yes",
-                deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
-                deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
-                paymentReference: "somereference",
-                fee: "£15"
+                certificateDetails: {
+                    orderedBy: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
+                    companyName: "TestDefault",
+                    companyNumber: "TT000056",
+                    certificateType: "Incorporation with all company name changes",
+                    statementOfGoodStanding: "Yes",
+                    principalPlaceOfBusiness: "Current address",
+                    generalPartners: "Yes",
+                },
+                deliveryInfo: {
+                    deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
+                    deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
+                },
+                paymentDetails: {
+                    paymentReference: "somereference",
+                    fee: "£15"
+                }
             } as OrderDetails
         });
     });

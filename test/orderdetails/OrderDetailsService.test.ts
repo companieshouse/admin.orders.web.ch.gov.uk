@@ -109,7 +109,7 @@ describe("OrderDetailsService", () => {
         const mappedResults: OrderDetailsResults = {
             status: Status.SUCCESS,
             model: {
-                companyNumber: "12345678"
+                orderNumber: "ORD-957216-028332"
             } as OrderDetails
         }
         const resultsMapper: any = {};

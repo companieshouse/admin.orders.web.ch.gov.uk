@@ -1,5 +1,13 @@
 export class OrderDetails {
-    public orderNumber?: string;
+    public certificateDetails?: CertificateDetails
+    public deliveryInfo?: DeliveryInfo
+    public paymentDetails?: PaymentDetails
+
+    constructor(public readonly orderNumber: string) {
+    }
+}
+
+class CertificateDetails {
     public orderedBy?: string;
     public companyName?: string;
     public companyNumber?: string;
@@ -17,8 +25,14 @@ export class OrderDetails {
     public companyObjects?: string;
     public liquidators?: string;
     public administrators?: string;
+}
+
+class DeliveryInfo {
     public deliveryMethod?: string;
     public deliveryDetails?: string;
+}
+
+class PaymentDetails {
     public paymentReference?: string;
     public fee?: string;
 }
