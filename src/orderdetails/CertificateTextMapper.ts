@@ -9,6 +9,7 @@ import { CertificateDetails } from "./OrderDetails";
 
 export abstract class CertificateTextMapper {
     static readonly DISSOLUTION = "dissolution";
+    static readonly ITEM_KIND_CERTIFICATE = "item#certificate";
 
     static isOptionSelected (itemOption: Boolean | undefined): string {
         if (itemOption === undefined) {

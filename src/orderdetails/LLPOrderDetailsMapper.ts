@@ -7,6 +7,7 @@ import { CertificateTextMapper } from "./CertificateTextMapper";
 import { CertificateDetails, OrderDetails } from "./OrderDetails";
 import { OrderDetailsMapper } from "./OrderDetailsMapper";
 import { OrderDetailsResults } from "./OrderDetailsResults";
+import e = require("express");
 
 @Service()
 export class LLPOrderDetailsMapper implements OrderDetailsMapper {
@@ -14,7 +15,7 @@ export class LLPOrderDetailsMapper implements OrderDetailsMapper {
     private static readonly logger = createLogger("LLPOrderDetailsMapper");
 
     map(response: ApiResult<ApiResponse<Checkout>>): OrderDetailsResults {
-        if (response.isSuccess()) {
+        if (response.isSuccess() && response.value.resource?.items[0].kind === CertificateTextMapper.ITEM_KIND_CERTIFICATE) {
             let item = response.value.resource?.items[0]
             let itemOptions = item?.itemOptions as CertificateItemOptions
             let certificateDetails = {
@@ -46,13 +47,17 @@ export class LLPOrderDetailsMapper implements OrderDetailsMapper {
                     }
                 } as OrderDetails
             } as OrderDetailsResults;
-        } else if (response.value.httpStatusCode === 404){
-            LLPOrderDetailsMapper.logger.error("Checkout endpoint returned HTTP [" + response.value.httpStatusCode + "] with error(s): '" + (response.value.errors || []).map(error => error.error).join(", ") + "'");
+        } else if (response.isSuccess() && response.value.resource?.items[0].kind !== CertificateTextMapper.ITEM_KIND_CERTIFICATE){
+            LLPOrderDetailsMapper.logger.error("Item kind must be " + CertificateTextMapper.ITEM_KIND_CERTIFICATE + ", but was: " + response.value.resource?.items[0].kind);
             return {
                 status: Status.CLIENT_ERROR
+            } as OrderDetailsResults; 
+        } else if (response.isFailure()) {
+            LLPOrderDetailsMapper.logger.error("Checkout endpoint returned HTTP [" + response.value.httpStatusCode + "] with error(s): '" + (response.value.errors || []).map(error => error.error).join(", ") + "'");
+            return {
+                status: Status.SERVER_ERROR
             } as OrderDetailsResults;
         } else {
-            LLPOrderDetailsMapper.logger.error("Checkout endpoint returned HTTP [" + response.value.httpStatusCode + "] with error(s): '" + (response.value.errors || []).map(error => error.error).join(", ") + "'");
             return {
                 status: Status.SERVER_ERROR
             } as OrderDetailsResults;

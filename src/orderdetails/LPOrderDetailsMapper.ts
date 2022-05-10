@@ -14,7 +14,7 @@ export class LPOrderDetailsMapper implements OrderDetailsMapper {
     private static readonly logger = createLogger("LPOrderDetailsMapper");
 
     map(response: ApiResult<ApiResponse<Checkout>>): OrderDetailsResults {
-        if (response.isSuccess()) {
+        if (response.isSuccess() && response.value.resource?.items[0].kind === CertificateTextMapper.ITEM_KIND_CERTIFICATE) {
             let item = response.value.resource?.items[0]
             let itemOptions = item?.itemOptions as CertificateItemOptions
             return {
@@ -43,13 +43,17 @@ export class LPOrderDetailsMapper implements OrderDetailsMapper {
                     }
                 } as OrderDetails
             } as OrderDetailsResults;
-        } else if (response.value.httpStatusCode === 404){
-            LPOrderDetailsMapper.logger.error("Checkout endpoint returned HTTP [" + response.value.httpStatusCode + "] with error(s): '" + (response.value.errors || []).map(error => error.error).join(", ") + "'");
+        } else if (response.isSuccess() && response.value.resource?.items[0].kind !== CertificateTextMapper.ITEM_KIND_CERTIFICATE){
+            LPOrderDetailsMapper.logger.error("Item kind must be " + CertificateTextMapper.ITEM_KIND_CERTIFICATE + ", but was: " + response.value.resource?.items[0].kind);
             return {
                 status: Status.CLIENT_ERROR
+            } as OrderDetailsResults; 
+        } else if (response.isFailure()) {
+            LPOrderDetailsMapper.logger.error("Checkout endpoint returned HTTP [" + response.value.httpStatusCode + "] with error(s): '" + (response.value.errors || []).map(error => error.error).join(", ") + "'");
+            return {
+                status: Status.SERVER_ERROR
             } as OrderDetailsResults;
         } else {
-            LPOrderDetailsMapper.logger.error("Checkout endpoint returned HTTP [" + response.value.httpStatusCode + "] with error(s): '" + (response.value.errors || []).map(error => error.error).join(", ") + "'");
             return {
                 status: Status.SERVER_ERROR
             } as OrderDetailsResults;
