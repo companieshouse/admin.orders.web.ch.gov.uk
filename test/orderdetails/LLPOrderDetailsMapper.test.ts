@@ -113,19 +113,13 @@ describe("LLPOrderDetailsMapper", () => {
                     certificateType: "Incorporation with all company name changes",
                     statementOfGoodStanding: "Yes",
                     registeredOfficeAddress: "Current address",
-                    designatedMembers: "Including designated members':<br><br>Correspondence address<br>",
+                    designatedMembers: "Including designated members':\n\nCorrespondence address\n",
                     members: "Yes",
-                    liquidators: "No",
-                    administrators: "No",
-                    filterMappings: {
-                        administrators: false,
-                        liquidators: false,
-                        statementOfGoodStanding: true
-                    }
+                    isNotDissolution: true
                 },
                 deliveryInfo: {
                     deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
-                    deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
+                    deliveryDetails: "John Test\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
                 },
                 paymentDetails: {
                     paymentReference: "somereference",
@@ -235,17 +229,11 @@ describe("LLPOrderDetailsMapper", () => {
                     registeredOfficeAddress: "Current address",
                     designatedMembers: "No",
                     members: "No",
-                    liquidators: "No",
-                    administrators: "No",
-                    filterMappings: {
-                        administrators: false,
-                        liquidators: false,
-                        statementOfGoodStanding: true
-                    }
+                    isNotDissolution: true
                 },
                 deliveryInfo: {
                     deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
-                    deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
+                    deliveryDetails: "John Test\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
                 },
                 paymentDetails: {
                     paymentReference: "somereference",
@@ -357,21 +345,15 @@ describe("LLPOrderDetailsMapper", () => {
                     companyName: "TestDefault",
                     companyNumber: "TT000056",
                     certificateType: "Incorporation with all company name changes",
-                    statementOfGoodStanding: "No",
                     registeredOfficeAddress: "No",
                     designatedMembers: "Yes",
                     members: "No",
                     liquidators: "Yes",
-                    administrators: "No",
-                    filterMappings: {
-                        administrators: false,
-                        liquidators: true,
-                        statementOfGoodStanding: false
-                    }
+                    isNotDissolution: true
                 },
                 deliveryInfo: {
                     deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
-                    deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
+                    deliveryDetails: "John Test\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
                 },
                 paymentDetails: {
                     paymentReference: "somereference",
@@ -480,21 +462,15 @@ describe("LLPOrderDetailsMapper", () => {
                     companyName: "TestDefault",
                     companyNumber: "TT000056",
                     certificateType: "Incorporation with all company name changes",
-                    statementOfGoodStanding: "No",
                     registeredOfficeAddress: "No",
                     designatedMembers: "No",
-                    members: "Including members':<br><br>Correspondence address<br>",
-                    liquidators: "No",
+                    members: "Including members':\n\nCorrespondence address\n",
                     administrators: "No",
-                    filterMappings: {
-                        administrators: true,
-                        liquidators: false,
-                        statementOfGoodStanding: false
-                    }
+                    isNotDissolution: true
                 },
                 deliveryInfo: {
                     deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
-                    deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
+                    deliveryDetails: "John Test\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
                 },
                 paymentDetails: {
                     paymentReference: "somereference",
@@ -522,6 +498,27 @@ describe("LLPOrderDetailsMapper", () => {
         // then
         expect(actual).toEqual({
             status: Status.SERVER_ERROR
+        });
+    });
+
+    it("Maps a client error response", () => {
+        // given
+        const serverResponse = new Failure<ApiResponse<Checkout>, ApiErrorResponse>({
+            httpStatusCode: 404,
+            errors: [{
+                error: "Something went wrong",
+            }, {
+                error: "Something else went wrong"
+            }]
+        });
+        const mapper = new LLPOrderDetailsMapper();
+
+        // when
+        const actual = mapper.map(serverResponse);
+
+        // then
+        expect(actual).toEqual({
+            status: Status.CLIENT_ERROR
         });
     });
 });

@@ -8,6 +8,8 @@ import { CompanyStatus } from "./CompanyStatus";
 import { CertificateDetails } from "./OrderDetails";
 
 export abstract class CertificateTextMapper {
+    static readonly DISSOLUTION = "dissolution";
+
     static isOptionSelected (itemOption: Boolean | undefined): string {
         if (itemOption === undefined) {
             return "No";

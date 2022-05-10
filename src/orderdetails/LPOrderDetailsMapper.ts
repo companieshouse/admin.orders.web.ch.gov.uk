@@ -12,7 +12,6 @@ import { OrderDetailsResults } from "./OrderDetailsResults";
 export class LPOrderDetailsMapper implements OrderDetailsMapper {
 
     private static readonly logger = createLogger("LPOrderDetailsMapper");
-    private readonly DISSOLUTION = "dissolution";
 
     map(response: ApiResult<ApiResponse<Checkout>>): OrderDetailsResults {
         if (response.isSuccess()) {
@@ -32,7 +31,7 @@ export class LPOrderDetailsMapper implements OrderDetailsMapper {
                         generalPartners: CertificateTextMapper.isOptionSelected(itemOptions.generalPartnerDetails?.includeBasicInformation),
                         limitedPartners: CertificateTextMapper.isOptionSelected(itemOptions.limitedPartnerDetails?.includeBasicInformation),
                         generalNatureOfBusiness: CertificateTextMapper.isOptionSelected(itemOptions.includeGeneralNatureOfBusinessInformation),
-                        isNotDissolution: itemOptions.certificateType !== this.DISSOLUTION
+                        isNotDissolution: itemOptions.certificateType !== CertificateTextMapper.DISSOLUTION
                     },
                     deliveryInfo: {
                         deliveryMethod: CertificateTextMapper.mapDeliveryMethod(itemOptions),
@@ -43,6 +42,11 @@ export class LPOrderDetailsMapper implements OrderDetailsMapper {
                         fee: CertificateTextMapper.prependCurrencySymbol(response.value.resource?.totalOrderCost)
                     }
                 } as OrderDetails
+            } as OrderDetailsResults;
+        } else if (response.value.httpStatusCode === 404){
+            LPOrderDetailsMapper.logger.error("Checkout endpoint returned HTTP [" + response.value.httpStatusCode + "] with error(s): '" + (response.value.errors || []).map(error => error.error).join(", ") + "'");
+            return {
+                status: Status.CLIENT_ERROR
             } as OrderDetailsResults;
         } else {
             LPOrderDetailsMapper.logger.error("Checkout endpoint returned HTTP [" + response.value.httpStatusCode + "] with error(s): '" + (response.value.errors || []).map(error => error.error).join(", ") + "'");

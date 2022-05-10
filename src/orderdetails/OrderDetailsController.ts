@@ -20,7 +20,14 @@ export class OrderDetailsController {
         OrderDetailsController.logger.trace("GET request received");
         const orderParameters = new OrderDetailsParameters(req.params.orderId, req.orderAdminSession?.getAccessToken() || "");
         const order = await this.service.fetchOrder(orderParameters);
-        if (order.status !== Status.SUCCESS) {
+        if (order.status === Status.CLIENT_ERROR) {
+            const model = this.pageFactory.buildNotFound();
+            res.render(model.template, {
+                control: model
+            });
+            return;
+        }
+        if (order.status === Status.SERVER_ERROR) {
             const model = this.pageFactory.buildServiceUnavailable();
             res.render(model.template, {
                 control: model

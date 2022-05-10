@@ -10,7 +10,6 @@ import { OrderDetailsResults } from "./OrderDetailsResults";
 export class DefaultOrderDetailsMapper implements OrderDetailsMapper {
 
     private static readonly logger = createLogger("DefaultOrderDetailsMapper");
-    private readonly DISSOLUTION = "dissolution";
 
     map(response: ApiResult<ApiResponse<Checkout>>): OrderDetailsResults {
         if (response.isSuccess()) {
@@ -29,8 +28,9 @@ export class DefaultOrderDetailsMapper implements OrderDetailsMapper {
                 companyObjects: CertificateTextMapper.isOptionSelected(itemOptions.includeCompanyObjectsInformation),
                 liquidators: CertificateTextMapper.isOptionSelected(itemOptions.liquidatorsDetails?.includeBasicInformation),
                 administrators: CertificateTextMapper.isOptionSelected(itemOptions.administratorsDetails?.includeBasicInformation),
-                isNotDissolution: itemOptions.certificateType !== this.DISSOLUTION
+                isNotDissolution: itemOptions.certificateType !== CertificateTextMapper.DISSOLUTION
             } as CertificateDetails
+
             return {
                 status: Status.SUCCESS,
                 model: {
@@ -44,6 +44,11 @@ export class DefaultOrderDetailsMapper implements OrderDetailsMapper {
                         fee: CertificateTextMapper.prependCurrencySymbol(response.value.resource?.totalOrderCost)
                     }
                 } as OrderDetails
+            } as OrderDetailsResults;
+        } else if (response.value.httpStatusCode === 404){
+            DefaultOrderDetailsMapper.logger.error("Checkout endpoint returned HTTP [" + response.value.httpStatusCode + "] with error(s): '" + (response.value.errors || []).map(error => error.error).join(", ") + "'");
+            return {
+                status: Status.CLIENT_ERROR
             } as OrderDetailsResults;
         } else {
             DefaultOrderDetailsMapper.logger.error("Checkout endpoint returned HTTP [" + response.value.httpStatusCode + "] with error(s): '" + (response.value.errors || []).map(error => error.error).join(", ") + "'");

@@ -112,11 +112,12 @@ describe("LPOrderDetailsMapper", () => {
                     principalPlaceOfBusiness: "Current address",
                     generalPartners: "Yes",
                     limitedPartners: "Yes",
-                    generalNatureOfBusiness: "Yes"
+                    generalNatureOfBusiness: "Yes",
+                    isNotDissolution: true
                 },
                 deliveryInfo: {
                     deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
-                    deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
+                    deliveryDetails: "John Test\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
                 },
                 paymentDetails: {
                     paymentReference: "somereference",
@@ -225,11 +226,12 @@ describe("LPOrderDetailsMapper", () => {
                     principalPlaceOfBusiness: "Current address",
                     generalPartners: "No",
                     limitedPartners: "No",
-                    generalNatureOfBusiness: "No"
+                    generalNatureOfBusiness: "No",
+                    isNotDissolution: true
                 },
                 deliveryInfo: {
                     deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
-                    deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
+                    deliveryDetails: "John Test\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
                 },
                 paymentDetails: {
                     paymentReference: "somereference",
@@ -257,6 +259,27 @@ describe("LPOrderDetailsMapper", () => {
         // then
         expect(actual).toEqual({
             status: Status.SERVER_ERROR
+        });
+    });
+
+    it("Maps a client error response", () => {
+        // given
+        const serverResponse = new Failure<ApiResponse<Checkout>, ApiErrorResponse>({
+            httpStatusCode: 404,
+            errors: [{
+                error: "Something went wrong",
+            }, {
+                error: "Something else went wrong"
+            }]
+        });
+        const mapper = new LPOrderDetailsMapper();
+
+        // when
+        const actual = mapper.map(serverResponse);
+
+        // then
+        expect(actual).toEqual({
+            status: Status.CLIENT_ERROR
         });
     });
 });

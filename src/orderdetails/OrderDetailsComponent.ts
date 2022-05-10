@@ -1,6 +1,5 @@
 import {AbstractViewComponent} from "../core/AbstractViewComponent";
 import {ViewModel} from "../core/ViewModel";
-import { optionFilter } from "./OptionFilter";
 import { OrderDetails } from "./OrderDetails";
 
 export class OrderDetailsComponent extends AbstractViewComponent {
@@ -11,7 +10,6 @@ export class OrderDetailsComponent extends AbstractViewComponent {
     render(): ViewModel {
         const model = super.render();
         model.data = this.orderDetails.certificateDetails
-        model.data.optionFilter = optionFilter
         return model;
     }
 }

@@ -31,4 +31,8 @@ export class PageFactory implements ErrorPageBuildable {
     buildUnauthorised(): ViewModel {
         return this.globalPageFactory.buildUnauthorised();
     }
+
+    buildNotFound(): ViewModel {
+        return this.globalPageFactory.buildNotFound();
+    }
 }
