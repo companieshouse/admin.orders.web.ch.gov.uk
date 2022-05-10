@@ -5,7 +5,7 @@ export class OrderDetails {
 }
 
 class CertificateDetails {
-    public readonly orderNumber?: string
+    public orderNumber?: string
     public orderedBy?: string;
     public companyName?: string;
     public companyNumber?: string;

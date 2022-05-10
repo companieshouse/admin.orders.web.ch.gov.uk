@@ -98,7 +98,6 @@ describe("LPOrderDetailsMapper", () => {
         // when
         const result = mapper.map(serverResponse);
 
-        console.log(result)
         // then
         expect(result).toEqual({
             status: "SUCCESS",
@@ -212,7 +211,6 @@ describe("LPOrderDetailsMapper", () => {
         // when
         const result = mapper.map(serverResponse);
 
-        console.log(result)
         // then
         expect(result).toEqual({
             status: "SUCCESS",
