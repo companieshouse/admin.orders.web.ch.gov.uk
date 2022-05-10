@@ -4,7 +4,8 @@ import {
 } from "@companieshouse/api-sdk-node/dist/services/order/certificates/types";
 import { DeliveryDetails } from "@companieshouse/api-sdk-node/dist/services/order/basket/types";
 import { AddressRecordsType } from "./AddressRecordsType";
-const escape = require("escape-html");
+import { CompanyStatus } from "./CompanyStatus";
+import { CertificateDetails } from "./OrderDetails";
 
 export abstract class CertificateTextMapper {
     static isOptionSelected (itemOption: Boolean | undefined): string {
@@ -203,5 +204,19 @@ export abstract class CertificateTextMapper {
             htmlString += element + "\n";
         });
         return htmlString;
+    }
+
+    static filterMappings(details: CertificateDetails, companyStatus: string): CertificateDetails {
+        if (companyStatus === CompanyStatus.ACTIVE) {
+            delete details.administrators;
+            delete details.liquidators;
+        } else if (companyStatus == CompanyStatus.LIQUIDATION) {
+            delete details.statementOfGoodStanding;
+            delete details.administrators;
+        } else if (companyStatus === CompanyStatus.ADMINISTRATION) {
+            delete details.statementOfGoodStanding;
+            delete details.liquidators;
+        } 
+        return details;
     }
 }

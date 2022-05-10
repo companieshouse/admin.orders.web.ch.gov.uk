@@ -12,7 +12,8 @@ import { OrderDetailsResults } from "./OrderDetailsResults";
 export class LPOrderDetailsMapper implements OrderDetailsMapper {
 
     private static readonly logger = createLogger("LPOrderDetailsMapper");
-    
+    private readonly DISSOLUTION = "dissolution";
+
     map(response: ApiResult<ApiResponse<Checkout>>): OrderDetailsResults {
         if (response.isSuccess()) {
             let item = response.value.resource?.items[0]
@@ -30,7 +31,8 @@ export class LPOrderDetailsMapper implements OrderDetailsMapper {
                         principalPlaceOfBusiness: CertificateTextMapper.mapAddressOption(itemOptions.principalPlaceOfBusinessDetails?.includeAddressRecordsType),
                         generalPartners: CertificateTextMapper.isOptionSelected(itemOptions.generalPartnerDetails?.includeBasicInformation),
                         limitedPartners: CertificateTextMapper.isOptionSelected(itemOptions.limitedPartnerDetails?.includeBasicInformation),
-                        generalNatureOfBusiness: CertificateTextMapper.isOptionSelected(itemOptions.includeGeneralNatureOfBusinessInformation)
+                        generalNatureOfBusiness: CertificateTextMapper.isOptionSelected(itemOptions.includeGeneralNatureOfBusinessInformation),
+                        isNotDissolution: itemOptions.certificateType !== this.DISSOLUTION
                     },
                     deliveryInfo: {
                         deliveryMethod: CertificateTextMapper.mapDeliveryMethod(itemOptions),

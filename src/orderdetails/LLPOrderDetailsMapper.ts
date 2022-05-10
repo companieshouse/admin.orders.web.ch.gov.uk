@@ -13,32 +13,30 @@ import { OrderDetailsResults } from "./OrderDetailsResults";
 export class LLPOrderDetailsMapper implements OrderDetailsMapper {
 
     private static readonly logger = createLogger("LLPOrderDetailsMapper");
-    
+    private readonly DISSOLUTION = "dissolution";
+
     map(response: ApiResult<ApiResponse<Checkout>>): OrderDetailsResults {
         if (response.isSuccess()) {
             let item = response.value.resource?.items[0]
             let itemOptions = item?.itemOptions as CertificateItemOptions
+            let certificateDetails = {
+                orderNumber: response.value.resource?.reference,
+                orderedBy: response.value.resource?.checkedOutBy.email,
+                companyName: item?.companyName,
+                companyNumber: item?.companyNumber,
+                certificateType: CertificateTextMapper.mapCertificateType(itemOptions.certificateType),
+                statementOfGoodStanding: CertificateTextMapper.isOptionSelected(itemOptions.includeGoodStandingInformation),
+                registeredOfficeAddress: CertificateTextMapper.mapAddressOption(itemOptions.registeredOfficeAddressDetails?.includeAddressRecordsType),
+                designatedMembers: CertificateTextMapper.mapMembersOptions("Including designated members':", itemOptions.designatedMemberDetails),
+                members: CertificateTextMapper.mapMembersOptions("Including members':", itemOptions.memberDetails),
+                liquidators: CertificateTextMapper.isOptionSelected(itemOptions.liquidatorsDetails?.includeBasicInformation),
+                administrators: CertificateTextMapper.isOptionSelected(itemOptions.administratorsDetails?.includeBasicInformation),
+                isNotDissolution: itemOptions.certificateType !== this.DISSOLUTION
+            }
             return {
                 status: Status.SUCCESS,
                 model: {
-                    certificateDetails: {
-                        orderNumber: response.value.resource?.reference,
-                        orderedBy: response.value.resource?.checkedOutBy.email,
-                        companyName: item?.companyName,
-                        companyNumber: item?.companyNumber,
-                        certificateType: CertificateTextMapper.mapCertificateType(itemOptions.certificateType),
-                        statementOfGoodStanding: CertificateTextMapper.isOptionSelected(itemOptions.includeGoodStandingInformation),
-                        registeredOfficeAddress: CertificateTextMapper.mapAddressOption(itemOptions.registeredOfficeAddressDetails?.includeAddressRecordsType),
-                        designatedMembers: CertificateTextMapper.mapMembersOptions("Including designated members':", itemOptions.designatedMemberDetails),
-                        members: CertificateTextMapper.mapMembersOptions("Including members':", itemOptions.memberDetails),
-                        liquidators: CertificateTextMapper.isOptionSelected(itemOptions.liquidatorsDetails?.includeBasicInformation),
-                        administrators: CertificateTextMapper.isOptionSelected(itemOptions.administratorsDetails?.includeBasicInformation),
-                        filterMappings: {
-                            statementOfGoodStanding: itemOptions.companyStatus === CompanyStatus.ACTIVE,
-                            liquidators: itemOptions.companyStatus === CompanyStatus.LIQUIDATION,
-                            administrators: itemOptions.companyStatus === CompanyStatus.ADMINISTRATION
-                        }
-                    },
+                    certificateDetails: CertificateTextMapper.filterMappings(certificateDetails, itemOptions.companyStatus),
                     deliveryInfo: {
                         deliveryMethod: CertificateTextMapper.mapDeliveryMethod(itemOptions),
                         deliveryDetails: CertificateTextMapper.mapDeliveryDetails(response.value.resource?.deliveryDetails),
