@@ -4,9 +4,10 @@ import { createLogger } from "@companieshouse/structured-logging-node";
 import { Status } from "core/Status";
 import { CertificateTextMapper } from "./CertificateTextMapper";
 import { CompanyStatus } from "./CompanyStatus";
-import { OrderDetails } from "./OrderDetails";
+import { OrderDetails, CertificateDetails } from "./OrderDetails";
 import { OrderDetailsMapper } from "./OrderDetailsMapper";
 import { OrderDetailsResults } from "./OrderDetailsResults";
+import { isString } from "util";
 
 export class DefaultOrderDetailsMapper implements OrderDetailsMapper {
 
@@ -14,30 +15,29 @@ export class DefaultOrderDetailsMapper implements OrderDetailsMapper {
 
     map(response: ApiResult<ApiResponse<Checkout>>): OrderDetailsResults {
         if (response.isSuccess()) {
+
             let item = response.value.resource?.items[0]
             let itemOptions = item?.itemOptions as CertificateItemOptions
+            let certificateDetails = {
+                orderNumber: response.value.resource?.reference,
+                orderedBy: response.value.resource?.checkedOutBy.email,
+                companyName: item?.companyName,
+                companyNumber: item?.companyNumber,
+                certificateType: CertificateTextMapper.mapCertificateType(itemOptions.certificateType),
+                statementOfGoodStanding: CertificateTextMapper.isOptionSelected(itemOptions.includeGoodStandingInformation),
+                registeredOfficeAddress: CertificateTextMapper.mapAddressOption(itemOptions.registeredOfficeAddressDetails?.includeAddressRecordsType),
+                directors: CertificateTextMapper.mapDirectorOptions(itemOptions.directorDetails),
+                secretaries: CertificateTextMapper.mapSecretaryOptions(itemOptions.secretaryDetails),
+                companyObjects: CertificateTextMapper.isOptionSelected(itemOptions.includeCompanyObjectsInformation),
+                liquidators: CertificateTextMapper.isOptionSelected(itemOptions.liquidatorsDetails?.includeBasicInformation),
+                administrators: CertificateTextMapper.isOptionSelected(itemOptions.administratorsDetails?.includeBasicInformation),
+                isNotDissolution: itemOptions.certificateType !== "dissolution"
+            } as CertificateDetails
+            
             return {
                 status: Status.SUCCESS,
                 model: {
-                    certificateDetails: {
-                        orderNumber: response.value.resource?.reference,
-                        orderedBy: response.value.resource?.checkedOutBy.email,
-                        companyName: item?.companyName,
-                        companyNumber: item?.companyNumber,
-                        certificateType: CertificateTextMapper.mapCertificateType(itemOptions.certificateType),
-                        statementOfGoodStanding: CertificateTextMapper.isOptionSelected(itemOptions.includeGoodStandingInformation),
-                        registeredOfficeAddress: CertificateTextMapper.mapAddressOption(itemOptions.registeredOfficeAddressDetails?.includeAddressRecordsType),
-                        directors: CertificateTextMapper.mapDirectorOptions(itemOptions.directorDetails),
-                        secretaries: CertificateTextMapper.mapSecretaryOptions(itemOptions.secretaryDetails),
-                        companyObjects: CertificateTextMapper.isOptionSelected(itemOptions.includeCompanyObjectsInformation),
-                        liquidators: CertificateTextMapper.isOptionSelected(itemOptions.liquidatorsDetails?.includeBasicInformation),
-                        administrators: CertificateTextMapper.isOptionSelected(itemOptions.administratorsDetails?.includeBasicInformation),
-                        filterMappings: {
-                            statementOfGoodStanding: itemOptions.companyStatus === CompanyStatus.ACTIVE,
-                            liquidators: itemOptions.companyStatus === CompanyStatus.LIQUIDATION,
-                            administrators: itemOptions.companyStatus === CompanyStatus.ADMINISTRATION
-                        }
-                    },
+                    certificateDetails: this.filterMappings(certificateDetails, itemOptions.companyStatus),
                     deliveryInfo: {
                         deliveryMethod: CertificateTextMapper.mapDeliveryMethod(itemOptions),
                         deliveryDetails: CertificateTextMapper.mapDeliveryDetails(response.value.resource?.deliveryDetails),
@@ -54,5 +54,19 @@ export class DefaultOrderDetailsMapper implements OrderDetailsMapper {
                 status: Status.SERVER_ERROR
             } as OrderDetailsResults;
         }
+    }
+
+    filterMappings(details: CertificateDetails, companyStatus: string): CertificateDetails {
+        if (companyStatus === CompanyStatus.ACTIVE) {
+            delete details.administrators;
+            delete details.liquidators;
+        } else if (companyStatus == CompanyStatus.LIQUIDATION) {
+            delete details.statementOfGoodStanding;
+            delete details.administrators;
+        } else if (companyStatus === CompanyStatus.ADMINISTRATION) {
+            delete details.statementOfGoodStanding;
+            delete details.liquidators;
+        } 
+        return details;
     }
 }

@@ -4,7 +4,7 @@ export class OrderDetails {
     public paymentDetails?: PaymentDetails
 }
 
-class CertificateDetails {
+export class CertificateDetails {
     public orderNumber?: string
     public orderedBy?: string;
     public companyName?: string;
@@ -23,6 +23,7 @@ class CertificateDetails {
     public companyObjects?: string;
     public liquidators?: string;
     public administrators?: string;
+    public isNotDissolution?: boolean;
 }
 
 class DeliveryInfo {

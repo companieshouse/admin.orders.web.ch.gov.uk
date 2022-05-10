@@ -200,7 +200,7 @@ export abstract class CertificateTextMapper {
         let htmlString: string = "";
 
         mappings.forEach((element) => {
-            htmlString += element + "<br>";
+            htmlString += element + "\n";
         });
         return htmlString;
     }
