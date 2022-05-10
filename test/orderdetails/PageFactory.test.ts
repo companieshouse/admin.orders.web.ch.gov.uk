@@ -10,8 +10,8 @@ describe("PageFactory", () => {
         // given
         const pageFactory = new PageFactory(new GlobalPageFactory());
         const orderDetails: OrderDetails = {
-            orderNumber: "ORD-957216-028332",
             certificateDetails: {
+                orderNumber: "ORD-957216-028332",
                 orderedBy: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
                 companyName: "TestDefault",
                 companyNumber: "TT000056",
@@ -40,7 +40,8 @@ describe("PageFactory", () => {
 
         // then
         expect(actual).toEqual(new ViewModel("page", [
-            new ViewModel("order_details_component.njk", [], {
+            new ViewModel("orderDetails/order_details_component.njk", [], {
+                orderNumber: "ORD-957216-028332",
                 orderedBy: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
                 companyName: "TestDefault",
                 companyNumber: "TT000056",
@@ -49,16 +50,16 @@ describe("PageFactory", () => {
                 registeredOfficeAddress: "Current address",
                 designatedMembers: "Including designated members':<br><br>Appointment date<br>",
             }),
-            new ViewModel("delivery_details_component.njk", [], {
+            new ViewModel("orderDetails/delivery_details_component.njk", [], {
                 deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
                 deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
             }),
-            new ViewModel("payment_details_component.njk", [], {
+            new ViewModel("orderDetails/payment_details_component.njk", [], {
                 paymentReference: "somereference",
                 fee: "£15"
             }),
         ],{
-           title : "ORD-957216-028332"
+           title : "Order Details"
         }));
     });
 
@@ -89,6 +90,21 @@ describe("PageFactory", () => {
             new ViewModel("unauthorised.njk", [])
         ], {
             title: "Unauthorised"
+        }));
+    });
+
+    it("Builds a not found page", () => {
+        // given
+        const pageFactory = new PageFactory(new GlobalPageFactory());
+
+        // when
+        const actual = pageFactory.buildNotFound();
+
+        // then
+        expect(actual).toEqual(new ViewModel("page", [
+            new ViewModel("not_found.njk", [])
+        ], {
+            title: "Page not found"
         }));
     });
 });

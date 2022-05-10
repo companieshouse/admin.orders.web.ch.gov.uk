@@ -82,7 +82,7 @@ describe("SearchResultsMapper", () => {
                     productLine: "Certificate",
                     orderDate: "01/01/2022",
                     paymentStatus: "Paid",
-                    detailHref: "/orders-admin/order/ORD-123123-123123",
+                    detailHref: "/orders-admin/orders/ORD-123123-123123",
                 },
                 {
                     id: "ORD-321321-321321",

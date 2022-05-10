@@ -2,12 +2,10 @@ export class OrderDetails {
     public certificateDetails?: CertificateDetails
     public deliveryInfo?: DeliveryInfo
     public paymentDetails?: PaymentDetails
-
-    constructor(public readonly orderNumber: string) {
-    }
 }
 
-class CertificateDetails {
+export class CertificateDetails {
+    public orderNumber?: string
     public orderedBy?: string;
     public companyName?: string;
     public companyNumber?: string;
@@ -25,6 +23,7 @@ class CertificateDetails {
     public companyObjects?: string;
     public liquidators?: string;
     public administrators?: string;
+    public isNotDissolution?: boolean;
 }
 
 class DeliveryInfo {

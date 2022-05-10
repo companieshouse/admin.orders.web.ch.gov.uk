@@ -4,7 +4,7 @@ import { OrderDetails } from "./OrderDetails";
 
 export class PaymentDetailsComponent extends AbstractViewComponent {
     constructor(private orderDetails: OrderDetails) {
-        super("payment_details_component.njk", []);
+        super("orderDetails/payment_details_component.njk", []);
     }
 
     render(): ViewModel {

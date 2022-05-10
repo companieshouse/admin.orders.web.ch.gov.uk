@@ -31,4 +31,19 @@ describe("GlobalPageFactory", () => {
             title: "Unauthorised"
         }));
     });
+
+    it("Builds a not found page", () => {
+        // given
+        const pageFactory = new GlobalPageFactory();
+
+        // when
+        const actual = pageFactory.buildNotFound();
+
+        // then
+        expect(actual).toEqual(new ViewModel("page", [
+            new ViewModel("not_found.njk", [])
+        ], {
+            title: "Page not found"
+        }));
+    });
 });

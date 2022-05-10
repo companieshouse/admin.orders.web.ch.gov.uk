@@ -4,7 +4,7 @@ import { OrderDetails } from "./OrderDetails";
 
 export class DeliveryDetailsComponent extends AbstractViewComponent {
     constructor(private orderDetails: OrderDetails) {
-        super("delivery_details_component.njk", []);
+        super("orderDetails/delivery_details_component.njk", []);
     }
 
     render(): ViewModel {

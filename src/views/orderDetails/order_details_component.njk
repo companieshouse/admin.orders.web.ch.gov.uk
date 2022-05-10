@@ -1,3 +1,6 @@
+<h1 class="govuk-heading-xl">
+    {{ control.data.orderNumber }}
+</h1>
 <h2 class="govuk-heading-l">
     Order details
 </h2>
@@ -38,146 +41,149 @@
         </dd>
     </div>
 
-    {% if control.data.statementOfGoodStanding %}
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                Statement of good standing
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{ control.data.statementOfGoodStanding }}
-            </dd>
-        </div>
-    {% endif %}
+    {% if control.data.isNotDissolution %}
+        {% if control.data.statementOfGoodStanding %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Statement of good standing
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.statementOfGoodStanding }}
+                </dd>
+            </div>
+        {% endif %}
 
-    {% if control.data.registeredOfficeAddress %}
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                Registered office address
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{ control.data.registeredOfficeAddress }}
-            </dd>
-        </div>
-    {% endif %}
+        {% if control.data.registeredOfficeAddress %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Registered office address
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.registeredOfficeAddress }}
+                </dd>
+            </div>
+        {% endif %}
 
-    {% if control.data.principalPlaceOfBusiness %}
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                Registered office address
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{ control.data.principalPlaceOfBusiness }}
-            </dd>
-        </div>
-    {% endif %}
+        {% if control.data.principalPlaceOfBusiness %}
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Principal place of business
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.principalPlaceOfBusiness }}
+                </dd>
+            </div>
+        {% endif %}
 
-    {% if control.data.directors %}   
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                The names of all current company directors
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{ control.data.directors }}
-            </dd>
-        </div>
-    {% endif %}
+        {% if control.data.directors %}   
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    The names of all current company directors
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.directors | striptags(true) | escape | nl2br }}
+                </dd>
+            </div>
+        {% endif %}
 
-    {% if control.data.secretaries %}   
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                The names of all current secretaries
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{ control.data.secretaries }}
-            </dd>
-        </div>
-    {% endif %}
+        {% if control.data.secretaries %}   
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    The names of all current secretaries
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.secretaries | striptags(true) | escape | nl2br }}
+                </dd>
+            </div>
+        {% endif %}
 
-    {% if control.data.designatedMembers %}   
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                The names of all current designated members
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{ control.data.designatedMembers }}
-            </dd>
-        </div>
-    {% endif %}
+        {% if control.data.designatedMembers %}   
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    The names of all current designated members
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.designatedMembers | striptags(true) | escape | nl2br }}
+                </dd>
+            </div>
+        {% endif %}
 
-    {% if control.data.members %}   
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                The names of all current members
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{ control.data.members }}
-            </dd>
-        </div>
-    {% endif %}
+        {% if control.data.members %}   
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    The names of all current members
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.members | striptags(true) | escape | nl2br }}
+                </dd>
+            </div>
+        {% endif %}
 
-    {% if control.data.generalPartners %}   
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                The names of all current general partners
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{ control.data.generalPartners }}
-            </dd>
-        </div>
-    {% endif %}
+        {% if control.data.generalPartners %}   
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    The names of all current general partners
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.generalPartners }}
+                </dd>
+            </div>
+        {% endif %}
 
-    {% if control.data.limitedPartners %}   
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                The names of all current limited partners
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{ control.data.limitedPartners }}
-            </dd>
-        </div>
-    {% endif %}
+        {% if control.data.limitedPartners %}   
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    The names of all current limited partners
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.limitedPartners }}
+                </dd>
+            </div>
+        {% endif %}
 
-    {% if control.data.generalNatureOfBusiness %}   
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                General nature of business
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{ control.data.generalNatureOfBusiness }}
-            </dd>
-        </div>
-    {% endif %}
+        {% if control.data.generalNatureOfBusiness %}   
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    General nature of business
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.generalNatureOfBusiness }}
+                </dd>
+            </div>
+        {% endif %}
 
-    {% if control.data.companyObjects %}   
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                Company objects
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{ control.data.companyObjects }}
-            </dd>
-        </div>
-    {% endif %}
+        {% if control.data.companyObjects %}   
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Company objects
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.companyObjects }}
+                </dd>
+            </div>
+        {% endif %}
 
-    {% if control.data.liquidators %}   
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                Liquidators' details
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{ control.data.liquidators }}
-            </dd>
-        </div>
-    {% endif %}
+        {% if control.data.liquidators %}   
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Liquidators' details
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.liquidators }}
+                </dd>
+            </div>
+        {% endif %}
 
-    {% if control.data.administrators %}   
-        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-                Administrators' details
-            </dt>
-            <dd class="govuk-summary-list__value">
-                {{ control.data.administrators }}
-            </dd>
-        </div>
-    {% endif %}
+        {% if control.data.administrators %}   
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Administrators' details
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.administrators }}
+                </dd>
+            </div>
+        {% endif %}
+
+    {% endif %}       
 </dl>
