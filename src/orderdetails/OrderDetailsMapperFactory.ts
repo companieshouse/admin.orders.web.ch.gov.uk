@@ -1,20 +1,19 @@
-import { Service } from "typedi";
+import { Inject, Service } from "typedi";
 import { DefaultOrderDetailsMapper } from "./DefaultOrderDetailsMapper";
-import { NullOrderDetailsMapper } from "./NullOrderDetailsMapper";
+import { OrderDetailsErrorMapper } from "./OrderDetailsErrorMapper";
 import { LLPOrderDetailsMapper } from "./LLPOrderDetailsMapper";
 import { LPOrderDetailsMapper } from "./LPOrderDetailsMapper";
 import { OrderDetailsMapper } from "./OrderDetailsMapper";
 import { ApiResult, ApiResponse } from "@companieshouse/api-sdk-node/dist/services/resource";
 import { Checkout, CertificateItemOptions } from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
 import "reflect-metadata";
-import { Inject } from "typedi";
 
 @Service()
 export class OrderDetailsMapperFactory {
     private readonly mappers: Map<string, OrderDetailsMapper>
     constructor(@Inject() llpMapper: LLPOrderDetailsMapper, @Inject() lpMapper: LPOrderDetailsMapper,
-        @Inject() private readonly defaultMapper: DefaultOrderDetailsMapper, 
-        @Inject() private readonly nullMapper: NullOrderDetailsMapper) {
+        @Inject() private readonly defaultMapper: DefaultOrderDetailsMapper,
+        @Inject() private readonly nullMapper: OrderDetailsErrorMapper) {
         this.mappers = new Map<string, OrderDetailsMapper>();
         this.mappers.set("llp", llpMapper);
         this.mappers.set("limited-partnership", lpMapper);
