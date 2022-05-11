@@ -4,7 +4,6 @@ import {StubApiClientFactory} from "../../../dist/client/StubApiClientFactory";
 import failureJson from "../stubbing/failure.json";
 import orderPageJson from "../stubbing/success_page.json"
 import { expect } from "chai";
-import { Browser } from "selenium-webdriver";
 
 export interface DetailsPage {
     openPage(): Promise<void>;
@@ -27,8 +26,9 @@ export abstract class AbstractDetailsPage implements DetailsPage {
     protected constructor(protected detailsSteps: DetailsSteps, protected browserAgent: BrowserAgent, protected apiClientFactory: StubApiClientFactory) {
     }
 
-    openPage(): Promise<void> {
-        throw new Error("Invalid operation");
+    public async openPage(): Promise<void> {
+        await this.browserAgent.openPage("/orders-admin/orders/ORD-123123-123123");
+        this.detailsSteps.currentPage = this.detailsSteps.detailsPageLoaded;
     }
 
     anticipateValidOrder(): void {
@@ -90,28 +90,23 @@ export class DetailsPageNotLoaded extends AbstractDetailsPage {
         super(detailsSteps, browserAgent, apiClientFactory);
     }
 
-    public async openPage(): Promise<void> {
-        await this.browserAgent.openPage("/orders-admin/orders/ORD-123123-123123");
-        this.detailsSteps.currentPage = this.detailsSteps.detailsPageLoaded;
-    }
-
     anticipateValidOrder(): void {
-        this.apiClientFactory.willReturnSuccessfulResponse(orderPageJson);
+        this.apiClientFactory.willReturnSuccessfulCheckoutResponse(orderPageJson);
         this.detailsSteps.currentPage = this.detailsSteps.detailsPageLoaded;
     }
 
     anticipateInvalidOrder(): void {
-        this.apiClientFactory.willReturnFailureResponse(404, failureJson);
+        this.apiClientFactory.willReturnErrorCheckoutResponse(404, failureJson);
         this.detailsSteps.currentPage = this.detailsSteps.detailsPageInvalidOrder;
     }
 
     anticipateOrderNotFound(): void {
-        this.apiClientFactory.willReturnFailureResponse(404, failureJson);
+        this.apiClientFactory.willReturnErrorCheckoutResponse(404, failureJson);
         this.detailsSteps.currentPage = this.detailsSteps.detailsPageNotFound;
     }
 
     anticipateServiceUnavailable(): void {
-        this.apiClientFactory.willReturnFailureResponse(503, failureJson);
+        this.apiClientFactory.willReturnErrorCheckoutResponse(503, failureJson);
         this.detailsSteps.currentPage = this.detailsSteps.detailsPageServiceUnavailable;
     }
 }
@@ -121,13 +116,13 @@ export class DetailsPageLoaded extends AbstractDetailsPage {
         super(detailsSteps, browserAgent, apiClientFactory);
     }
 
-    // TODO 
+    // TODO
     clickBrowserBack(): Promise<void> {
         throw new Error("Invalid operation");
     }
 
     public async validateOrderDetails(data: string[][]): Promise<void> {
-        const resultList = await this.browserAgent.getList("#orderList");
+        const resultList = await this.browserAgent.getList("#orderDetailsList");
         for (const [index, element] of resultList.dataRows.entries()) {
             data[index].pop();
             expect(element.getValues()).to.deep.equal(data[index]);
@@ -136,7 +131,7 @@ export class DetailsPageLoaded extends AbstractDetailsPage {
     }
 
     public async validateDeliveryDetails(data: string[][]): Promise<void> {
-        const resultList = await this.browserAgent.getList("#deliveryList");
+        const resultList = await this.browserAgent.getList("#orderDeliveryList");
         for (const [index, element] of resultList.dataRows.entries()) {
             data[index].pop();
             expect(element.getValues()).to.deep.equal(data[index]);

@@ -80,7 +80,7 @@ export class DetailsSteps {
         await this.currentPage.validateLocation(path);
     }
 
-    @then(/^Not found should be displayed (Invalid)$/)
+    @then(/^Not found should be displayed as the order is invalid$/)
     async validateInvalidOrderError(): Promise<void> {
         await this.currentPage.validateInvalidOrderError();
     }
@@ -102,6 +102,6 @@ export class DetailsSteps {
 
     @then(/^I should be taken to the signout handler$/)
     public async verifySignInHandler() {
-        await this.currentPage.verifyLocation("/signout");
+        await this.currentPage.validateLocation("/signout");
     }
 }

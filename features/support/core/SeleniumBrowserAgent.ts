@@ -100,13 +100,13 @@ export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
         const headingNames = [];
         const headings = await list.findElements(By.css("dt"));
         for(const heading of headings) {
-            headingNames.push(heading.getText());
+            headingNames.push(await heading.getText());
         }
 
         const dataValues = [];
         const valuesList = await list.findElements(By.css("dd"));
         for(const value of valuesList) {
-            dataValues.push(value.getText());
+            dataValues.push(await value.getText());
         }
         const listData = [];
 

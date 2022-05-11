@@ -135,17 +135,17 @@ export class OrdersSearchPage extends AbstractSearchPage {
     }
 
     harnessOrdersApiWithResults(): void {
-        this.clientFactory.willReturnSuccessfulResponse(resultsJson);
+        this.clientFactory.willReturnSuccessfulSearchResponse(resultsJson);
         this.searchSteps.currentPage = this.searchSteps.anticipateResultsPageState;
     }
 
     harnessOrdersApiWithNoResults(): void {
-        this.clientFactory.willReturnSuccessfulResponse(noResultsJson);
+        this.clientFactory.willReturnSuccessfulSearchResponse(noResultsJson);
         this.searchSteps.currentPage = this.searchSteps.anticipateNoResultsPageState;
     }
 
     harnessOrdersApiWithError(): void {
-        this.clientFactory.willReturnFailureResponse(500, failureJson);
+        this.clientFactory.willReturnErrorSearchResponse(500, failureJson);
         this.searchSteps.currentPage = this.searchSteps.anticipateErrorPageState;
     }
 }

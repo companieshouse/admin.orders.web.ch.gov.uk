@@ -1,76 +1,67 @@
 {
-    paidAt: "2022-01-01T12:00:00.000Z",
-    status: "paid",
-    checkedOutBy: {
-        id: "123456",
-        email: "demo@ch.gov.uk"
+    "payment_reference": "payment_reference",
+    "etag": "F00DFACE",
+    "delivery_details": {
+        "country": "country",
+        "forename": "forename",
+        "locality": "locality",
+        "postal_code": "postal_code",
+        "surname": "surname",
+        "address_line_1": "address_line_1"
     },
-    links: {
-        self: `/orders/ORD-123123-123123`,
-        payment: `"/basket/checkouts/ORD-123123-123123/payment"`
+    "items": [
+        {
+            "id": "CRT-123123-123123",
+            "company_name": "company name",
+            "company_number": "12345678",
+            "description": "certificate for company 12345678",
+            "description_identifier": "certificate",
+            "description_values": {
+                "certificate": "certificate for company 12345678",
+                "company_number": "12345678"
+            },
+            "item_costs": [
+                {
+                    "discount_applied": "0",
+                    "item_cost": "15",
+                    "calculated_cost": "15",
+                    "product_type": "certificate"
+                }
+            ],
+            "item_options": {
+                "delivery_method": "postal",
+                "delivery_timescale": "standard",
+                "forename": "forename",
+                "surname": "surname",
+                "certificate_type": "incorporation-with-all-name-changes",
+                "director_details": {},
+                "registered_office_address_details": {},
+                "secretary_details": {}
+            },
+            "etag": "F00DFACE",
+            "kind": "item#certificate",
+            "links": {
+                "self": "/orderable/certificates/CRT-123123-123123"
+            },
+            "quantity": 1,
+            "item_uri": "/orderable/certificates/CRT-123123-123123",
+            "status": "unknown",
+            "postage_cost": "0",
+            "total_item_cost": "15",
+            "postal_delivery": true
+        }
+    ],
+    "kind": "order",
+    "total_order_cost": "15",
+    "reference": "ORD-123123-123123",
+    "paid_at": "2022-05-11T12:00:00.000",
+    "checked_out_by": {
+        "email": "demo@ch.gov.uk",
+        "id": "F00DFACE"
     },
-    paymentReference: "F00DFACE",
-    etag: "CAFE",
-    deliveryDetails: {
-        addressLine1: "address line 1",
-        addressLine2: "address line 2",
-        country: "country",
-        forename: "forename",
-        locality: "locality",
-        postalCode: "postal code",
-        region: "region",
-        surname: "surname",
-        poBox: "po box"
-    },
-    items: [{
-        id: "CRT-123456-123456",
-        companyName: "TEST COMPANY LIMITED",
-        companyNumber: "00000000",
-        description: "certificate for company 00000000",
-        descriptionIdentifier: "certificate",
-        descriptionValues: {
-            certificate: "certificate for company 00000000",
-            companyNumber: "00000000"
-        },
-        itemCosts: [{
-            discountApplied: "0",
-            itemCost: "15",
-            calculatedCost: "15",
-            productType: "certificate"
-        }],
-        itemOptions: {
-            certificateType: "incorporation-with-all-name-changes",
-            deliveryMethod: "postal",
-            deliveryTimescale: "standard",
-            directorDetails: {
-                includeBasicInformation: true
-            },
-            forename: "forename",
-            includeGoodStandingInformation: true,
-            registeredOfficeAddressDetails: {
-                includeAddressRecordsType: "current-and-previous"
-            },
-            secretaryDetails: {
-                includeBasicInformation: true
-            },
-            surname: "surname",
-            companyType: "ltd"
-        } as ItemOptions,
-        etag: "abcdefg123456",
-        kind: "item#certificate",
-        links: {
-            self: "/orderable/certificates/CRT-123456-123456"
-        },
-        postalDelivery: true,
-        quantity: 1,
-        itemUri: "/orderable/certificates/CRT-123456-123456",
-        status: "unknown",
-        postageCost: "0",
-        totalItemCost: "15",
-        customerReference: "mycert",
-        satisfiedAt: "2022-01-01T12:00:00.000Z"
-    }],
-    kind: "order",
-    totalOrderCost: "15",
-    reference: "ORD-123123-123123"
+    "status": "paid",
+    "links": {
+        "self": "/basket/checkouts/ORD-123123-123123",
+        "payment": "/basket/checkouts/ORD-123123-123123/payment"
+    }
 }
