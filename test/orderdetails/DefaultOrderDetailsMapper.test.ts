@@ -728,4 +728,26 @@ describe("DefaultOrderDetailsMapper", () => {
             status: Status.CLIENT_ERROR
         });
     });
+
+
+    it("Maps a not found error response to client error", () => {
+        // given
+        const serverResponse = new Failure<ApiResponse<Checkout>, ApiErrorResponse>({
+            httpStatusCode: 404,
+            errors: [{
+                error: "Something went wrong",
+            }, {
+                error: "Something else went wrong"
+            }]
+        });
+        const mapper = new DefaultOrderDetailsMapper();
+
+        // when
+        const actual = mapper.map(serverResponse);
+
+        // then
+        expect(actual).toEqual({
+            status: Status.CLIENT_ERROR
+        });
+    });
 });
