@@ -4,10 +4,12 @@ import { Status } from "core/Status";
 import { CertificateTextMapper } from "./CertificateTextMapper";
 import { CertificateDetails, OrderDetails } from "./OrderDetails";
 import { OrderDetailsResults } from "./OrderDetailsResults";
-import e = require("express");
 import { Success } from "@companieshouse/api-sdk-node/dist/services/result";
 import { AbstractOrderDetailsMapper } from "./AbstractOrderDetailsMapper";
+import {Service} from "typedi";
+import "reflect-metadata";
 
+@Service()
 export class LLPOrderDetailsMapper extends AbstractOrderDetailsMapper {
     mapSuccessfulResponse(response: Success<ApiResponse<Checkout>, ApiErrorResponse>): OrderDetailsResults {
         let item = response.value.resource?.items[0]
@@ -26,7 +28,7 @@ export class LLPOrderDetailsMapper extends AbstractOrderDetailsMapper {
             administrators: CertificateTextMapper.isOptionSelected(itemOptions.administratorsDetails?.includeBasicInformation),
             isNotDissolution: itemOptions.certificateType !== CertificateTextMapper.DISSOLUTION
         } as CertificateDetails
-        
+
         return {
             status: Status.SUCCESS,
             model: {
@@ -41,5 +43,5 @@ export class LLPOrderDetailsMapper extends AbstractOrderDetailsMapper {
                 }
             } as OrderDetails
         } as OrderDetailsResults;
-    } 
+    }
 }

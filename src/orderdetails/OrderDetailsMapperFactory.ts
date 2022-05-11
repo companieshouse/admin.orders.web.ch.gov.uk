@@ -6,6 +6,10 @@ import { LPOrderDetailsMapper } from "./LPOrderDetailsMapper";
 import { OrderDetailsMapper } from "./OrderDetailsMapper";
 import { ApiResult, ApiResponse } from "@companieshouse/api-sdk-node/dist/services/resource";
 import { Checkout, CertificateItemOptions } from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
+import "./DefaultOrderDetailsMapper";
+import "./OrderDetailsErrorMapper";
+import "./LLPOrderDetailsMapper";
+import "./LPOrderDetailsMapper";
 import "reflect-metadata";
 
 @Service()

@@ -6,7 +6,10 @@ import { OrderDetails } from "./OrderDetails";
 import { OrderDetailsResults } from "./OrderDetailsResults";
 import { Success } from "@companieshouse/api-sdk-node/dist/services/result";
 import { AbstractOrderDetailsMapper } from "./AbstractOrderDetailsMapper";
+import {Service} from "typedi";
+import "reflect-metadata";
 
+@Service()
 export class LPOrderDetailsMapper extends AbstractOrderDetailsMapper {
     mapSuccessfulResponse(response: Success<ApiResponse<Checkout>, ApiErrorResponse>): OrderDetailsResults {
         let item = response.value.resource?.items[0]
