@@ -95,7 +95,7 @@ describe("OrderDetailsService", () => {
                 }
             }
         });
-        
+
         const checkout: any = {};
         checkout.getCheckout = jest.fn(() => {
             return checkoutResponse;
@@ -130,6 +130,6 @@ describe("OrderDetailsService", () => {
         expect(apiClientFactory.newApiClient).toHaveBeenCalled();
         expect(checkout.getCheckout).toHaveBeenCalledWith("ORD-957216-028332");
         expect(mapper.map).toHaveBeenCalledWith(checkoutResponse);
-        expect(factory.getOrDefault).toHaveBeenCalledWith("plc");
+        expect(factory.getOrDefault).toHaveBeenCalledWith(checkoutResponse);
     });
 });
