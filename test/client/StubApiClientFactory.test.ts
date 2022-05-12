@@ -147,8 +147,8 @@ describe("StubApiClientFactory", () => {
                 self: `/orders/ORD-123123-123123`,
                 payment: `"/basket/checkouts/ORD-123123-123123/payment"`
             },
-            paymentReference: "1234567",
-            etag: "F00DFACE",
+            paymentReference: "F00DFACE",
+            etag: "CAFE",
             deliveryDetails: {
                 addressLine1: "address line 1",
                 addressLine2: "address line 2",
@@ -162,7 +162,7 @@ describe("StubApiClientFactory", () => {
             },
             items: [{
                 id: "CRT-123456-123456",
-                companyName: "Company Name",
+                companyName: "TEST COMPANY LIMITED",
                 companyNumber: "00000000",
                 description: "certificate for company 00000000",
                 descriptionIdentifier: "certificate",
