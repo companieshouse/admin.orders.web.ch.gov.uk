@@ -1,0 +1,22 @@
+<h2 class="govuk-heading-l">
+    Delivery details
+</h2>
+<dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Delivery method
+        </dt>
+        <dd class="govuk-summary-list__value">
+            {{ control.data.deliveryMethod }}
+        </dd>
+    </div>
+
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            Delivery details
+        </dt>
+        <dd class="govuk-summary-list__value">
+            {{ control.data.deliveryDetails | striptags(true) | escape | nl2br }}
+        </dd>
+    </div>
+</dl>
