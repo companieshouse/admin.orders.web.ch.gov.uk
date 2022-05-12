@@ -3,6 +3,7 @@ import {Service} from "typedi";
 import "reflect-metadata";
 import {Builder, By, WebDriver} from "selenium-webdriver";
 import {SearchResultsRow, SearchResultsTable} from "./SearchResultsTable";
+import {OrderDataRow, OrderDataList} from "./OrderDataList";
 import { URL } from "url";
 
 @Service("selenium")
@@ -86,6 +87,34 @@ export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
             }
         }
         return new SearchResultsTable(tableRows);
+    }
+    public async getList(selector: string): Promise<OrderDataList> {
+        if (this.driver == null) {
+            throw new Error("Driver not started");
+        }
+        const list = await this.driver.findElement(By.css(selector));
+        const tagName = await list.getTagName();
+        if (tagName !== "dl") {
+            throw new Error("Expected " + selector + " to refer to a data list but got: " + tagName);
+        }
+        const headingNames = [];
+        const headings = await list.findElements(By.css("dt"));
+        for(const heading of headings) {
+            headingNames.push(await heading.getText());
+        }
+
+        const dataValues = [];
+        const valuesList = await list.findElements(By.css("dd"));
+        for(const value of valuesList) {
+            dataValues.push(await value.getText());
+        }
+        const listData = [];
+
+        for (let i=0; i<headingNames.length; i++) {
+            listData.push(new OrderDataRow(headingNames[i], dataValues[i]));
+        }
+
+        return new OrderDataList(listData);
     }
 
     public async getElementText(selector: string): Promise<string> {

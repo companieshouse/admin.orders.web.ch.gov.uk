@@ -2,6 +2,7 @@
  * Manages interactions with a web browser.
  */
 import {SearchResultsTable} from "./SearchResultsTable";
+import { OrderDataList } from "./OrderDataList";
 
 export interface BrowserAgent {
     /**
@@ -45,6 +46,15 @@ export interface BrowserAgent {
      * @throws {Error} If the element is not a table or if it cannot be found.
      */
     getTable(selector: string): Promise<SearchResultsTable>;
+
+    /**
+     * Find and deserialise the data list referred to by the provided selector.
+     *
+     * @param selector A CSS selector corresponding to a data list on the page.
+     * @returns {OrderDataList} A deserialised {@link OrderDataList data list}.
+     * @throws {Error} If the element is not a table or if it cannot be found.
+     */
+    getList(selector: string): Promise<OrderDataList>;
 
     /**
      * Input text into the element referred to by the provided selector.
