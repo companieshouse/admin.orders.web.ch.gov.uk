@@ -2,22 +2,19 @@ import {DetailsSteps} from "./DetailsSteps";
 import {BrowserAgent} from "../core/BrowserAgent";
 import {StubApiClientFactory} from "../../../dist/client/StubApiClientFactory";
 import failureJson from "../stubbing/failure.json";
-import orderPageJson from "../stubbing/success_page.json"
 import { expect } from "chai";
 
 export interface DetailsPage {
     openPage(): Promise<void>;
-    anticipateValidOrder(): void;
-    anticipateInvalidOrder(): void;
+    anticipateValidOrder(body: any): void;
+    anticipateInvalidOrder(body: any): void;
     anticipateOrderNotFound(): void;
     anticipateServiceUnavailable(): void;
     clickBrowserBack(): Promise<void>;
-    clickSignOut(): Promise<void>;
     validateOrderDetails(data: string[][]): Promise<void>;
     validateDeliveryDetails(data: string[][]): Promise<void>;
     validatePaymentDetails(data: string[][]): Promise<void>;
     validateLocation(path: string): Promise<void>;
-    validateInvalidOrderError(): Promise<void>;
     validateNotFoundError(): Promise<void>;
     validateServiceUnavailableError(): Promise<void>;
 }
@@ -28,14 +25,13 @@ export abstract class AbstractDetailsPage implements DetailsPage {
 
     public async openPage(): Promise<void> {
         await this.browserAgent.openPage("/orders-admin/orders/ORD-123123-123123");
-        this.detailsSteps.currentPage = this.detailsSteps.detailsPageLoaded;
     }
 
-    anticipateValidOrder(): void {
+    anticipateValidOrder(body: any): void {
         throw new Error("Invalid operation");
     }
 
-    anticipateInvalidOrder(): void {
+    anticipateInvalidOrder(body: any): void {
         throw new Error("Invalid operation");
     }
 
@@ -49,10 +45,6 @@ export abstract class AbstractDetailsPage implements DetailsPage {
 
     clickBrowserBack(): Promise<void> {
         throw new Error("Invalid operation");
-    }
-
-    public async clickSignOut(): Promise<void> {
-        await this.browserAgent.clickElement(".sign-out-link");
     }
 
     validateOrderDetails(data: string[][]): Promise<void> {
@@ -72,10 +64,6 @@ export abstract class AbstractDetailsPage implements DetailsPage {
         expect(location).to.equal(path);
     }
 
-    validateInvalidOrderError(): Promise<void> {
-        throw new Error("Invalid operation");
-    }
-
     validateNotFoundError(): Promise<void> {
         throw new Error("Invalid operation");
     }
@@ -90,14 +78,14 @@ export class DetailsPageNotLoaded extends AbstractDetailsPage {
         super(detailsSteps, browserAgent, apiClientFactory);
     }
 
-    anticipateValidOrder(): void {
-        this.apiClientFactory.willReturnSuccessfulCheckoutResponse(orderPageJson);
+    anticipateValidOrder(body: any): void {
+        this.apiClientFactory.willReturnSuccessfulCheckoutResponse(body);
         this.detailsSteps.currentPage = this.detailsSteps.detailsPageLoaded;
     }
 
-    anticipateInvalidOrder(): void {
-        this.apiClientFactory.willReturnErrorCheckoutResponse(404, failureJson);
-        this.detailsSteps.currentPage = this.detailsSteps.detailsPageInvalidOrder;
+    anticipateInvalidOrder(body: any): void {
+        this.apiClientFactory.willReturnSuccessfulCheckoutResponse(body);
+        this.detailsSteps.currentPage = this.detailsSteps.detailsPageNotFound;
     }
 
     anticipateOrderNotFound(): void {
@@ -127,7 +115,7 @@ export class DetailsPageLoaded extends AbstractDetailsPage {
             data[index].pop();
             expect(element.getValues()).to.deep.equal(data[index]);
             // TODO: Check headings as well
-        };
+        }
     }
 
     public async validateDeliveryDetails(data: string[][]): Promise<void> {
@@ -135,7 +123,7 @@ export class DetailsPageLoaded extends AbstractDetailsPage {
         for (const [index, element] of resultList.dataRows.entries()) {
             data[index].pop();
             expect(element.getValues()).to.deep.equal(data[index]);
-        };
+        }
     }
 
     public async validatePaymentDetails(data: string[][]): Promise<void> {
@@ -143,20 +131,7 @@ export class DetailsPageLoaded extends AbstractDetailsPage {
         for (const [index, element] of resultList.dataRows.entries()) {
             data[index].pop();
             expect(element.getValues()).to.deep.equal(data[index]);
-        };
-    }
-}
-
-export class DetailsPageInvalidOrder extends AbstractDetailsPage {
-    constructor(detailsSteps: DetailsSteps, browserAgent: BrowserAgent, apiClientFactory: StubApiClientFactory) {
-        super(detailsSteps, browserAgent, apiClientFactory);
-    }
-
-    public async validateInvalidOrderError(): Promise<void> {
-        const headingText = await this.browserAgent.getElementText("h1");
-        const bodyText = await this.browserAgent.getElementText("#invalid-not-found-body");
-        expect(headingText).to.equal("This page cannot be found");
-        expect(bodyText).to.equal("Check that you have entered the correct web address or try using the search.");
+        }
     }
 }
 
@@ -167,8 +142,8 @@ export class DetailsPageNotFound extends AbstractDetailsPage {
 
     public async validateNotFoundError(): Promise<void> {
         const headingText = await this.browserAgent.getElementText("h1");
-        const bodyText = await this.browserAgent.getElementText("#page-not-found-body");
-        expect(headingText).to.equal("This page cannot be found");
+        const bodyText = await this.browserAgent.getElementText("#main-content p.govuk-body");
+        expect(headingText).to.equal("Order not found");
         expect(bodyText).to.equal("Check that you have entered the correct web address or try using the search.");
     }
 }
@@ -180,6 +155,6 @@ export class DetailsPageServiceUnavailable extends AbstractDetailsPage {
 
     public async validateServiceUnavailableError(): Promise<void> {
         const headingText = await this.browserAgent.getElementText("h1");
-        expect(headingText).to.equal("Sorry, this service is unavailable");
+        expect(headingText).to.equal("Service unavailable");
     }
 }

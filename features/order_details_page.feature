@@ -1,7 +1,7 @@
 Feature: View order details
 
   Scenario: View order details for an existing order
-    Given The checkout endpoint will return an order that is a paid certificate
+    Given The checkout endpoint will return a paid certificate order
     When I view order details
     Then The following order details should be displayed:
       | Ordered by     | Company name         | Company number | Certificate type                            | Statement of good standing | Registered office address | The names of all current company directors | The names of all current secretaries | Company objects |
@@ -13,15 +13,20 @@ Feature: View order details
       | Payment reference | Fee |
       | F00DFACE          | £15 |
 
-  Scenario: Invalid order
-    Given The checkout endpoint will return an order that is not a paid certificate
+  Scenario: Unpaid certificate
+    Given The checkout endpoint will return an unpaid certificate order
     When I view order details
-    Then Not found should be displayed as the order is invalid
+    Then Order not found should be displayed
+
+  Scenario: Not a certificate
+    Given The checkout endpoint will return a certified document order
+    When I view order details
+    Then Order not found should be displayed
 
   Scenario: Order not found
     Given The checkout endpoint will return HTTP 404 Not Found
     When I view order details
-    Then Not found should be displayed
+    Then Order not found should be displayed
 
   Scenario: Service unavailable
     Given The checkout endpoint will return a server error
@@ -29,7 +34,7 @@ Feature: View order details
     Then Service unavailable should be displayed
 
   Scenario: User signout
-    Given The checkout endpoint will return an order that is a paid certificate
+    Given The checkout endpoint will return a paid certificate order
     When I view order details
     And I click sign out
     Then I should be taken to the signout handler
