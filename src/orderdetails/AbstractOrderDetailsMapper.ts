@@ -12,8 +12,8 @@ export abstract class AbstractOrderDetailsMapper implements OrderDetailsMapper {
     private static readonly logger = createLogger("AbstractErrorMapper");
 
     map(response: ApiResult<ApiResponse<Checkout>>): OrderDetailsResults {
-        if (response.isSuccess() && response.value.resource?.items[0].kind !== CertificateTextMapper.ITEM_KIND_CERTIFICATE){
-            AbstractOrderDetailsMapper.logger.error("Item kind must be " + CertificateTextMapper.ITEM_KIND_CERTIFICATE + ", but was: " + response.value.resource?.items[0].kind);
+        if (response.isSuccess() && (response.value.resource?.items[0].kind !== CertificateTextMapper.ITEM_KIND_CERTIFICATE || response.value.resource?.status !== "paid")) {
+            AbstractOrderDetailsMapper.logger.error(`Order ${response.value.resource?.reference} is not a paid certificate`);
             return {
                 status: Status.CLIENT_ERROR
             } as OrderDetailsResults; 

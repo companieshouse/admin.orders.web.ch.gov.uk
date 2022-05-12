@@ -9,6 +9,6 @@ import "reflect-metadata";
 @Service()
 export class OrderDetailsErrorMapper extends AbstractOrderDetailsMapper {
     mapSuccessfulResponse(response: Success<ApiResponse<Checkout>, ApiErrorResponse>): OrderDetailsResults  {
-        throw new Error("Tried to map a successful response with NullOrderDetailsMapper");
+        throw new Error("Tried to map a successful response with OrderDetailsErrorMapper");
     }
 }
