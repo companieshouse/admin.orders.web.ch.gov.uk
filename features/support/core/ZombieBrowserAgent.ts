@@ -89,20 +89,22 @@ export class ZombieBrowserAgent implements BrowserAgent, AgentService {
         const headingNames = [];
         const headings = await list.querySelectorAll("dt");
         for(const heading of headings) {
-            headingNames.push(heading.innerHTML.trim());
+            let cleanHeading = heading.innerHTML.trim();
+            cleanHeading = cleanHeading.replace("<br>", "");
+            headingNames.push(cleanHeading);
         }
 
         const dataValues = [];
         const valuesList = await list.querySelectorAll("dd");
         for(const value of valuesList) {
-            dataValues.push(value.innerHTML.trim());
+            let cleanHeading = value.innerHTML.trim();
+            cleanHeading = cleanHeading.replace(/<br>/g, "");
+            dataValues.push(cleanHeading);
         }
         const listData = [];
 
         for (let i=0; i<headingNames.length; i++) {
-            const rowData = new Map<string, string>();
-            rowData.set(headingNames[i], dataValues[i]);
-            listData.push(new OrderDataRow(rowData));
+            listData.push(new OrderDataRow(headingNames[i], dataValues[i]));
         }
 
         return new OrderDataList(listData);

@@ -11,7 +11,12 @@ import {BrowserAgent} from "../core/BrowserAgent";
 import Container from "typedi";
 import {StubApiClientFactory} from "../../../dist/client/StubApiClientFactory";
 import {DataTable} from "@cucumber/cucumber";
-import orderPageJson from "../stubbing/success_page.json"
+import paidDefaultLiquidated from "../stubbing/paid_certificate_default_liq.json";
+import paidDefaultActive from "../stubbing/paid_certificate_default_active.json";
+import paidDefaultAdministrated from "../stubbing/paid_certificate_default_adm.json";
+import paidLlpAdministrated from "../stubbing/paid_certificate_llp_admin.json";
+import paidLlpActive from "../stubbing/paid_certificate_llp_active.json";
+import paidLpActive from "../stubbing/paid_certificate_lp_active.json";
 import unpaidCertificate from "../stubbing/unpaid_certificate.json";
 import notACertificate from "../stubbing/not_a_certificate.json";
 
@@ -30,9 +35,34 @@ export class DetailsSteps {
         this.currentPage = new DetailsPageNotLoaded(this, browserAgent, apiClientFactory);
     }
 
-    @given(/^The checkout endpoint will return a paid certificate order$/)
-    async anticipateValidOrder(): Promise<void> {
-        await this.currentPage.anticipateValidOrder(orderPageJson);
+    @given(/^The checkout endpoint will return a paid certificate order for a liquidated limited company$/)
+    async anticipateLiquidatedLimitedCompanyOrder(): Promise<void> {
+        await this.currentPage.anticipateValidOrder(paidDefaultLiquidated);
+    }
+
+    @given(/^The checkout endpoint will return a paid certificate order for an active limited company$/)
+    async anticipateActiveLimitedCompanyOrder(): Promise<void> {
+        await this.currentPage.anticipateValidOrder(paidDefaultActive);
+    }
+
+    @given(/^The checkout endpoint will return a paid certificate order for an administrated limited company with no options requested$/)
+    async anticipateAdministratedLimitedCompanyOrder(): Promise<void> {
+        await this.currentPage.anticipateValidOrder(paidDefaultAdministrated);
+    }
+
+    @given(/^The checkout endpoint will return a paid certificate order for an administrated LLP$/)
+    async anticipateAdministratedLLPOrder(): Promise<void> {
+        await this.currentPage.anticipateValidOrder(paidLlpAdministrated);
+    }
+
+    @given(/^The checkout endpoint will return a paid certificate order for an active LLP$/)
+    async anticipateActiveLLPOrder(): Promise<void> {
+        await this.currentPage.anticipateValidOrder(paidLlpActive);
+    }
+
+    @given(/^The checkout endpoint will return a paid certificate order for an active limited partnership$/)
+    async anticipateActiveLPOrder(): Promise<void> {
+        await this.currentPage.anticipateValidOrder(paidLpActive);
     }
 
     @given(/^The checkout endpoint will return an unpaid certificate order$/)
@@ -67,22 +97,17 @@ export class DetailsSteps {
 
     @then(/^The following order details should be displayed:$/)
     async validateOrderDetails(results: DataTable): Promise<void> {
-        await this.currentPage.validateOrderDetails(results.rows());
+        await this.currentPage.validateOrderDetails(results.raw());
     }
 
     @then(/^The following delivery details should be displayed:$/)
     async validateDeliveryDetails(results: DataTable): Promise<void> {
-        await this.currentPage.validateDeliveryDetails(results.rows());
+        await this.currentPage.validateDeliveryDetails(results.raw());
     }
 
     @then(/^The following payment details should be displayed:$/)
     async validatePaymentDetails(results: DataTable): Promise<void> {
-        await this.currentPage.validatePaymentDetails(results.rows());
-    }
-
-    // TODO:
-    async validateLocation(path: string): Promise<void> {
-        await this.currentPage.validateLocation(path);
+        await this.currentPage.validatePaymentDetails(results.raw());
     }
 
     @then(/^Order not found should be displayed$/)

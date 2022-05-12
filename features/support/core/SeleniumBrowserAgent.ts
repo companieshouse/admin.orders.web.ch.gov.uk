@@ -111,9 +111,7 @@ export class SeleniumBrowserAgent implements BrowserAgent, AgentService {
         const listData = [];
 
         for (let i=0; i<headingNames.length; i++) {
-            const rowData = new Map<string, string>();
-            rowData.set(headingNames[i], dataValues[i]);
-            listData.push(new OrderDataRow(rowData));
+            listData.push(new OrderDataRow(headingNames[i], dataValues[i]));
         }
 
         return new OrderDataList(listData);

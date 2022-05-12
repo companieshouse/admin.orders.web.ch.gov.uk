@@ -1,24 +1,27 @@
 {
-    "payment_reference": "payment_reference",
     "etag": "F00DFACE",
     "delivery_details": {
         "country": "country",
         "forename": "forename",
         "locality": "locality",
-        "postal_code": "postal_code",
+        "po_box": "po box",
+        "postal_code": "postal code",
+        "region": "region",
         "surname": "surname",
-        "address_line_1": "address_line_1"
+        "address_line_1": "address line 1",
+        "address_line_2": "address line 2"
     },
     "items": [
         {
             "id": "CRT-123123-123123",
-            "company_name": "company name",
-            "company_number": "12345678",
-            "description": "certificate for company 12345678",
+            "company_name": "TEST COMPANY LIMITED",
+            "company_number": "00000000",
+            "customer_reference": "customer reference",
+            "description": "certificate for company 00000000",
             "description_identifier": "certificate",
             "description_values": {
-                "certificate": "certificate for company 12345678",
-                "company_number": "12345678"
+                "certificate": "certificate for company 00000000",
+                "company_number": "00000000"
             },
             "item_costs": [
                 {
@@ -29,14 +32,24 @@
                 }
             ],
             "item_options": {
-                "delivery_method": "postal",
+                "collection_location": "collection location",
+                "contact_number": "0",
+                "delivery_method": "collection",
                 "delivery_timescale": "standard",
                 "forename": "forename",
                 "surname": "surname",
                 "certificate_type": "incorporation-with-all-name-changes",
-                "director_details": {},
-                "registered_office_address_details": {},
-                "secretary_details": {}
+                "director_details": {
+                },
+                "include_email_copy": false,
+                "administrators_details": {
+                },
+                "registered_office_address_details": {
+                },
+                "secretary_details": {
+                },
+                "company_type": "ltd",
+                "company_status": "administration"
             },
             "etag": "F00DFACE",
             "kind": "item#certificate",
@@ -54,12 +67,12 @@
     "kind": "order",
     "total_order_cost": "15",
     "reference": "ORD-123123-123123",
-    "paid_at": "2022-05-11T12:00:00.000",
     "checked_out_by": {
         "email": "demo@ch.gov.uk",
-        "id": "F00DFACE"
+        "id": "CAFE"
     },
     "status": "paid",
+    "payment_reference": "CAFE",
     "links": {
         "self": "/basket/checkouts/ORD-123123-123123",
         "payment": "/basket/checkouts/ORD-123123-123123/payment"

@@ -14,7 +14,6 @@ export interface DetailsPage {
     validateOrderDetails(data: string[][]): Promise<void>;
     validateDeliveryDetails(data: string[][]): Promise<void>;
     validatePaymentDetails(data: string[][]): Promise<void>;
-    validateLocation(path: string): Promise<void>;
     validateNotFoundError(): Promise<void>;
     validateServiceUnavailableError(): Promise<void>;
 }
@@ -57,11 +56,6 @@ export abstract class AbstractDetailsPage implements DetailsPage {
 
     validatePaymentDetails(data: string[][]): Promise<void> {
         throw new Error("Invalid operation");
-    }
-
-    public async validateLocation(path: string): Promise<void> {
-        const location = await this.browserAgent.getLocation();
-        expect(location).to.equal(path);
     }
 
     validateNotFoundError(): Promise<void> {
@@ -111,27 +105,20 @@ export class DetailsPageLoaded extends AbstractDetailsPage {
 
     public async validateOrderDetails(data: string[][]): Promise<void> {
         const resultList = await this.browserAgent.getList("#orderDetailsList");
-        for (const [index, element] of resultList.dataRows.entries()) {
-            data[index].pop();
-            expect(element.getValues()).to.deep.equal(data[index]);
-            // TODO: Check headings as well
-        }
+        expect(resultList.getNames()).to.deep.equal(data[0]);
+        expect(resultList.getValues()).to.deep.equal(data[1]);
     }
 
     public async validateDeliveryDetails(data: string[][]): Promise<void> {
-        const resultList = await this.browserAgent.getList("#orderDeliveryList");
-        for (const [index, element] of resultList.dataRows.entries()) {
-            data[index].pop();
-            expect(element.getValues()).to.deep.equal(data[index]);
-        }
+        const resultList = await this.browserAgent.getList("#deliveryDetailsList");
+        expect(resultList.getNames()).to.deep.equal(data[0]);
+        expect(resultList.getValues()).to.deep.equal(data[1]);
     }
 
     public async validatePaymentDetails(data: string[][]): Promise<void> {
-        const resultList = await this.browserAgent.getList("#paymentList");
-        for (const [index, element] of resultList.dataRows.entries()) {
-            data[index].pop();
-            expect(element.getValues()).to.deep.equal(data[index]);
-        }
+        const resultList = await this.browserAgent.getList("#paymentDetailsList");
+        expect(resultList.getNames()).to.deep.equal(data[0]);
+        expect(resultList.getValues()).to.deep.equal(data[1]);
     }
 }
 
