@@ -10,7 +10,6 @@ export interface DetailsPage {
     anticipateInvalidOrder(body: any): void;
     anticipateOrderNotFound(): void;
     anticipateServiceUnavailable(): void;
-    clickBrowserBack(): Promise<void>;
     validateOrderDetails(data: string[][]): Promise<void>;
     validateDeliveryDetails(data: string[][]): Promise<void>;
     validatePaymentDetails(data: string[][]): Promise<void>;
@@ -39,10 +38,6 @@ export abstract class AbstractDetailsPage implements DetailsPage {
     }
 
     anticipateServiceUnavailable(): void {
-        throw new Error("Invalid operation");
-    }
-
-    clickBrowserBack(): Promise<void> {
         throw new Error("Invalid operation");
     }
 
@@ -96,11 +91,6 @@ export class DetailsPageNotLoaded extends AbstractDetailsPage {
 export class DetailsPageLoaded extends AbstractDetailsPage {
     constructor(detailsSteps: DetailsSteps, browserAgent: BrowserAgent, apiClientFactory: StubApiClientFactory) {
         super(detailsSteps, browserAgent, apiClientFactory);
-    }
-
-    // TODO
-    clickBrowserBack(): Promise<void> {
-        throw new Error("Invalid operation");
     }
 
     public async validateOrderDetails(data: string[][]): Promise<void> {

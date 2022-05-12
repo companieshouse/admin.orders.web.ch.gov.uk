@@ -90,11 +90,6 @@ export class DetailsSteps {
         await this.currentPage.openPage();
     }
 
-    @when(/^I click the browser back button$/)
-    async clickBrowserBack(): Promise<void> {
-        await this.currentPage.clickBrowserBack();
-    }
-
     @then(/^The following order details should be displayed:$/)
     async validateOrderDetails(results: DataTable): Promise<void> {
         await this.currentPage.validateOrderDetails(results.raw());
