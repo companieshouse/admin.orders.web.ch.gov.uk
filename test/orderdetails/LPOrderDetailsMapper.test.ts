@@ -84,7 +84,7 @@ describe("LPOrderDetailsMapper", () => {
                     email: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
                     id: "zXUYdFHZPxwoUcWVEWaoGJkEAfK"
                 },
-                status: "failed",
+                status: "paid",
                 links: {
                     self: "/basket/checkouts/ORD-957216-028332",
                     payment: "/basket/checkouts/ORD-957216-028332/payment"
@@ -197,7 +197,7 @@ describe("LPOrderDetailsMapper", () => {
                     email: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
                     id: "zXUYdFHZPxwoUcWVEWaoGJkEAfK"
                 },
-                status: "failed",
+                status: "paid",
                 links: {
                     self: "/basket/checkouts/ORD-957216-028332",
                     payment: "/basket/checkouts/ORD-957216-028332/payment"

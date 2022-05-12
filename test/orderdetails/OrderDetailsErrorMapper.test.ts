@@ -2,7 +2,7 @@ import {Failure, Success} from "@companieshouse/api-sdk-node/dist/services/resul
 import {ApiErrorResponse, ApiResponse} from "@companieshouse/api-sdk-node/dist/services/resource";
 import {Checkout} from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
 import {Status} from "../../src/core/Status";
-import {OrderDetailsErrorMapper} from "../../dist/orderdetails/OrderDetailsErrorMapper";
+import {OrderDetailsErrorMapper} from "../../src/orderdetails/OrderDetailsErrorMapper";
 
 describe("OrderDetailsErrorMapper", () => {
     it("Maps a non-HTTP 404 Not Found error to a server error response", () => {
@@ -37,7 +37,7 @@ describe("OrderDetailsErrorMapper", () => {
                     id : "LLBdFxTUqSouJOKeflzCOuyguZq",
                     email : "testautomation61@companieshouse.gov.uk; forename=Test; surname=User"
                 },
-                status : "cancelled",
+                status : "paid",
                 links : {
                     payment : "/basket/checkouts/ORD-769316-028358/payment",
                     self : "/basket/checkouts/ORD-769316-028358"
@@ -125,6 +125,95 @@ describe("OrderDetailsErrorMapper", () => {
         });
     });
 
+    it("Maps a client error response when certificate is unpaid", () => {
+        // given
+        const serverResponse = new Success<ApiResponse<Checkout>, ApiErrorResponse>({
+            httpStatusCode: 200,
+            resource: {
+                paidAt: "sometime",
+                paymentReference: "somereference",
+                etag: "133c845078fc928fc38d409b9ffd732b2356f594",
+                deliveryDetails: {
+                    poBox: "poBox",
+                    country: "UK",
+                    forename: "John",
+                    locality: "Cardiff",
+                    postalCode: "CF14 3UZ",
+                    region: "Cardiff",
+                    surname: "Test",
+                    addressLine1: "1 Crown Way",
+                    addressLine2: "Maindy"
+                },
+                items: [
+                    {
+                        id: "CRT-102416-028334",
+                        companyName: "TestDefault",
+                        companyNumber: "TT000056",
+                        description: "certificate for company TT000056",
+                        descriptionIdentifier: "certificate",
+                        descriptionValues: {
+                            certificate: "certificate for company TT000056",
+                            companyNumber: "TT000056"
+                        },
+                        itemCosts: [
+                            {
+                                discountApplied: "0",
+                                itemCost: "15",
+                                calculatedCost: "15",
+                                productType: "certificate"
+                            }
+                        ],
+                        itemOptions: {
+                            companyStatus: "active",
+                            companyType: "plc",
+                            deliveryMethod: "postal",
+                            deliveryTimescale: "standard",
+                            forename: "John",
+                            surname: "Test",
+                            certificateType: "incorporation-with-all-name-changes",
+                            registeredOfficeAddressDetails: {
+                                includeAddressRecordsType: "current"
+                            },
+                            directorDetails: {},
+                            secretaryDetails: {}
+                        },
+                        etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
+                        kind: "item#certificate",
+                        links: {
+                            self: "/orderable/certificates/CRT-102416-028334"
+                        },
+                        quantity: 1,
+                        itemUri: "/orderable/certificates/CRT-102416-028334",
+                        status: "unknown",
+                        postageCost: "0",
+                        totalItemCost: "15",
+                        postalDelivery: true
+                    }
+                ],
+                kind: "order",
+                totalOrderCost: "15",
+                reference: "ORD-957216-028332",
+                checkedOutBy: {
+                    email: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
+                    id: "zXUYdFHZPxwoUcWVEWaoGJkEAfK"
+                },
+                status: "failed",
+                links: {
+                    self: "/basket/checkouts/ORD-957216-028332",
+                    payment: "/basket/checkouts/ORD-957216-028332/payment"
+                }
+            }
+        });
+        const mapper = new OrderDetailsErrorMapper();
+
+        // when
+        const actual = mapper.map(serverResponse);
+
+        // then
+        expect(actual).toEqual({
+            status: Status.CLIENT_ERROR
+        });
+    });
 
     it("Maps a not found error response to client error", () => {
         // given
@@ -229,7 +318,7 @@ describe("OrderDetailsErrorMapper", () => {
                     email: "testautomation5@companieshouse.gov.uk; forename=Test; surname=User",
                     id: "zXUYdFHZPxwoUcWVEWaoGJkEAfK"
                 },
-                status: "failed",
+                status: "paid",
                 links: {
                     self: "/basket/checkouts/ORD-957216-028332",
                     payment: "/basket/checkouts/ORD-957216-028332/payment"
