@@ -200,14 +200,16 @@ export abstract class CertificateTextMapper {
         return null;
     }
 
-    static mapEmailCopyRequired (itemOptions: Record<string, any>): string | null {
-        if (itemOptions?.includeEmailCopy === true) {
-            return "Yes";
+    static mapEmailCopyRequired (itemOptions: Record<string, any>): string {
+        if (itemOptions?.deliveryTimescale === "same-day") {
+            if (itemOptions?.includeEmailCopy === true) {
+                return "Yes";
+            }
+            if (itemOptions?.includeEmailCopy === false) {
+                return "No";
+            }
         }
-        if (itemOptions?.includeEmailCopy === false) {
-            return "No";
-        }
-        return null;
+        return "Email only available for express delivery method";
     }
 
     static mapToHtml (mappings: string[]): string {
