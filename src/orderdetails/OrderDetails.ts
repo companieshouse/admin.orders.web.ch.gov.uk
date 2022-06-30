@@ -29,6 +29,7 @@ export class CertificateDetails {
 class DeliveryInfo {
     public deliveryMethod?: string;
     public deliveryDetails?: string;
+    public emailCopyRequired?: string;
 }
 
 class PaymentDetails {
