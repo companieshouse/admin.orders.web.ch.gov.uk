@@ -195,9 +195,21 @@ export abstract class CertificateTextMapper {
             return "Standard delivery (aim to dispatch within 10 working days)";
         }
         if (itemOptions?.deliveryTimescale === "same-day") {
-            return "Same Day";
+            return "Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day)";
         }
         return null;
+    }
+
+    static mapEmailCopyRequired (itemOptions: Record<string, any>): string {
+        if (itemOptions?.deliveryTimescale === "same-day") {
+            if (itemOptions?.includeEmailCopy === true) {
+                return "Yes";
+            }
+            if (itemOptions?.includeEmailCopy === false) {
+                return "No";
+            }
+        }
+        return "Email only available for express delivery method";
     }
 
     static mapToHtml (mappings: string[]): string {
