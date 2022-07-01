@@ -7,8 +7,8 @@ Feature: View order details
       | Ordered by     | Company name         | Company number | Certificate type                            | Registered office address            | The names of all current company directors                                      | The names of all current secretaries                                | Company objects | Liquidators' details |
       | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | Current address and the two previous | Including directors':\n\nCorrespondence address\nDate of birth (month and year) | Including secretaries':\n\nCorrespondence address\nAppointment date | Yes             | Yes                  |
     And The following delivery details should be displayed:
-      | Delivery method                                            | Delivery details                                                                         |
-      | Standard delivery (aim to dispatch within 10 working days) | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
+      | Delivery method                                           | Email copy required                              | Delivery details                                                                         |
+      | Standard delivery (aim to dispatch within 10 working days)| Email only available for express delivery method | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
       | Payment reference | Fee |
       | CAFE              | £15 |
@@ -20,8 +20,8 @@ Feature: View order details
       | Ordered by     | Company name         | Company number | Certificate type                            | Statement of good standing | Registered office address          | The names of all current company directors | The names of all current secretaries | Company objects |
       | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | Yes                        | All current and previous addresses | Yes                                        | Yes                                  | Yes             |
     And The following delivery details should be displayed:
-      | Delivery method                                            | Delivery details                                                                         |
-      | Standard delivery (aim to dispatch within 10 working days) | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
+      | Delivery method                                            | Email copy required                              | Delivery details                                                                         |
+      | Standard delivery (aim to dispatch within 10 working days) | Email only available for express delivery method | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
       | Payment reference | Fee |
       | CAFE              | £15 |
@@ -33,8 +33,8 @@ Feature: View order details
       | Ordered by     | Company name         | Company number | Certificate type                            | Registered office address | The names of all current company directors | The names of all current secretaries | Company objects | Administrators' details |
       | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | No                        | No                                         | No                                   | No              | No                      |
     And The following delivery details should be displayed:
-      | Delivery method                                            | Delivery details                                                                         |
-      | Standard delivery (aim to dispatch within 10 working days) | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
+      | Delivery method                                            | Email copy required                              | Delivery details                                                                         |
+      | Standard delivery (aim to dispatch within 10 working days) | Email only available for express delivery method | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
       | Payment reference | Fee |
       | CAFE              | £15 |

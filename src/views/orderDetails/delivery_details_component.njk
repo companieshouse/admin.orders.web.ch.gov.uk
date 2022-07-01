@@ -11,14 +11,16 @@
         </dd>
     </div>
 
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-             Email copy required
-        </dt>
-        <dd class="govuk-summary-list__value">
-            {{ control.data.emailCopyRequired }}
-        </dd>
-    </div>
+    {% if control.data.emailCopyRequired %} 
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                Email copy required
+            </dt>
+            <dd class="govuk-summary-list__value">
+                {{ control.data.emailCopyRequired }}
+            </dd>
+        </div>
+    {% endif %}
 
     <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
