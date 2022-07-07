@@ -4,7 +4,7 @@ import {ApiResponse, ApiResult} from "@companieshouse/api-sdk-node/dist/services
 import {Service} from "typedi";
 import "reflect-metadata";
 import {Status} from "../core/Status";
-import {OrderSummary as OrderSummaryResource} from "@companieshouse/api-sdk-node/dist/services/order/search/types";
+import {CheckoutSummary as OrderSummaryResource} from "@companieshouse/api-sdk-node/dist/services/order/search/types";
 import {createLogger} from "@companieshouse/structured-logging-node";
 import dayjs from "dayjs";
 

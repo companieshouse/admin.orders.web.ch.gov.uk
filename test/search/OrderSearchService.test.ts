@@ -1,5 +1,5 @@
 import {jest} from "@jest/globals";
-import {SearchRequest, SearchResponse, OrderSummary as OrderSummaryResource} from "@companieshouse/api-sdk-node/dist/services/order/search";
+import {SearchRequest, SearchResponse, CheckoutSummary as OrderSummaryResource} from "@companieshouse/api-sdk-node/dist/services/order/search";
 import {OrderSearchService} from "../../src/search/OrderSearchService";
 import {SearchResults} from "../../src/search/SearchResults";
 import {Status} from "../../src/core/Status";
