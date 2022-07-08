@@ -39,7 +39,7 @@ describe("OrderSearchService", () => {
         const apiClientFactory: any = {};
         apiClientFactory.newApiClient = jest.fn(() => {
             return {
-                orderSearchService: searchClient
+                checkoutSearchService: searchClient
             };
         });
         const mappedResults: SearchResults = {
