@@ -4,7 +4,7 @@ import {ApiResponse, ApiResult} from "@companieshouse/api-sdk-node/dist/services
 import {Service} from "typedi";
 import "reflect-metadata";
 import {Status} from "../core/Status";
-import {CheckoutSummary as OrderSummaryResource} from "@companieshouse/api-sdk-node/dist/services/order/search/types";
+import {CheckoutSummary as CheckoutSummaryResource} from "@companieshouse/api-sdk-node/dist/services/order/search/types";
 import {createLogger} from "@companieshouse/structured-logging-node";
 import dayjs from "dayjs";
 
@@ -55,7 +55,7 @@ export class SearchResultsMapper {
         }
     }
 
-    private mapLink(summary: OrderSummaryResource): string {
+    private mapLink(summary: CheckoutSummaryResource): string {
         if (summary.productLine === "item#certificate" && summary.paymentStatus === "paid") {
             return `/orders-admin/orders/${summary.id}`;
         } else {
@@ -63,7 +63,7 @@ export class SearchResultsMapper {
         }
     }
 
-    private mapOrderDate(summary: OrderSummaryResource): string {
+    private mapOrderDate(summary: CheckoutSummaryResource): string {
         if (!summary.orderDate) {
             return "Unknown";
         }
@@ -71,11 +71,11 @@ export class SearchResultsMapper {
         return dayjs(date).format("DD/MM/YYYY");
     }
 
-    private mapProductLine(summary: OrderSummaryResource): string {
+    private mapProductLine(summary: CheckoutSummaryResource): string {
         return productLineMappings[summary.productLine] || "Unknown";
     }
 
-    private mapPaymentStatus(summary: OrderSummaryResource): string {
+    private mapPaymentStatus(summary: CheckoutSummaryResource): string {
         return paymentStatusMappings[summary.paymentStatus] || "Unknown";
     }
 }
