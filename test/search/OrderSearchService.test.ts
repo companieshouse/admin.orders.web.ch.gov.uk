@@ -1,5 +1,5 @@
 import {jest} from "@jest/globals";
-import {SearchRequest, SearchResponse, OrderSummary as OrderSummaryResource} from "@companieshouse/api-sdk-node/dist/services/order/search";
+import {SearchRequest, SearchResponse, CheckoutSummary as CheckoutSummaryResource} from "@companieshouse/api-sdk-node/dist/services/order/search";
 import {OrderSearchService} from "../../src/search/OrderSearchService";
 import {SearchResults} from "../../src/search/SearchResults";
 import {Status} from "../../src/core/Status";
@@ -29,7 +29,7 @@ describe("OrderSearchService", () => {
                             link: "/link/to/order"
                         }
                     }
-                }] as OrderSummaryResource[]
+                }] as CheckoutSummaryResource[]
             } as SearchResponse
         });
         const searchClient: any = {};
@@ -39,7 +39,7 @@ describe("OrderSearchService", () => {
         const apiClientFactory: any = {};
         apiClientFactory.newApiClient = jest.fn(() => {
             return {
-                orderSearchService: searchClient
+                checkoutSearchService: searchClient
             };
         });
         const mappedResults: SearchResults = {

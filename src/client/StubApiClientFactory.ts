@@ -160,7 +160,7 @@ export class StubApiClientFactory implements ApiClientFactory {
                     return self.checkoutResponse || self.defaultCheckoutResponse;
                 }
             },
-            orderSearchService: {
+            checkoutSearchService: {
                 async search(request: SearchRequest): Promise<ApiResult<ApiResponse<SearchResponse>>> {
                     return self.searchResponse || self.defaultSearchResponse;
                 }

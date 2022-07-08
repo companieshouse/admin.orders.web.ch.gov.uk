@@ -1,6 +1,6 @@
 import {Failure, Success} from "@companieshouse/api-sdk-node/dist/services/result";
 import {ApiErrorResponse, ApiResponse} from "@companieshouse/api-sdk-node/dist/services/resource";
-import {OrderSummary as OrderSummaryResource, SearchResponse} from "@companieshouse/api-sdk-node/dist/services/order/search";
+import {CheckoutSummary as CheckoutSummaryResource, SearchResponse} from "@companieshouse/api-sdk-node/dist/services/order/search";
 import {SearchResultsMapper} from "../../src/search/SearchResultsMapper";
 import {OrderSummary} from "../../src/search/OrderSummary";
 import {SearchResults} from "../../src/search/SearchResults";
@@ -60,7 +60,7 @@ describe("SearchResultsMapper", () => {
                     id: "ORD-230230-230230",
                     email: "demo5@ch.gov.uk",
                     companyNumber: "23023023"
-                }] as OrderSummaryResource[]
+                }] as CheckoutSummaryResource[]
             } as SearchResponse
         });
         const mapper = new SearchResultsMapper();

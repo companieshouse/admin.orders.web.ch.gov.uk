@@ -16,7 +16,7 @@ describe("StubApiClientFactory", () => {
         const client = factory.newApiClient("F00DFACE");
 
         // when
-        const result = await client.orderSearchService.search({pageSize: 1000}) as Success<ApiResponse<SearchResponse>, ApiErrorResponse>;
+        const result = await client.checkoutSearchService.search({pageSize: 1000}) as Success<ApiResponse<SearchResponse>, ApiErrorResponse>;
 
         // then
         expect(result.isFailure()).toEqual(false);
@@ -36,7 +36,7 @@ describe("StubApiClientFactory", () => {
         const client = factory.newApiClient("F00DFACE");
 
         // when
-        const result = await client.orderSearchService.search({pageSize: 1000}) as Failure<ApiResponse<SearchResponse>, ApiErrorResponse>;
+        const result = await client.checkoutSearchService.search({pageSize: 1000}) as Failure<ApiResponse<SearchResponse>, ApiErrorResponse>;
 
         // then
         expect(result.isFailure()).toEqual(true);
@@ -51,7 +51,7 @@ describe("StubApiClientFactory", () => {
         const client = factory.newApiClient("F00DFACE");
 
         // when
-        const result = await client.orderSearchService.search({pageSize: 1000}) as Success<ApiResponse<SearchResponse>, ApiErrorResponse>;
+        const result = await client.checkoutSearchService.search({pageSize: 1000}) as Success<ApiResponse<SearchResponse>, ApiErrorResponse>;
 
         // then
         expect(result.isFailure()).toEqual(false);

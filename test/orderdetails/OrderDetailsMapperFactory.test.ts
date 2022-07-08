@@ -1,4 +1,4 @@
-import {OrderDetailsMapperFactory} from "../../dist/orderdetails/OrderDetailsMapperFactory";
+import {OrderDetailsMapperFactory} from "../../src/orderdetails/OrderDetailsMapperFactory";
 import {ApiErrorResponse, ApiResponse, ApiResult} from "@companieshouse/api-sdk-node/dist/services/resource";
 import {Checkout} from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
 import {Failure, Success} from "@companieshouse/api-sdk-node/dist/services/result";
