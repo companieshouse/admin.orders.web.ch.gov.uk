@@ -7,6 +7,7 @@ import {Status} from "../../src/core/Status";
 import {OrderSummary} from "../../src/search/OrderSummary";
 import {SearchCriteria} from "../../src/search/SearchCriteria";
 import {OrderSearchParameters} from "../../src/search/OrderSearchParameters";
+import {BACK_LINK_TOGGLER} from "../../src/config/BackLinkToggler";
 
 describe("SearchController", () => {
 
@@ -18,6 +19,7 @@ describe("SearchController", () => {
         const expectedViewModel = new ViewModel("template1", [{
             template: "template2"
         } as ViewModel]);
+        BACK_LINK_TOGGLER.searchPageBackLinkEnabled = false;
 
         pageFactory.buildInitialSearchPage = jest.fn(() => {
             return expectedViewModel;
@@ -29,7 +31,8 @@ describe("SearchController", () => {
 
         // then
         expect(response.render).toHaveBeenCalledWith("template1", {
-            control: expectedViewModel
+            control: expectedViewModel,
+            renderBackButton: false
         });
     });
 
@@ -51,9 +54,12 @@ describe("SearchController", () => {
         const expectedViewModel = new ViewModel("template1", [{
             template: "template2"
         } as ViewModel]);
+        BACK_LINK_TOGGLER.searchPageBackLinkEnabled = false;
+
         pageFactory.buildSearchPageWithResults = jest.fn((): ViewModel => {
             return expectedViewModel;
         });
+        
         const request: any = {
             body: {
                 orderNumber: "ORD-123123-123123"
@@ -79,7 +85,8 @@ describe("SearchController", () => {
         expect(service.findOrders).toHaveBeenCalledWith(expectedSearchParameters);
         expect(pageFactory.buildSearchPageWithResults).toHaveBeenCalledWith(expectedSearchCriteria, expectedResults);
         expect(response.render).toHaveBeenCalledWith("template1", {
-            control: expectedViewModel
+            control: expectedViewModel,
+            renderBackButton: false
         });
         expect(nextFunction).toHaveBeenCalledTimes(0);
     });

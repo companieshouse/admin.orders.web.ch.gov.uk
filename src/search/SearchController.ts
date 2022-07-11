@@ -8,6 +8,7 @@ import "reflect-metadata";
 import {PageFactory} from "./PageFactory";
 import {Status} from "../core/Status";
 import {createLogger} from "@companieshouse/structured-logging-node";
+import {BACK_LINK_TOGGLER} from "../config/BackLinkToggler";
 
 @Service()
 export class SearchController {
@@ -27,7 +28,8 @@ export class SearchController {
         SearchController.logger.trace("GET request received");
         const model = this.pageFactory.buildInitialSearchPage();
         res.render(model.template, {
-            control: model
+            control: model,
+            renderBackButton: BACK_LINK_TOGGLER.searchPageBackLinkEnabled
         });
         SearchController.logger.trace("Finished processing GET request");
     }
@@ -51,7 +53,8 @@ export class SearchController {
         }
         const model = this.pageFactory.buildSearchPageWithResults(searchCriteria, results);
         res.render(model.template, {
-            control: model
+            control: model,
+            renderBackButton: BACK_LINK_TOGGLER.searchPageBackLinkEnabled
         });
         SearchController.logger.trace("Finished processing POST request");
     }
