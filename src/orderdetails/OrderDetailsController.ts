@@ -34,9 +34,11 @@ export class OrderDetailsController {
             });
             return;
         }
+        let isOrderDetailsPage: boolean = true;
         const model = this.pageFactory.buildOrderDetailsPage(order);
         res.render(model.template, {
-            control: model
+            control: model,
+            renderBackButton: isOrderDetailsPage
         });
         OrderDetailsController.logger.trace("Finished processing GET request");
     }

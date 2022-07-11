@@ -1,4 +1,7 @@
 <nav>
+    {% if renderBackButton %}
+        <a class="govuk-link govuk-!-margin-3 govuk-back-link" href="#">Back</a>
+    {% endif %}
     <a class="govuk-link govuk-!-margin-3 sign-out-link" href="/signout">Sign out</a>
     <hr class="sign-out-divider" />
 </nav>
