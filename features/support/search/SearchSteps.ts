@@ -109,6 +109,18 @@ export class SearchSteps {
         await this.currentPage.verifyLocation("/signout");
     }
 
+    @given(/^I am on the orders search page and have clicked search$/)
+    public async clickAndDisplaySearchResults(): Promise<void> {
+        await this.currentPage.openSearchPage();
+        await this.currentPage.harnessOrdersApiWithResults();
+        await this.currentPage.clickSearch();
+    }
+
+    @when(/^I click on the linkable certificate resource$/)
+    async clickLinkableCertificate(): Promise<void> {
+        await this.currentPage.clickLinkableCertificate();
+    }
+
     public getValue(key: string): string {
         return this.memory.get(key) || "";
     }

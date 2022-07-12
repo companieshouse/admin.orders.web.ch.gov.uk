@@ -114,4 +114,14 @@ export class DetailsSteps {
     async validateServiceUnavailableError(): Promise<void> {
         await this.currentPage.validateServiceUnavailableError();
     }
+
+    @when(/^I click the back link$/)
+    async clickBackLink(): Promise<void> {
+        await this.currentPage.clickBackLink();
+    }
+
+    @then(/^I should be taken to the orders search page$/)
+    async verifyLocationIsSearch(): Promise<void> {
+        await this.currentPage.verifyLocation("/orders-admin/search");
+    }
 }

@@ -15,7 +15,7 @@
         {
             "id": "CRT-123123-123123",
             "company_name": "TEST COMPANY LIMITED",
-            "company_number": "00000000",
+            "company_number": "12345678",
             "customer_reference": "customer reference",
             "description": "certificate for company 00000000",
             "description_identifier": "certificate",
@@ -79,7 +79,7 @@
     "total_order_cost": "15",
     "reference": "ORD-123123-123123",
     "checked_out_by": {
-        "email": "demo@ch.gov.uk",
+        "email": "demo1@ch.gov.uk",
         "id": "CAFE"
     },
     "status": "paid",

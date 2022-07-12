@@ -15,6 +15,8 @@ export interface DetailsPage {
     validatePaymentDetails(data: string[][]): Promise<void>;
     validateNotFoundError(): Promise<void>;
     validateServiceUnavailableError(): Promise<void>;
+    clickBackLink(): Promise<void>;
+    verifyLocation(path: string): Promise<void>;
 }
 
 export abstract class AbstractDetailsPage implements DetailsPage {
@@ -60,6 +62,15 @@ export abstract class AbstractDetailsPage implements DetailsPage {
     validateServiceUnavailableError(): Promise<void> {
         throw new Error("Invalid operation");
     }
+
+    public async clickBackLink(): Promise<void> {
+        await this.browserAgent.clickElement(".govuk-back-link");
+    }
+
+    public async verifyLocation(path: string): Promise<void> {
+        const location = await this.browserAgent.getLocation();
+        expect(location).to.equal(path);
+    }    
 }
 
 export class DetailsPageNotLoaded extends AbstractDetailsPage {
