@@ -21,6 +21,7 @@ export interface SearchPage {
     verifyMatchingOrdersDisplayed(results: string[][]): Promise<void>;
     verifySearchCriteriaPreserved(): Promise<void>;
     verifyLocation(path: string): Promise<void>;
+    clickLinkableCertificate(): Promise<void>;
 }
 
 export abstract class AbstractSearchPage implements SearchPage {
@@ -79,6 +80,11 @@ export abstract class AbstractSearchPage implements SearchPage {
     harnessOrdersApiWithResults(): void {
         throw new Error("Invalid operation");
     }
+
+    clickLinkableCertificate(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
 }
 
 export class NoPage extends AbstractSearchPage {
@@ -213,6 +219,13 @@ export class SearchResultsPage extends OrdersSearchPage {
             expect(element.getValues()).to.deep.equal(results[index]);
             expect(linkable).to.equal(element.linkable.toString());
         }
+    }
+
+    public async clickLinkableCertificate(): Promise<void> {
+        const pathToLink = "#main-content > table > tbody > tr:nth-child(1) > td:nth-child(1) > a"
+        const orderIdText = await this.interactor.getElementText(pathToLink);
+        expect(orderIdText).to.equal("ORD-123123-123123");
+        await this.interactor.clickElement(pathToLink);
     }
 }
 

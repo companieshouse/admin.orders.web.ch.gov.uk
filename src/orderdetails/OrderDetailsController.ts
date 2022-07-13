@@ -6,6 +6,7 @@ import {createLogger} from "@companieshouse/structured-logging-node";
 import { OrderDetailsService } from "./OrderDetailsService";
 import { OrderDetailsParameters } from "./OrderDetailsParameters";
 import { Status } from "core/Status";
+import { BACK_LINK_TOGGLER } from "../config/BackLinkToggler";
 
 @Service()
 export class OrderDetailsController {
@@ -36,7 +37,8 @@ export class OrderDetailsController {
         }
         const model = this.pageFactory.buildOrderDetailsPage(order);
         res.render(model.template, {
-            control: model
+            control: model,
+            renderBackButton: BACK_LINK_TOGGLER.orderPageBackLinkEnabled
         });
         OrderDetailsController.logger.trace("Finished processing GET request");
     }
