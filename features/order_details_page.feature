@@ -105,15 +105,11 @@ Feature: View order details
     Then I should be taken to the signout handler
 
   Scenario: Back link
-    Given I am on the orders search page and have clicked search
-    Then The following orders should be displayed:
+    Given I am viewing a paid certificate order details     
       | Order number      | Email           | Company number | Order type     | Order date | Payment status | Linkable |
       | ORD-123123-123123 | demo1@ch.gov.uk | 12345678       | Certificate    | 11/04/2022 | Paid           | true     |
       | ORD-121212-121212 | demo2@ch.gov.uk | 12121212       | Certificate    | 11/04/2022 | In progress    | false    |
       | ORD-323232-323232 | demo3@ch.gov.uk | 32323232       | Certified copy | 11/04/2022 | Paid           | false    |
       | ORD-321321-321321 | demo4@ch.gov.uk | 87654321       | Missing image  | 11/04/2022 | Paid           | false    |
-    When I click on the linkable certificate resource
-    Then The checkout endpoint will return a paid certificate order for an active limited company
-    When I view order details
-    And I click the back link
-    Then I should be taken to the orders search page
+    When I click the back link
+    Then I should return to the orders search page
