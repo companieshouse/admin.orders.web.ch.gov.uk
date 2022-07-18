@@ -48,7 +48,8 @@ describe("LPOrderDetailsMapper", () => {
                             companyStatus: "active",
                             companyType: "limited-partnership",
                             deliveryMethod: "postal",
-                            deliveryTimescale: "standard",
+                            deliveryTimescale: "same-day",
+                            includeEmailCopy: true,
                             forename: "John",
                             surname: "Test",
                             certificateType: "incorporation-with-all-name-changes",
@@ -114,8 +115,9 @@ describe("LPOrderDetailsMapper", () => {
                     isNotDissolution: true
                 },
                 deliveryInfo: {
-                    deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
+                    deliveryMethod: "Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day)",
                     deliveryDetails: "John Test\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
+                    emailCopyRequired: "Yes"
                 },
                 paymentDetails: {
                     paymentReference: "somereference",
@@ -168,6 +170,7 @@ describe("LPOrderDetailsMapper", () => {
                             companyType: "limited-partnership",
                             deliveryMethod: "postal",
                             deliveryTimescale: "standard",
+                            includeEmailCopy: false,
                             forename: "John",
                             surname: "Test",
                             certificateType: "incorporation-with-all-name-changes",
@@ -229,6 +232,7 @@ describe("LPOrderDetailsMapper", () => {
                 deliveryInfo: {
                     deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
                     deliveryDetails: "John Test\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
+                    emailCopyRequired: "Email only available for express delivery method"
                 },
                 paymentDetails: {
                     paymentReference: "somereference",
