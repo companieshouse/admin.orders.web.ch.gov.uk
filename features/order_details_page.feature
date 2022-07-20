@@ -72,8 +72,8 @@ Feature: View order details
       | Ordered by     | Company name         | Company number | Certificate type                            | Statement of good standing | Principal place of business          | The names of all current general partners | The names of all current limited partners | General nature of business |
       | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | Yes                        | Current address and the two previous | Yes                                       | Yes                                       | Yes                        |
     And The following delivery details should be displayed:
-      | Delivery method                                            | Delivery details                                                                         |
-      | Standard delivery (aim to dispatch within 10 working days) | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
+      | Delivery method                                            | Email copy required                              | Delivery details                                                                         |
+      | Standard delivery (aim to dispatch within 10 working days) | Email only available for express delivery method |forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
       | Payment reference | Fee |
       | CAFE              | £15 |

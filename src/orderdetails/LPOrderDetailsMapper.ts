@@ -33,6 +33,7 @@ export class LPOrderDetailsMapper extends AbstractOrderDetailsMapper {
                 deliveryInfo: {
                     deliveryMethod: CertificateTextMapper.mapDeliveryMethod(itemOptions),
                     deliveryDetails: CertificateTextMapper.mapDeliveryDetails(response.value.resource?.deliveryDetails),
+                    emailCopyRequired: CertificateTextMapper.mapEmailCopyRequired(itemOptions),
                 },
                 paymentDetails: {
                     paymentReference: response.value.resource?.paymentReference,
