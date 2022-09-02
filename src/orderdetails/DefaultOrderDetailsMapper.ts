@@ -1,4 +1,5 @@
-import { CertificateItemOptions, Checkout } from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
+import { Checkout } from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
+import { ItemOptions as CertificateItemOptions } from "@companieshouse/api-sdk-node/dist/services/order/certificates/types";
 import { ApiResponse, ApiErrorResponse } from "@companieshouse/api-sdk-node/dist/services/resource";
 import { Status } from "core/Status";
 import { CertificateTextMapper } from "./CertificateTextMapper";

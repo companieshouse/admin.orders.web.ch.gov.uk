@@ -7,7 +7,8 @@ import {Service} from "typedi";
 import "reflect-metadata";
 import {SearchRequest} from "@companieshouse/api-sdk-node/dist/services/order/search/types";
 import ApiClient from "@companieshouse/api-sdk-node/dist/client";
-import {Checkout, ItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/checkout";
+import {Checkout} from "@companieshouse/api-sdk-node/dist/services/order/checkout";
+import {ItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/order";
 
 @Service("stub.client")
 export class StubApiClientFactory implements ApiClientFactory {

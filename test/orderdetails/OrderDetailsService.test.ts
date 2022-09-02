@@ -8,6 +8,7 @@ import { OrderDetailsParameters } from "../../src/orderdetails/OrderDetailsParam
 import { Status } from "../../src/core/Status";
 import { Checkout } from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
 import { OrderDetails } from "../../src/orderdetails/OrderDetails";
+import {ItemOptions as CertificateItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/certificates/types";
 
 describe("OrderDetailsService", () => {
     it("Fetches and transforms orders from the search API", async () => {
@@ -67,7 +68,7 @@ describe("OrderDetailsService", () => {
                             secretaryDetails: {
                                 includeBasicInformation: true
                             }
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {
