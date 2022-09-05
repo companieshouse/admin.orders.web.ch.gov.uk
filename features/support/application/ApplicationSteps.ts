@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import {binding, given} from "cucumber-tsflow/dist";
-import {FEATURE_FLAGS} from "../../../src/config/FeatureOptions";
+import {FEATURE_FLAGS} from "../../../dist/config/FeatureOptions";
 
 @binding()
 export class ApplicationSteps {

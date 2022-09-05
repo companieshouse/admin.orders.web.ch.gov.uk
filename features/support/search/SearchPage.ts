@@ -4,6 +4,7 @@ import { BrowserAgent } from "../core/BrowserAgent";
 import "reflect-metadata";
 import {StubApiClientFactory} from "../../../dist/client/StubApiClientFactory";
 import resultsJson from "../stubbing/success_with_results.json";
+import multiItemResultsJson from "../stubbing/success_with_multi_item_results.json";
 import noResultsJson from "../stubbing/success_no_results.json";
 import failureJson from "../stubbing/failure.json";
 
@@ -13,6 +14,7 @@ export interface SearchPage {
     enterEmail(text: string): Promise<void>;
     enterCompanyNumber(text: string): Promise<void>;
     harnessOrdersApiWithResults(): void;
+    harnessOrdersApiWithMultiItemResults(): void;
     harnessOrdersApiWithNoResults(): void;
     harnessOrdersApiWithError(): void;
     clickSearch(): Promise<void>;
@@ -81,6 +83,10 @@ export abstract class AbstractSearchPage implements SearchPage {
         throw new Error("Invalid operation");
     }
 
+    harnessOrdersApiWithMultiItemResults(): void {
+        throw new Error("Invalid operation");
+    }
+
     clickLinkableCertificate(): Promise<void> {
         throw new Error("Invalid operation");
     }
@@ -142,6 +148,11 @@ export class OrdersSearchPage extends AbstractSearchPage {
 
     harnessOrdersApiWithResults(): void {
         this.clientFactory.willReturnSuccessfulSearchResponse(resultsJson);
+        this.searchSteps.currentPage = this.searchSteps.anticipateResultsPageState;
+    }
+
+    harnessOrdersApiWithMultiItemResults(): void {
+        this.clientFactory.willReturnSuccessfulSearchResponse(multiItemResultsJson);
         this.searchSteps.currentPage = this.searchSteps.anticipateResultsPageState;
     }
 

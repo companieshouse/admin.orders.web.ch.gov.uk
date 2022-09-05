@@ -1,33 +1,37 @@
-import {SearchPage} from "./SearchPage";
-import {SearchComponent} from "./SearchComponent";
-import {SearchResultsComponent} from "./SearchResultsComponent";
-import {SearchResultComponent} from "./SearchResultComponent";
-import {Service} from "typedi";
+import {Inject, Service} from "typedi";
 import "reflect-metadata";
 import {ViewModel} from "../core/ViewModel";
 import {SearchResults} from "./SearchResults";
 import {GlobalPageFactory} from "../core/GlobalPageFactory";
 import {ErrorPageBuildable} from "../core/ErrorPageBuildable";
 import {SearchCriteria} from "./SearchCriteria";
+import {SearchViewComponentFactory} from "./SearchViewComponentFactory";
+import "./SingleItemSearchViewComponentFactory";
+import "./MultiItemSearchViewComponentFactory";
+import {FEATURE_FLAGS} from "../config/FeatureOptions";
 
 @Service()
 export class PageFactory implements ErrorPageBuildable {
     public static readonly SEARCH_PAGE_TITLE = "Search for an order";
 
-    constructor(private globalPageFactory: GlobalPageFactory) {
+    constructor(@Inject("singleItemSearch") private singleItemComponentFactory: SearchViewComponentFactory,
+                @Inject("multiItemSearch") private multiItemComponentFactory: SearchViewComponentFactory,
+                private globalPageFactory: GlobalPageFactory) {
     }
 
     public buildInitialSearchPage(): ViewModel {
-        const page = new SearchPage(PageFactory.SEARCH_PAGE_TITLE);
-        page.add(new SearchComponent());
+        const componentFactory = FEATURE_FLAGS.multiItemBasketEnabled ? this.multiItemComponentFactory : this.singleItemComponentFactory;
+        const page = componentFactory.newSearchPageModel(PageFactory.SEARCH_PAGE_TITLE);
+        page.add(componentFactory.newSearchComponentModel());
         return page.render();
     }
 
     public buildSearchPageWithResults(searchCriteria: SearchCriteria, results: SearchResults): ViewModel {
-        const page = new SearchPage(PageFactory.SEARCH_PAGE_TITLE);
-        const searchControls = new SearchComponent(searchCriteria);
-        const resultEntries = results.orderSummaries.map(result => new SearchResultComponent(result));
-        const resultsViewContainer = new SearchResultsComponent(resultEntries, results.totalOrders);
+        const componentFactory = FEATURE_FLAGS.multiItemBasketEnabled ? this.multiItemComponentFactory : this.singleItemComponentFactory;
+        const page = componentFactory.newSearchPageModel(PageFactory.SEARCH_PAGE_TITLE);
+        const searchControls = componentFactory.newSearchComponentModel(searchCriteria);
+        const resultEntries = results.orderSummaries.map(result => componentFactory.newSearchResultComponentModel(result));
+        const resultsViewContainer = componentFactory.newSearchResultsComponentModel(resultEntries, results.totalOrders);
         page.add(searchControls);
         page.add(resultsViewContainer);
         return page.render();

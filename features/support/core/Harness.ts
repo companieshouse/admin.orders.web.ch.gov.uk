@@ -2,7 +2,7 @@ import {AfterAll, Before, BeforeAll} from '@cucumber/cucumber';
 import {Registrar} from "../../../dist/application/Registrar";
 import {Container} from "typedi";
 import {AgentService} from "./BrowserAgent";
-import {FEATURE_FLAGS} from "../../../src/config/FeatureOptions";
+import {FEATURE_FLAGS} from "../../../dist/config/FeatureOptions";
 
 BeforeAll(async function () {
     const registrar = Container.get(Registrar);

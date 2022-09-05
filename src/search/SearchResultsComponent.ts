@@ -1,14 +1,15 @@
 import {AbstractViewComponent} from "../core/AbstractViewComponent";
-import {SearchResultComponent} from "./SearchResultComponent";
 import {ViewModel} from "../core/ViewModel";
+import {ViewComponent} from "../core/ViewComponent";
 
 export class SearchResultsComponent extends AbstractViewComponent {
     private readonly pageSize: number;
 
-    constructor(results: SearchResultComponent[],
+    constructor(results: ViewComponent[],
                 private readonly total: number,
+                template: string = "search/search_results.njk",
                 private readonly noResultsTemplate: string = "search/no_results_found.njk") {
-        super("search/search_results.njk", results);
+        super(template, results);
         this.pageSize = results.length;
     }
 
