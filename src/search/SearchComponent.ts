@@ -3,8 +3,8 @@ import {SearchCriteria} from "./SearchCriteria";
 import {ViewModel} from "../core/ViewModel";
 
 export class SearchComponent extends AbstractViewComponent {
-    constructor(private searchCriteria?: SearchCriteria) {
-        super("search/search_component.njk", []);
+    constructor(private searchCriteria?: SearchCriteria, template: string = "search/search_component.njk") {
+        super(template, []);
     }
 
     render(): ViewModel {

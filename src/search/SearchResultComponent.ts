@@ -3,8 +3,8 @@ import {OrderSummary} from "./OrderSummary";
 import {ViewModel} from "../core/ViewModel";
 
 export class SearchResultComponent extends AbstractViewComponent {
-    constructor(private orderSummary: OrderSummary) {
-        super("search/search_result.njk", []);
+    constructor(private orderSummary: OrderSummary, template: string = "search/search_result.njk") {
+        super(template, []);
     }
 
     render(): ViewModel {

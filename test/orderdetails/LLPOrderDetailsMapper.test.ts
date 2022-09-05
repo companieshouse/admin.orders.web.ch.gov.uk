@@ -1,11 +1,9 @@
-import {Failure, Success} from "@companieshouse/api-sdk-node/dist/services/result";
+import {Success} from "@companieshouse/api-sdk-node/dist/services/result";
 import {ApiErrorResponse, ApiResponse} from "@companieshouse/api-sdk-node/dist/services/resource";
-import { Status } from "../../src/core/Status";
-import { CertificateItemOptions, Checkout } from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
+import { Checkout } from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
 import { OrderDetails } from "../../src/orderdetails/OrderDetails";
-import { OrderDetailsMapperFactory } from "../../src/orderdetails/OrderDetailsMapperFactory";
 import { LLPOrderDetailsMapper } from "../../src/orderdetails/LLPOrderDetailsMapper";
-import {DefaultOrderDetailsMapper} from "../../src/orderdetails/DefaultOrderDetailsMapper";
+import {ItemOptions as CertificateItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/certificates/types";
 
 describe("LLPOrderDetailsMapper", () => {
     it("Maps a successful response for llp company details", () => {
@@ -68,7 +66,7 @@ describe("LLPOrderDetailsMapper", () => {
                                 includeAddress: false,
                                 includeAppointmentDate: false
                             }
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {
@@ -183,7 +181,7 @@ describe("LLPOrderDetailsMapper", () => {
                             },
                             designatedMemberDetails: {},
                             memberDetails: {}
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {
@@ -304,7 +302,7 @@ describe("LLPOrderDetailsMapper", () => {
                             liquidatorsDetails: {
                                 includeBasicInformation: true
                             }
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {
@@ -422,7 +420,7 @@ describe("LLPOrderDetailsMapper", () => {
                                 includeAppointmentDate: false
                             },
                             administratorsDetails: {}
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {

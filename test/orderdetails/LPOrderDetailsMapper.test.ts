@@ -1,9 +1,9 @@
-import {Failure, Success} from "@companieshouse/api-sdk-node/dist/services/result";
+import {Success} from "@companieshouse/api-sdk-node/dist/services/result";
 import {ApiErrorResponse, ApiResponse} from "@companieshouse/api-sdk-node/dist/services/resource";
-import { Status } from "../../src/core/Status";
 import { Checkout } from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
 import { OrderDetails } from "../../src/orderdetails/OrderDetails";
 import { LPOrderDetailsMapper } from "../../src/orderdetails/LPOrderDetailsMapper";
+import {ItemOptions as CertificateItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/certificates/types";
 
 describe("LPOrderDetailsMapper", () => {
     it("Maps a successful response for limited-partnership company details", () => {
@@ -64,7 +64,7 @@ describe("LPOrderDetailsMapper", () => {
                                 includeBasicInformation: true,
                             },
                             includeGeneralNatureOfBusinessInformation: true
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {
@@ -179,7 +179,7 @@ describe("LPOrderDetailsMapper", () => {
                             },
                             generalPartnerDetails: {},
                             limitedPartnerDetails: {}
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {

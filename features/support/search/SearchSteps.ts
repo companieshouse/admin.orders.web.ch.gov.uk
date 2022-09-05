@@ -67,6 +67,11 @@ export class SearchSteps {
         await this.currentPage.harnessOrdersApiWithResults();
     }
 
+    @given(/^Orders API will return results omitting company_number and product_line fields$/)
+    public async ordersApiWillReturnMultiItemResults(): Promise<void> {
+        await this.currentPage.harnessOrdersApiWithMultiItemResults();
+    }
+
     @given(/^Orders API will return no results$/)
     public async ordersApiWillReturnNoResults(): Promise<void> {
         await this.currentPage.harnessOrdersApiWithNoResults();

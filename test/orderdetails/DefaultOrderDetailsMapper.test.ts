@@ -1,10 +1,9 @@
-import {Failure, Success} from "@companieshouse/api-sdk-node/dist/services/result";
+import {Success} from "@companieshouse/api-sdk-node/dist/services/result";
 import {ApiErrorResponse, ApiResponse} from "@companieshouse/api-sdk-node/dist/services/resource";
-import { Status } from "../../src/core/Status";
-import { CertificateItemOptions, Checkout } from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
+import { Checkout } from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
 import { OrderDetails } from "../../src/orderdetails/OrderDetails";
 import { DefaultOrderDetailsMapper } from "../../src/orderdetails/DefaultOrderDetailsMapper";
-import { OrderDetailsMapperFactory } from "../../src/orderdetails/OrderDetailsMapperFactory";
+import {ItemOptions as CertificateItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/certificates/types";
 
 describe("DefaultOrderDetailsMapper", () => {
     it("Maps a successful response for default company details", () => {
@@ -69,7 +68,7 @@ describe("DefaultOrderDetailsMapper", () => {
                                 includeAddress: false,
                                 includeAppointmentDate: false
                             }
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {
@@ -184,7 +183,7 @@ describe("DefaultOrderDetailsMapper", () => {
                             },
                             directorDetails: {},
                             secretaryDetails: {}
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {
@@ -308,7 +307,7 @@ describe("DefaultOrderDetailsMapper", () => {
                             liquidatorsDetails: {
                                 includeBasicInformation: true
                             }
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {
@@ -426,7 +425,7 @@ describe("DefaultOrderDetailsMapper", () => {
                                 includeAppointmentDate: false
                             },
                             administratorsDetails: {}
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {
@@ -551,7 +550,7 @@ describe("DefaultOrderDetailsMapper", () => {
                                 includeAddress: false,
                                 includeAppointmentDate: false
                             }
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {

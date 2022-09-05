@@ -7,6 +7,7 @@ import {Status} from "../core/Status";
 import {CheckoutSummary as CheckoutSummaryResource} from "@companieshouse/api-sdk-node/dist/services/order/search/types";
 import {createLogger} from "@companieshouse/structured-logging-node";
 import dayjs from "dayjs";
+import {FEATURE_FLAGS} from "../config/FeatureOptions";
 
 const productLineMappings: {[key: string]: string} = {
     "item#certificate": "Certificate",
@@ -41,9 +42,7 @@ export class SearchResultsMapper {
                         email: summary.email,
                         productLine: this.mapProductLine(summary),
                         paymentStatus: this.mapPaymentStatus(summary),
-                        extraProperties: {
-                            companyNumber: summary.companyNumber
-                        }
+                        extraProperties: this.mapExtraProperties(summary)
                     }
                 }) || [])
             };
@@ -56,7 +55,9 @@ export class SearchResultsMapper {
     }
 
     private mapLink(summary: CheckoutSummaryResource): string {
-        if (summary.productLine === "item#certificate" && summary.paymentStatus === "paid") {
+        if (FEATURE_FLAGS.multiItemBasketEnabled) {
+            return "javascript:void(0)";
+        } else if (summary.productLine === "item#certificate" && summary.paymentStatus === "paid") {
             return `/orders-admin/orders/${summary.id}`;
         } else {
             return "";
@@ -71,11 +72,22 @@ export class SearchResultsMapper {
         return dayjs(date).format("DD/MM/YYYY");
     }
 
-    private mapProductLine(summary: CheckoutSummaryResource): string {
+    private mapProductLine(summary: CheckoutSummaryResource): string | undefined {
+        if (FEATURE_FLAGS.multiItemBasketEnabled) {
+            return undefined;
+        }
         return productLineMappings[summary.productLine] || "Unknown";
     }
 
     private mapPaymentStatus(summary: CheckoutSummaryResource): string {
         return paymentStatusMappings[summary.paymentStatus] || "Unknown";
+    }
+
+    private mapExtraProperties(summary: CheckoutSummaryResource): { [key: string]: string } {
+        const result: {[key: string]: string} = {};
+        if (!FEATURE_FLAGS.multiItemBasketEnabled) {
+            result.companyNumber = summary.companyNumber;
+        }
+        return result;
     }
 }

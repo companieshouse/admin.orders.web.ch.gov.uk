@@ -3,6 +3,8 @@ import {ApiErrorResponse, ApiResponse} from "@companieshouse/api-sdk-node/dist/s
 import {Checkout} from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
 import {Status} from "../../src/core/Status";
 import {OrderDetailsErrorMapper} from "../../src/orderdetails/OrderDetailsErrorMapper";
+import {ItemOptions as CertifiedCopyItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/certified-copies/types";
+import {ItemOptions as CertificateItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/certificates/types";
 
 describe("OrderDetailsErrorMapper", () => {
     it("Maps a non-HTTP 404 Not Found error to a server error response", () => {
@@ -75,6 +77,10 @@ describe("OrderDetailsErrorMapper", () => {
                             }
                         ],
                         itemOptions : {
+                            forename: "forename",
+                            surname: "surname",
+                            contactNumber: "0123456789",
+                            collectionLocation: "cardiff",
                             filingHistoryDocuments : [
                                 {
                                     filingHistoryDate : "2019-11-23",
@@ -95,7 +101,7 @@ describe("OrderDetailsErrorMapper", () => {
                             ],
                             deliveryMethod : "postal",
                             deliveryTimescale : "standard"
-                        },
+                        } as CertifiedCopyItemOptions,
                         etag : "e9869125e3a1ad5d7a16f472d7175f17d0542fd6",
                         kind : "item#certified-copy",
                         links : {
@@ -176,7 +182,7 @@ describe("OrderDetailsErrorMapper", () => {
                             },
                             directorDetails: {},
                             secretaryDetails: {}
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {
@@ -297,7 +303,7 @@ describe("OrderDetailsErrorMapper", () => {
                                 includeAddress: false,
                                 includeAppointmentDate: false
                             }
-                        },
+                        } as CertificateItemOptions,
                         etag: "21ecbbf3391cf856155393cc3d4a737d9a3c233a",
                         kind: "item#certificate",
                         links: {
