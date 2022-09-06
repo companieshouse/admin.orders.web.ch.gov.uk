@@ -50,7 +50,7 @@ Feature: View order details
       | Standard delivery (aim to dispatch within 10 working days) | Email only available for express delivery method | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
       | Payment reference | Fee |
-      | CAFE              | £15 |
+        | CAFE              | £15 |
 
   Scenario: View order details for an existing active LLP certificate order
     Given The checkout endpoint will return a paid certificate order for an active LLP
@@ -105,7 +105,7 @@ Feature: View order details
     Then I should be taken to the signout handler
 
   Scenario: Back link
-    Given I am viewing a paid certificate order details     
+    Given I am viewing a paid certificate order details
       | Order number      | Email           | Company number | Order type     | Order date | Payment status | Linkable |
       | ORD-123123-123123 | demo1@ch.gov.uk | 12345678       | Certificate    | 11/04/2022 | Paid           | true     |
       | ORD-121212-121212 | demo2@ch.gov.uk | 12121212       | Certificate    | 11/04/2022 | In progress    | false    |
