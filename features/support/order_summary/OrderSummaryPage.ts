@@ -76,9 +76,7 @@ export class OrderSummaryPage extends AbstractSummaryPage {
     async verifyItems(expectedItems: string[][]): Promise<void> {
         const resultsTable = await this.interactor.getTable(".govuk-table");
         for (const [index, element] of resultsTable.tableRows.entries()) {
-            const linkable = expectedItems[index].pop();
             expect(element.getValues()).to.deep.equal(expectedItems[index]);
-            expect(linkable).to.equal(element.linkable.toString());
         }
     }
 

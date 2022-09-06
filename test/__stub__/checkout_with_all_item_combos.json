@@ -19,7 +19,7 @@
       "description": "missing image delivery for company 00000000",
       "description_identifier": "missing-image-delivery",
       "description_values": {
-        "company_number": "00000000",
+        "company_number": "12345678",
         "missing-image-delivery": "missing image delivery for company 00000000"
       },
       "item_costs": [
@@ -63,7 +63,7 @@
       "description_identifier": "certificate",
       "description_values": {
         "certificate": "certificate for company 00000000",
-        "company_number": "00000000"
+        "company_number": "12345678"
       },
       "item_costs": [
         {
