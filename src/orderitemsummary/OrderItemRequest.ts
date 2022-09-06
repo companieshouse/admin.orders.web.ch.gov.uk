@@ -1,5 +1,5 @@
 export class OrderItemRequest {
-    apiToken: string;
-    orderId: string;
-    itemId: string;
+    apiToken?: string;
+    orderId?: string;
+    itemId?: string;
 }

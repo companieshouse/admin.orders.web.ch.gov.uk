@@ -1,4 +1,4 @@
 export class OrderItemView {
-    template: string;
-    data: object;
+    template?: string;
+    data?: object;
 }
