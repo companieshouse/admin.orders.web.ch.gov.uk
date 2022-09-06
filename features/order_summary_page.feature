@@ -18,7 +18,8 @@ Feature: Order summary page
       | CRT-123123-123124 | Certificate        | 12345678       | Express         | £50 |
       | CCD-123123-123123 | Certified document | 12345678       | Standard        | £15 |
       | CCD-123123-123124 | Certified document | 12345678       | Express         | £50 |
-    And Delivery details for the order should be "forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry"
+    And Delivery details for the order should be:
+      | Delivery address | "forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry" |
     And Payment details for the order should be:
       | Payment reference | Fee  |
       | F00DFACE          | £133 |

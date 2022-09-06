@@ -9,12 +9,12 @@ export interface OrderSummaryPageState {
     openOrderSummaryPage(): Promise<void>;
     verifyLayout(): Promise<void>;
     verifyItems(expectedItems: string[][]): Promise<void>;
-    verifyDeliveryDetails(expectedDeliveryAddress: string): Promise<void>;
+    verifyDeliveryDetails(expectedDeliveryDetails: string[][]): Promise<void>;
     verifyPaymentDetails(expectedPaymentDetails: string[][]): Promise<void>;
 }
 
 export abstract class AbstractSummaryPage implements OrderSummaryPageState {
-    protected constructor(protected stateMachine: OrderSummarySteps) {
+    constructor(protected stateMachine: OrderSummarySteps) {
     }
 
     anticipateSuccessfulResponse(): Promise<void> {
@@ -25,7 +25,7 @@ export abstract class AbstractSummaryPage implements OrderSummaryPageState {
         throw new Error("Invalid operation");
     }
 
-    verifyDeliveryDetails(expectedDeliveryAddress: string): Promise<void> {
+    verifyDeliveryDetails(expectedDeliveryDetails: string[][]): Promise<void> {
         throw new Error("Invalid operation");
     }
 
@@ -82,8 +82,10 @@ export class OrderSummaryPage extends AbstractSummaryPage {
         }
     }
 
-    async verifyDeliveryDetails(expectedDeliveryAddress: string): Promise<void> {
-        expect(await this.interactor.getElementText("#deliveryDetails")).to.contain(expectedDeliveryAddress);
+    async verifyDeliveryDetails(expectedDeliveryDetails: string[][]): Promise<void> {
+        const resultList = await this.interactor.getList("#deliveryDetailsList");
+        expect(resultList.getNames()).to.deep.equal(expectedDeliveryDetails[0]);
+        expect(resultList.getValues()).to.deep.equal(expectedDeliveryDetails[1]);
     }
 
     async verifyPaymentDetails(expectedPaymentDetails: string[][]): Promise<void> {

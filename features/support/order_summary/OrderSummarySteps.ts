@@ -34,9 +34,9 @@ export class OrderSummarySteps {
         await this.currentPage.verifyItems(expectedItems.rows())
     }
 
-    @then(/^Delivery details for the order should be "(.+?)"$/)
-    async verifyDeliveryDetailsDisplayed(expectedDeliveryDetails: string) {
-        await this.currentPage.verifyDeliveryDetails(expectedDeliveryDetails);
+    @then(/^Delivery details for the order should be:$/)
+    async verifyDeliveryDetailsDisplayed(expectedDeliveryDetails: DataTable) {
+        await this.currentPage.verifyDeliveryDetails(expectedDeliveryDetails.raw());
     }
 
     @then(/Payment details for the order should be:/)
