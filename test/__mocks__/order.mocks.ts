@@ -44,72 +44,24 @@ export const mockMissingImageDeliveryItem: Item = {
     postalDelivery: false
 };
 
-export const mockMidOrderItemView: GovUkOrderItemSummaryView = {
-    orderId: "ORD-123456-123456",
-    itemId: "MID-123456-123456",
-    itemDetails: {
-        entries: [
-            {
-                key: {
-                    classes: "govuk-!-width-one-third",
-                    text: "Company name"
-                },
-                value: {
-                    classes: "govuk-!-width-two-thirds",
-                    text: "The Company"
-                }
-            },
-            {
-                key: {
-                    classes: "govuk-!-width-one-third",
-                    text: "Company number"
-                },
-                value: {
-                    classes: "govuk-!-width-two-thirds",
-                    text: "00000000"
-                }
-            },
-            {
-                key: {
-                    classes: "govuk-!-width-one-third",
-                    text: "Date"
-                },
-                value: {
-                    classes: "govuk-!-width-two-thirds",
-                    text: "26 May 2015"
-                }
-            },
-            {
-                key: {
-                    classes: "govuk-!-width-one-third",
-                    text: "Type"
-                },
-                value: {
-                    classes: "govuk-!-width-two-thirds",
-                    text: "AP01"
-                }
-            },
-            {
-                key: {
-                    classes: "govuk-!-width-one-third",
-                    text: "Description"
-                },
-                value: {
-                    classes: "govuk-!-width-two-thirds",
-                    text: "Appointment of Mr Richard John Harris as a director"
-                }
-            },
-            {
-                key: {
-                    classes: "govuk-!-width-one-third",
-                    text: "Fee"
-                },
-                value: {
-                    classes: "govuk-!-width-two-thirds",
-                    text: "£3"
-                }
-            }
-        ]
+export const mockMidOrderItemView = {
+    controls: [{
+        controls: [],
+        data: {
+            orderId: "ORD-123456-123456",
+            itemId: "MID-123456-123456",
+            companyName: "The Company",
+            companyNumber: "00000000",
+            date: "26 May 2015",
+            type: "AP01",
+            description: "Appointment of Mr Richard John Harris as a director",
+            fee: "£3",
+            backLinkUrl: "/orders-admin/order-summaries/ORD-123456-123456"
+        },
+        template: "orderItemSummary/order-item-summary-mid.njk"
+    }],
+    data: {
+        title: "Summary of item MID-123456-123456 in order ORD-123456-123456"
     },
-    backLinkUrl: "/orders/ORD-123456-123456"
+    template: "page"
 };

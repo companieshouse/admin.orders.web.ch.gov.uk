@@ -1,6 +1,6 @@
-import { OrderItemView } from "./OrderItemView";
+import {ViewModel} from "../core/ViewModel";
 
 export interface OrderItemMapper {
     map(): void;
-    getMappedOrder(): OrderItemView;
+    getMappedOrder(): ViewModel;
 }

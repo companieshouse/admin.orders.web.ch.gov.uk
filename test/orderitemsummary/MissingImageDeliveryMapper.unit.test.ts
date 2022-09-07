@@ -1,8 +1,6 @@
 import { MissingImageDeliveryMapper } from "../../src/orderitemsummary/MissingImageDeliveryMapper";
-import { OrderItemView } from "../../src/orderitemsummary/OrderItemView";
-import { expect } from "chai";
 import { MapperRequest } from "../../src/mappers/MapperRequest";
-import { mockMissingImageDeliveryItem, mockMidOrderItemView } from "../__mocks__/order.mocks";
+import {mockMidOrderItemView, mockMissingImageDeliveryItem} from "../__mocks__/order.mocks";
 
 describe("MissingImageDeliveryMapper", () => {
     describe("map", () => {
@@ -12,11 +10,10 @@ describe("MissingImageDeliveryMapper", () => {
 
             // when
             mapper.map();
-            const actual: OrderItemView = mapper.getMappedOrder();
+            const actual = mapper.getMappedOrder();
 
             // then
-            expect(actual.data).to.deep.equal(mockMidOrderItemView);
-            expect(actual.template).to.equal("order-item-summary-mid");
+            expect(actual).toEqual(mockMidOrderItemView);
         });
     });
 });
