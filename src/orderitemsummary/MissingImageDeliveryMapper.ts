@@ -1,11 +1,11 @@
 import { OrderItemMapper } from "./OrderItemMapper";
 import { ItemOptions as MissingImageDeliveryItemOptions } from "@companieshouse/api-sdk-node/dist/services/order/mid";
 import { MapperRequest } from "../mappers/MapperRequest";
-import { mapFilingHistory, mapFilingHistoryDate } from "./FilingHistoryMapper";
 import {MissingImageItemSummaryPage} from "./MissingImageItemSummaryPage";
 import {MissingImageDeliverySummary} from "./MissingImageDeliverySummary";
 import {MissingImageDeliveryDetailsComponent} from "./MissingImageDeliveryDetailsComponent";
 import {ViewModel} from "../core/ViewModel";
+import { mapFilingHistory, mapFilingHistoryDate } from "../mappers/FilingHistoryMapper";
 
 export class MissingImageDeliveryMapper implements OrderItemMapper {
     private readonly data: MissingImageDeliverySummary;

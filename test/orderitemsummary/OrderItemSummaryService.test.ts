@@ -1,6 +1,6 @@
 import {mockMidOrderItemView, mockMissingImageDeliveryItem} from "../__mocks__/order.mocks";
 import {OrderItemSummaryService} from "../../src/orderitemsummary/OrderItemSummaryService";
-import {Success} from "@companieshouse/api-sdk-node/dist/services/result";
+import {Failure, Success} from "@companieshouse/api-sdk-node/dist/services/result";
 import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order/types";
 import {OrderItemRequest} from "../../src/orderitemsummary/OrderItemRequest";
 import {jest} from "@jest/globals";
@@ -8,6 +8,7 @@ import {OrderItemView} from "../../src/orderitemsummary/OrderItemView";
 import {MapperRequest} from "../../src/mappers/MapperRequest";
 import {Status} from "../../dist/core/Status";
 import {OrderItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/order-item/service";
+import {OrderItemSummaryFactory} from "../../dist/orderitemsummary/OrderItemSummaryFactory";
 
 describe("OrderItemSummaryService", () => {
     describe("getOrderItem", () => {
@@ -54,6 +55,70 @@ describe("OrderItemSummaryService", () => {
             expect(mapper.map).toHaveBeenCalled();
             expect(mapper.getMappedOrder).toHaveBeenCalled();
             expect(factory.getMapper).toHaveBeenCalledWith(new MapperRequest( "ORD-123456-123456", mockMissingImageDeliveryItem));
+        });
+
+        it("Returns client error when api returns 404 not found", async () => {
+            // given
+            const response = new Failure<Item, OrderItemErrorResponse>({
+                httpStatusCode: 404
+            });
+
+            const orderItem: any = {};
+            orderItem.getOrderItem = jest.fn(() => {
+                return response;
+            });
+            const apiClientFactory: any = {};
+            apiClientFactory.newApiClient = jest.fn(() => {
+                return {
+                    orderItem: orderItem
+                };
+            });
+
+            const mappedResults: OrderItemView = {
+                status: Status.CLIENT_ERROR,
+            }
+
+            const service = new OrderItemSummaryService(apiClientFactory, new OrderItemSummaryFactory());
+
+            // when
+            const result = await service.getOrderItem(new OrderItemRequest("123123", "ORD-123456-123456", "MID-123456-123456"));
+
+            // then
+            expect(result).toStrictEqual(mappedResults);
+            expect(apiClientFactory.newApiClient).toHaveBeenCalled();
+            expect(orderItem.getOrderItem).toHaveBeenCalledWith("ORD-123456-123456", "MID-123456-123456");
+        });
+
+        it("Returns client error when api returns 404 not found", async () => {
+            // given
+            const response = new Failure<Item, OrderItemErrorResponse>({
+                httpStatusCode: 500
+            });
+
+            const orderItem: any = {};
+            orderItem.getOrderItem = jest.fn(() => {
+                return response;
+            });
+            const apiClientFactory: any = {};
+            apiClientFactory.newApiClient = jest.fn(() => {
+                return {
+                    orderItem: orderItem
+                };
+            });
+
+            const mappedResults: OrderItemView = {
+                status: Status.SERVER_ERROR,
+            }
+
+            const service = new OrderItemSummaryService(apiClientFactory, new OrderItemSummaryFactory());
+
+            // when
+            const result = await service.getOrderItem(new OrderItemRequest("123123", "ORD-123456-123456", "MID-123456-123456"));
+
+            // then
+            expect(result).toStrictEqual(mappedResults);
+            expect(apiClientFactory.newApiClient).toHaveBeenCalled();
+            expect(orderItem.getOrderItem).toHaveBeenCalledWith("ORD-123456-123456", "MID-123456-123456");
         });
 
         // it("Propagates exception thrown by API client", async () => {
