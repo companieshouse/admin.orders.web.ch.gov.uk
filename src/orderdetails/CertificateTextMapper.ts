@@ -175,6 +175,10 @@ export abstract class CertificateTextMapper {
             mappings.push(deliveryDetails.addressLine2);
         }
 
+        if (deliveryDetails.companyName !== "" && deliveryDetails.companyName !== undefined) {
+            mappings.push(deliveryDetails.companyName);
+        }
+
         mappings.push(deliveryDetails.locality);
 
         if (deliveryDetails.region !== "" && deliveryDetails.region !== undefined) {
