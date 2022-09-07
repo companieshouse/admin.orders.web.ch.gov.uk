@@ -20,15 +20,7 @@ export const mapFilingHistory = (description: string, descriptionValues: Record<
     return removeAsterisks(mappedFilingHistoryDescription);
 };
 
-const getFullFilingHistoryDescription = (descriptionKey: string): string => {
-    if (filingHistoryDescriptions === undefined) {
-        return descriptionKey;
-    } else {
-        return filingHistoryDescriptions[DESCRIPTIONS_CONSTANT][descriptionKey] || descriptionKey;
-    }
-};
-
-const mapFilingHistoryDescriptionValues = (description: string, descriptionValues: Record<string, string>) => {
+export const mapFilingHistoryDescriptionValues = (description: string, descriptionValues: Record<string, string>) => {
     if (descriptionValues.description) {
         return descriptionValues.description;
     } else {
@@ -39,7 +31,7 @@ const mapFilingHistoryDescriptionValues = (description: string, descriptionValue
     }
 };
 
-const mapDateFullMonth = (dateString: string): string => {
+export const mapDateFullMonth = (dateString: string): string => {
     const d = new Date(dateString);
     const year = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
     const month = new Intl.DateTimeFormat("en", { month: "long" }).format(d);
@@ -48,8 +40,14 @@ const mapDateFullMonth = (dateString: string): string => {
     return `${day} ${month} ${year}`;
 };
 
-const removeAsterisks = (description: string) => {
+export const removeAsterisks = (description: string) => {
     return description.replace(/\*/g, "");
 };
 
-
+const getFullFilingHistoryDescription = (descriptionKey: string): string => {
+    if (filingHistoryDescriptions === undefined) {
+        return descriptionKey;
+    } else {
+        return filingHistoryDescriptions[DESCRIPTIONS_CONSTANT][descriptionKey] || descriptionKey;
+    }
+};
