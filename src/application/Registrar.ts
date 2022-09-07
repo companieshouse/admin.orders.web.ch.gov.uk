@@ -24,9 +24,7 @@ export class Registrar {
         this.app.bindGet(this.serverPaths.webContextPath + "/search", this.searchController.handleGet.bind(this.searchController), this.middlewareProvider.middlewareables);
         this.app.bindPost(this.serverPaths.webContextPath + "/search", this.searchController.handlePost.bind(this.searchController), this.middlewareProvider.middlewareables);
         this.app.bindGet(this.serverPaths.webContextPath + "/orders/:orderId", this.orderDetailsController.handleGet.bind(this.orderDetailsController), this.middlewareProvider.middlewareables);
-        if (FEATURE_FLAGS.multiItemBasketEnabled) {
-            this.app.bindGet(this.serverPaths.webContextPath + "/order-summaries/:orderId", this.orderSummaryController.readOrder.bind(this.orderSummaryController), this.middlewareProvider.middlewareables);
-        }
+        this.app.bindGet(this.serverPaths.webContextPath + "/order-summaries/:orderId", this.orderSummaryController.readOrder.bind(this.orderSummaryController), this.middlewareProvider.middlewareables);
         this.app.start();
     }
 

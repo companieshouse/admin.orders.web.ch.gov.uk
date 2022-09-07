@@ -41,3 +41,14 @@ Feature: Order summary page
     When I view the order summary
     Then The order summary page should display service unavailable
 
+  Scenario: User signs out
+    Given I am viewing an order summary
+    When I click sign out
+    Then I should be taken to the signout handler
+
+  Scenario: Click back button
+    Given Multi-item basket functionality has been enabled
+    And The order summary page will load successfully
+    And I have navigated to the order from the search page
+    When I click the back button on the order summary page
+    Then I should be returned from the order summary page to the orders search page

@@ -45,9 +45,26 @@ export class OrderSummarySteps {
         });
     }
 
+    @given(/^I am viewing an order summary$/)
+    async harnessAndViewOrderSummary() {
+        await this.checkoutResourceContainsItems();
+        await this.currentPage.openOrderSummaryPage();
+    }
+
+    @given(/^The order summary page will load successfully$/)
+    async harnessAndAutotransition() {
+        await this.checkoutResourceContainsItems();
+        await this.currentPage.openOrderSummaryPageViaLink();
+    }
+
     @when(/^I view the order summary$/)
     async viewOrderSummary() {
         await this.currentPage.openOrderSummaryPage();
+    }
+
+    @when(/^I click the back button on the order summary page$/)
+    async clickBackButton() {
+        await this.currentPage.clickBackLink();
     }
 
     @then(/^The following items should be displayed:$/)
@@ -78,5 +95,10 @@ export class OrderSummarySteps {
     @then(/The order summary page should display service unavailable/)
     async verifyServiceUnavailableDisplayed() {
         await this.currentPage.verifyServiceUnavailableErrorDisplayed();
+    }
+
+    @then(/I should be returned from the order summary page to the orders search page/)
+    async verifyLocationIsSearch() {
+        await this.currentPage.verifyLocation("/orders-admin/search");
     }
 }

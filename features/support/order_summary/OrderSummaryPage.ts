@@ -8,6 +8,9 @@ export interface OrderSummaryPageState {
     anticipateClientError(json: any): Promise<void>;
     anticipateServerError(json: any): Promise<void>;
     openOrderSummaryPage(): Promise<void>;
+    openOrderSummaryPageViaLink(): Promise<void>;
+    clickBackLink(): Promise<void>;
+    clickSignOut(): Promise<void>;
     verifyLayout(): Promise<void>;
     verifyItems(expectedItems: string[][]): Promise<void>;
     verifyDeliveryDetails(expectedDeliveryDetails: string[][]): Promise<void>;
@@ -15,6 +18,7 @@ export interface OrderSummaryPageState {
     verifyPaymentDetails(expectedPaymentDetails: string[][]): Promise<void>;
     verifyNotFoundErrorDisplayed(): Promise<void>;
     verifyServiceUnavailableErrorDisplayed(): Promise<void>;
+    verifyLocation(expected: string): Promise<void>;
 }
 
 export abstract class AbstractSummaryPage implements OrderSummaryPageState {
@@ -34,6 +38,18 @@ export abstract class AbstractSummaryPage implements OrderSummaryPageState {
     }
 
     openOrderSummaryPage(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    openOrderSummaryPageViaLink(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    clickBackLink(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    clickSignOut(): Promise<void> {
         throw new Error("Invalid operation");
     }
 
@@ -62,6 +78,10 @@ export abstract class AbstractSummaryPage implements OrderSummaryPageState {
     }
 
     verifyServiceUnavailableErrorDisplayed(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    verifyLocation(expected: string): Promise<void> {
         throw new Error("Invalid operation");
     }
 }
@@ -96,11 +116,23 @@ export class AnticipateOrderSummary extends AbstractSummaryPage {
         await this.interactor.openPage("/orders-admin/order-summaries/ORD-123123-123123");
         this.stateMachine.currentPage = this.stateMachine.orderSummary;
     }
+
+    async openOrderSummaryPageViaLink(): Promise<void> {
+        this.stateMachine.currentPage = this.stateMachine.orderSummary;
+    }
 }
 
 export class OrderSummaryPage extends AbstractSummaryPage {
     constructor(stateMachine: OrderSummarySteps, private interactor: BrowserAgent) {
         super(stateMachine);
+    }
+
+    async clickBackLink(): Promise<void> {
+        await this.interactor.clickElement(".govuk-back-link");
+    }
+
+    async clickSignOut(): Promise<void> {
+        await this.interactor.clickElement(".sign-out-link");
     }
 
     async verifyLayout(): Promise<void> {
@@ -140,5 +172,9 @@ export class OrderSummaryPage extends AbstractSummaryPage {
     async verifyServiceUnavailableErrorDisplayed(): Promise<void> {
         const headingText = await this.interactor.getElementText("h1");
         expect(headingText).to.equal("Service unavailable");
+    }
+
+    async verifyLocation(expected: string): Promise<void> {
+        expect(await this.interactor.getLocation()).to.equal(expected);
     }
 }
