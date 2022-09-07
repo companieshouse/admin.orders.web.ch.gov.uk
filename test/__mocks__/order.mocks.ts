@@ -1,4 +1,5 @@
 import { Item } from "@companieshouse/api-sdk-node/dist/services/order/order/types";
+import { GovUkOrderCertifiedCopyItemSummaryView } from "../../src/orderitemsummary/GovUkOrderCertifiedCopyItemSummaryView";
 
 export const mockMissingImageDeliveryItem: Item = {
     id: "MID-123456-123456",
@@ -41,4 +42,54 @@ export const mockMissingImageDeliveryItem: Item = {
     postageCost: "0",
     totalItemCost: "3",
     postalDelivery: false
+};
+
+export const mockCertifiedCopyItem: Item = {
+    id: "CCD-123456-123456",
+    companyName: "Company Name",
+    companyNumber: "00000000",
+    description: "certified-copy for company 00000000",
+    descriptionIdentifier: "certified-copy",
+    descriptionValues: {
+        certificate: "certified-copy for company 00000000",
+        companyNumber: "00000000"
+    },
+    itemCosts: [{
+        discountApplied: "0",
+        itemCost: "30",
+        calculatedCost: "30",
+        productType: "certified-copy"
+    }],
+    itemOptions: {
+        collectionLocation: "cardiff",
+        contactNumber: "0123456789",
+        deliveryMethod: "postal",
+        deliveryTimescale: "standard",
+        filingHistoryDocuments: [{
+            filingHistoryDate: "2010-02-12",
+            filingHistoryDescription: "change-person-director-company-with-change-date",
+            filingHistoryDescriptionValues: {
+                change_date: "2010-02-12",
+                officer_name: "Thomas David Wheare"
+            },
+            filingHistoryId: "MzAwOTM2MDg5OWFkaXF6a2N4",
+            filingHistoryType: "CH01",
+            filingHistoryCost: "15"
+        }],
+        forename: "forename",
+        surname: "surname"
+    },
+    etag: "abcdefg123456",
+    kind: "item#certified-copy",
+    links: {
+        self: "/orderable/certified-copies/CCD-123456-123456"
+    },
+    postalDelivery: true,
+    quantity: 1,
+    itemUri: "/orderable/certified-copies/CCD-123456-123456",
+    status: "unknown",
+    postageCost: "0",
+    totalItemCost: "15",
+    customerReference: "mycert",
+    satisfiedAt: "2020-05-15T08:41:05.798Z"
 };
