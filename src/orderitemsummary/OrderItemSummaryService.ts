@@ -30,7 +30,7 @@ export class OrderItemSummaryService {
             mapper.map();
             return {
                 status: Status.SUCCESS,
-                ...mapper.getMappedOrder()
+                viewModel: mapper.getMappedOrder()
             };
         } else if (response.isFailure() && response.value.httpStatusCode === 404) {
             OrderItemSummaryService.logger.error("Order item not found");

@@ -1,5 +1,6 @@
+import {ViewModel} from "../core/ViewModel";
+
 export class OrderItemView {
     status?: string;
-    template?: string;
-    data?: object;
+    viewModel?: ViewModel;
 }

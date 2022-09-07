@@ -8,7 +8,7 @@ import {OrderItemView} from "../../src/orderitemsummary/OrderItemView";
 import {MapperRequest} from "../../src/mappers/MapperRequest";
 import {Status} from "../../dist/core/Status";
 import {OrderItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/order-item/service";
-import {OrderItemSummaryFactory} from "../../dist/orderitemsummary/OrderItemSummaryFactory";
+import {OrderItemSummaryFactory} from "../../src/orderitemsummary/OrderItemSummaryFactory";
 
 describe("OrderItemSummaryService", () => {
     describe("getOrderItem", () => {
@@ -29,7 +29,7 @@ describe("OrderItemSummaryService", () => {
 
             const mappedResults: OrderItemView = {
                 status: Status.SUCCESS,
-                data: mockMidOrderItemView
+                viewModel: mockMidOrderItemView
             }
 
             const mapper: any = {};
@@ -49,7 +49,10 @@ describe("OrderItemSummaryService", () => {
             const result = await service.getOrderItem(new OrderItemRequest("123123", "ORD-123456-123456", "MID-123456-123456"));
 
             // then
-            expect(result).toStrictEqual(mappedResults);
+            expect(result).toStrictEqual({
+                status: Status.SUCCESS,
+                viewModel: mappedResults
+            });
             expect(apiClientFactory.newApiClient).toHaveBeenCalled();
             expect(orderItem.getOrderItem).toHaveBeenCalledWith("ORD-123456-123456", "MID-123456-123456");
             expect(mapper.map).toHaveBeenCalled();
@@ -120,31 +123,5 @@ describe("OrderItemSummaryService", () => {
             expect(apiClientFactory.newApiClient).toHaveBeenCalled();
             expect(orderItem.getOrderItem).toHaveBeenCalledWith("ORD-123456-123456", "MID-123456-123456");
         });
-
-        // it("Propagates exception thrown by API client", async () => {
-        //     // given
-        //     const expectedError = new InternalServerError();
-        //     sandbox.stub(apiClient, "getOrderItem")
-        //         .throws(expectedError);
-        //     const mappedOrder = {};
-        //     const mapper = {
-        //         map: sandbox.spy(),
-        //         getMappedOrder: sandbox.stub().returns(mappedOrder)
-        //     };
-        //     const factory = {
-        //         getMapper: sandbox.stub().returns(mapper)
-        //     };
-        //     const service = new OrderItemSummaryService(factory);
-        //
-        //     await expect(service.getOrderItem({
-        //         apiToken: "F00DFACE",
-        //         orderId: "ORD-123456-123456",
-        //         itemId: "MID-123456-123456"
-        //     })).to.be.rejectedWith(expectedError);
-        //     expect(apiClient.getOrderItem).to.be.calledOnceWith("ORD-123456-123456", "MID-123456-123456");
-        //     expect(mapper.getMappedOrder).to.not.be.called;
-        //     expect(mapper.map).to.not.be.called;
-        //     expect(factory.getMapper).to.not.be.called;
-        // });
     });
 });
