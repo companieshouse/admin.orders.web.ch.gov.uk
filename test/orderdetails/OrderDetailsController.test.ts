@@ -6,13 +6,20 @@ import { OrderDetailsParameters } from "../../src/orderdetails/OrderDetailsParam
 import { CertificateDetails, OrderDetails } from "../../src/orderdetails/OrderDetails";
 import { OrderDetailsResults } from "../../src/orderdetails/OrderDetailsResults";
 import { Status } from "../../src/core/Status";
+import {FEATURE_FLAGS} from "../../src/config/FeatureOptions";
+import { Response } from "express";
 
 describe("OrderDetailsController", () => {
 
+    afterAll(() => {
+        FEATURE_FLAGS.multiItemBasketEnabled = false;
+    });
+
     it("Handles get order details requests", async () => {
         // given
+        FEATURE_FLAGS.multiItemBasketEnabled = false;
         const service: any = {};
-        const expectedCertificateDetailsResults = 
+        const expectedCertificateDetailsResults =
         {
             certificateDetails : {
                 orderNumber: "ORD-123123-123123"
@@ -66,6 +73,7 @@ describe("OrderDetailsController", () => {
 
     it("Renders service unavailable if server error status returned by service", async () => {
         // given
+        FEATURE_FLAGS.multiItemBasketEnabled = false;
         const service: any = {};
         const expectedViewModel = new ViewModel("template1", []);
         const pageFactory: any = {};
@@ -112,6 +120,7 @@ describe("OrderDetailsController", () => {
 
     it("Renders not found if client error status returned by service", async () => {
         // given
+        FEATURE_FLAGS.multiItemBasketEnabled = false;
         const service: any = {};
         const expectedViewModel = new ViewModel("template1", []);
         const pageFactory: any = {};
@@ -153,6 +162,27 @@ describe("OrderDetailsController", () => {
         expect(response.render).toHaveBeenCalledWith("template1", {
             control: expectedViewModel,
         });
+        expect(nextFunction).toHaveBeenCalledTimes(0);
+    });
+
+    it("Redirects user agent to view order summary page if multi-item basket enabled", async () => {
+        // given
+        FEATURE_FLAGS.multiItemBasketEnabled = true;
+        const request: any = {
+            params: {
+                orderId: "ORD-123123-123123"
+            }
+        };
+        const response = {} as Response;
+        response.redirect = jest.fn(() => {});
+        const controller = new OrderDetailsController({} as any, {} as any);
+        const nextFunction = jest.fn();
+
+        // when
+        await controller.handleGet(request, response, nextFunction);
+
+        // then
+        expect(response.redirect).toHaveBeenCalledWith("/orders-admin/order-summaries/ORD-123123-123123");
         expect(nextFunction).toHaveBeenCalledTimes(0);
     });
 })

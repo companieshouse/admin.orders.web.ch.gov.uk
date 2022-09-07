@@ -7,6 +7,7 @@ import { OrderDetailsService } from "./OrderDetailsService";
 import { OrderDetailsParameters } from "./OrderDetailsParameters";
 import { Status } from "core/Status";
 import { BACK_LINK_TOGGLER } from "../config/BackLinkToggler";
+import {FEATURE_FLAGS} from "../config/FeatureOptions";
 
 @Service()
 export class OrderDetailsController {
@@ -19,6 +20,10 @@ export class OrderDetailsController {
 
     public async handleGet(req: Request, res: Response, next: NextFunction): Promise<void> {
         OrderDetailsController.logger.trace("GET request received");
+        if (FEATURE_FLAGS.multiItemBasketEnabled) {
+            OrderDetailsController.logger.info("Multi-item basket enabled; redirecting to order summary endpoint...");
+            return res.redirect(`/orders-admin/order-summaries/${req.params.orderId}`);
+        }
         const orderParameters = new OrderDetailsParameters(req.params.orderId, req.orderAdminSession?.getAccessToken() || "");
         const order = await this.service.fetchOrder(orderParameters);
         if (order.status === Status.CLIENT_ERROR) {

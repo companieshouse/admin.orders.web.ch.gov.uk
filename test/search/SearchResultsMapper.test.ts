@@ -203,7 +203,7 @@ describe("SearchResultsMapper", () => {
                     },
                     orderDate: "01/01/2022",
                     paymentStatus: "Paid",
-                    detailHref: "javascript:void(0)"
+                    detailHref: "/orders-admin/order-summaries/ORD-123123-123123"
                 },
                 {
                     id: "ORD-321321-321321",
@@ -212,7 +212,7 @@ describe("SearchResultsMapper", () => {
                     },
                     orderDate: "05/05/2021",
                     paymentStatus: "Paid",
-                    detailHref: "javascript:void(0)"
+                    detailHref: "/orders-admin/order-summaries/ORD-321321-321321"
                 },
                 {
                     id: "ORD-121212-121212",
@@ -221,7 +221,7 @@ describe("SearchResultsMapper", () => {
                     },
                     orderDate: "12/02/2020",
                     paymentStatus: "Unknown",
-                    detailHref: "javascript:void(0)"
+                    detailHref: "/orders-admin/order-summaries/ORD-121212-121212"
                 },
                 {
                     id: "ORD-323232-323232",
@@ -230,7 +230,7 @@ describe("SearchResultsMapper", () => {
                     },
                     orderDate: "21/12/2021",
                     paymentStatus: "Paid",
-                    detailHref: "javascript:void(0)"
+                    detailHref: "/orders-admin/order-summaries/ORD-323232-323232"
                 },
                 {
                     id: "ORD-230230-230230",
@@ -239,7 +239,7 @@ describe("SearchResultsMapper", () => {
                     },
                     orderDate: "Unknown",
                     paymentStatus: "Unknown",
-                    detailHref: "javascript:void(0)"
+                    detailHref: "/orders-admin/order-summaries/ORD-230230-230230"
                 }
             ] as OrderSummary[]
         } as SearchResults);
