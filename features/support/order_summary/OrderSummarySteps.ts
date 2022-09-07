@@ -5,6 +5,8 @@ import {DataTable} from "@cucumber/cucumber";
 import {BrowserAgent} from "../core/BrowserAgent";
 import Container from "typedi";
 import {StubApiClientFactory} from "../../../dist/client/StubApiClientFactory";
+import successfulCheckoutResponse from "../stubbing/order_summary/checkout_with_all_item_combos.json";
+import checkoutNoDeliverableItems from "../stubbing/order_summary/checkout_with_no_deliverable_items.json";
 
 @binding()
 export class OrderSummarySteps {
@@ -19,9 +21,28 @@ export class OrderSummarySteps {
         this.currentPage = new NoPage(this, apiFactory);
     }
 
-    @given(/^The checkout contains the following items:$/)
-    async checkoutResourceContainsItems(expectedItems: DataTable) {
-        await this.currentPage.anticipateSuccessfulResponse();
+    @given(/^The checkout contains all known item types with all known delivery timescales$/)
+    async checkoutResourceContainsItems() {
+        await this.currentPage.anticipateSuccessfulResponse(successfulCheckoutResponse);
+    }
+
+    @given(/^The checkout contains no deliverable items$/)
+    async checkoutResourceContainsNoDeliverableItemsItems() {
+        await this.currentPage.anticipateSuccessfulResponse(checkoutNoDeliverableItems);
+    }
+
+    @given(/^The checkout does not exist$/)
+    async checkoutResourceNonexistent() {
+        await this.currentPage.anticipateClientError({
+            error: "Not found"
+        });
+    }
+
+    @given(/^An error will occur when the checkout is fetched$/)
+    async checkoutResourceErrors() {
+        await this.currentPage.anticipateServerError({
+            error: "Something went wrong"
+        });
     }
 
     @when(/^I view the order summary$/)
@@ -39,8 +60,23 @@ export class OrderSummarySteps {
         await this.currentPage.verifyDeliveryDetails(expectedDeliveryDetails.raw());
     }
 
+    @then(/^Delivery details for the order should not be displayed$/)
+    async verifyDeliveryDetailsNotDisplayed() {
+        await this.currentPage.verifyNoDeliveryDetailsDisplayed();
+    }
+
     @then(/Payment details for the order should be:/)
     async verifyPaymentDetails(expectedPaymentDetails: DataTable) {
         await this.currentPage.verifyPaymentDetails(expectedPaymentDetails.raw());
+    }
+
+    @then(/The order summary page should display order not found/)
+    async verifyOrderNotFoundDisplayed() {
+        await this.currentPage.verifyNotFoundErrorDisplayed();
+    }
+
+    @then(/The order summary page should display service unavailable/)
+    async verifyServiceUnavailableDisplayed() {
+        await this.currentPage.verifyServiceUnavailableErrorDisplayed();
     }
 }

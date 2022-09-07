@@ -3,13 +3,8 @@ Feature: Order summary page
   I want to view a summary of an order
   So I can see the items that make up that order
 
-  Scenario: View order summary
-    Given The checkout contains the following items:
-      | Missing image delivery                |
-      | Certificate with standard delivery    |
-      | Certificate with express delivery     |
-      | Certified copy with standard delivery |
-      | Certified copy with express delivery  |
+  Scenario: Display item summaries, delivery details and payment details for known item types and delivery timescales
+    Given The checkout contains all known item types with all known delivery timescales
     When I view the order summary
     Then The following items should be displayed:
       | Item number       | Order type         | Company number | Delivery method | Fee |
@@ -24,3 +19,25 @@ Feature: Order summary page
     And Payment details for the order should be:
       | Payment reference | Fee  |
       | payment_reference | £133 |
+
+  Scenario: Hide the delivery details section if order contains no deliverable items
+    Given The checkout contains no deliverable items
+    When I view the order summary
+    Then The following items should be displayed:
+      | Item number       | Order type         | Company number | Delivery method | Fee |
+      | MID-123123-123123 | Missing image      | 12345678       | N/A             | £3  |
+    And Delivery details for the order should not be displayed
+    And Payment details for the order should be:
+      | Payment reference | Fee  |
+      | payment_reference | £3 |
+
+  Scenario: Display order not found if the order summary doesn't exist
+    Given The checkout does not exist
+    When I view the order summary
+    Then The order summary page should display order not found
+
+  Scenario: Display service unavailable if an error occurs when displaying the order summary
+    Given An error will occur when the checkout is fetched
+    When I view the order summary
+    Then The order summary page should display service unavailable
+

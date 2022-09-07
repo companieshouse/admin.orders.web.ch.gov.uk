@@ -24,7 +24,9 @@ export class PageFactory implements ErrorPageBuildable {
         const content = new OrderSummaryDetailsComponent(orderSummary);
         pageModel.add(content);
         orderSummary.itemSummary.forEach(summary => content.add(new ItemDetailsComponent(summary)));
-        pageModel.add(new DeliveryDetailsComponent(orderSummary));
+        if (orderSummary.hasDeliverableItems) {
+            pageModel.add(new DeliveryDetailsComponent(orderSummary));
+        }
         pageModel.add(new PaymentDetailsComponent(orderSummary));
         return pageModel.render();
     }

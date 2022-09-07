@@ -1,23 +1,35 @@
 import {OrderSummarySteps} from "./OrderSummarySteps";
 import {StubApiClientFactory} from "../../../dist/client/StubApiClientFactory";
-import successfulCheckoutResponse from "../stubbing/order_summary/checkout_with_all_item_combos.json";
 import {BrowserAgent} from "../core/BrowserAgent";
 import { expect } from "chai";
 
 export interface OrderSummaryPageState {
-    anticipateSuccessfulResponse(): Promise<void>;
+    anticipateSuccessfulResponse(json: any): Promise<void>;
+    anticipateClientError(json: any): Promise<void>;
+    anticipateServerError(json: any): Promise<void>;
     openOrderSummaryPage(): Promise<void>;
     verifyLayout(): Promise<void>;
     verifyItems(expectedItems: string[][]): Promise<void>;
     verifyDeliveryDetails(expectedDeliveryDetails: string[][]): Promise<void>;
+    verifyNoDeliveryDetailsDisplayed(): Promise<void>;
     verifyPaymentDetails(expectedPaymentDetails: string[][]): Promise<void>;
+    verifyNotFoundErrorDisplayed(): Promise<void>;
+    verifyServiceUnavailableErrorDisplayed(): Promise<void>;
 }
 
 export abstract class AbstractSummaryPage implements OrderSummaryPageState {
     constructor(protected stateMachine: OrderSummarySteps) {
     }
 
-    anticipateSuccessfulResponse(): Promise<void> {
+    anticipateSuccessfulResponse(json: any): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    anticipateClientError(json: any): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    anticipateServerError(json: any): Promise<void> {
         throw new Error("Invalid operation");
     }
 
@@ -26,6 +38,10 @@ export abstract class AbstractSummaryPage implements OrderSummaryPageState {
     }
 
     verifyDeliveryDetails(expectedDeliveryDetails: string[][]): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    verifyNoDeliveryDetailsDisplayed(): Promise<void> {
         throw new Error("Invalid operation");
     }
 
@@ -40,6 +56,14 @@ export abstract class AbstractSummaryPage implements OrderSummaryPageState {
     verifyPaymentDetails(expectedPaymentDetails: string[][]): Promise<void> {
         throw new Error("Invalid operation");
     }
+
+    verifyNotFoundErrorDisplayed(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    verifyServiceUnavailableErrorDisplayed(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
 }
 
 export class NoPage extends AbstractSummaryPage {
@@ -47,8 +71,18 @@ export class NoPage extends AbstractSummaryPage {
         super(stateMachine);
     }
 
-    async anticipateSuccessfulResponse(): Promise<void> {
-        this.stubApiClient.willReturnSuccessfulCheckoutResponse(successfulCheckoutResponse);
+    async anticipateSuccessfulResponse(json: any): Promise<void> {
+        this.stubApiClient.willReturnSuccessfulCheckoutResponse(json);
+        this.stateMachine.currentPage = this.stateMachine.anticipateOrderSummary;
+    }
+
+    async anticipateClientError(json: any): Promise<void> {
+        this.stubApiClient.willReturnErrorCheckoutResponse(404, json);
+        this.stateMachine.currentPage = this.stateMachine.anticipateOrderSummary;
+    }
+
+    async anticipateServerError(json: any): Promise<void> {
+        this.stubApiClient.willReturnErrorCheckoutResponse(500, json);
         this.stateMachine.currentPage = this.stateMachine.anticipateOrderSummary;
     }
 }
@@ -86,9 +120,25 @@ export class OrderSummaryPage extends AbstractSummaryPage {
         expect(resultList.getValues()).to.deep.equal(expectedDeliveryDetails[1]);
     }
 
+    async verifyNoDeliveryDetailsDisplayed(): Promise<void> {
+        expect(await this.interactor.elementExists("#deliveryDetailsList")).to.be.false;
+    }
+
     async verifyPaymentDetails(expectedPaymentDetails: string[][]): Promise<void> {
         const resultList = await this.interactor.getList("#paymentDetailsList");
         expect(resultList.getNames()).to.deep.equal(expectedPaymentDetails[0]);
         expect(resultList.getValues()).to.deep.equal(expectedPaymentDetails[1]);
+    }
+
+    async verifyNotFoundErrorDisplayed(): Promise<void> {
+        const headingText = await this.interactor.getElementText("h1");
+        const bodyText = await this.interactor.getElementText("#main-content p.govuk-body");
+        expect(headingText).to.equal("Order not found");
+        expect(bodyText).to.equal("Check that you have entered the correct web address or try using the search.");
+    }
+
+    async verifyServiceUnavailableErrorDisplayed(): Promise<void> {
+        const headingText = await this.interactor.getElementText("h1");
+        expect(headingText).to.equal("Service unavailable");
     }
 }
