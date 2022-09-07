@@ -1,7 +1,7 @@
 import fs from "fs";
 import yaml from "yaml";
 
-const FILING_HISTORY_DESCRIPTIONS_PATH: string = "src/submodules/api-enumerations/filing_history_descriptions.yml";
+const FILING_HISTORY_DESCRIPTIONS_PATH: string = "api-enumerations/filing_history_descriptions.yml";
 const DESCRIPTIONS_CONSTANT: string = "description";
 const filingHistoryDescriptions = yaml.parse(fs.readFileSync(FILING_HISTORY_DESCRIPTIONS_PATH, "utf8"));
 
