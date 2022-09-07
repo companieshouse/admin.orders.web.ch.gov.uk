@@ -236,7 +236,7 @@ export abstract class CertificateTextMapper {
         } else if (companyStatus === CompanyStatus.ADMINISTRATION) {
             delete details.statementOfGoodStanding;
             delete details.liquidators;
-        } 
+        }
         return details;
     }
 }
