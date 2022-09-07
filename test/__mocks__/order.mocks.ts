@@ -1,4 +1,5 @@
 import { Item } from "@companieshouse/api-sdk-node/dist/services/order/order/types";
+import {GovUkOrderItemSummaryView} from "../../src/orderitemsummary/GovUkOrderItemSummaryView";
 
 export const mockMissingImageDeliveryItem: Item = {
     id: "MID-123456-123456",
@@ -41,4 +42,74 @@ export const mockMissingImageDeliveryItem: Item = {
     postageCost: "0",
     totalItemCost: "3",
     postalDelivery: false
+};
+
+export const mockMidOrderItemView: GovUkOrderItemSummaryView = {
+    orderId: "ORD-123456-123456",
+    itemId: "MID-123456-123456",
+    itemDetails: {
+        entries: [
+            {
+                key: {
+                    classes: "govuk-!-width-one-third",
+                    text: "Company name"
+                },
+                value: {
+                    classes: "govuk-!-width-two-thirds",
+                    text: "The Company"
+                }
+            },
+            {
+                key: {
+                    classes: "govuk-!-width-one-third",
+                    text: "Company number"
+                },
+                value: {
+                    classes: "govuk-!-width-two-thirds",
+                    text: "00000000"
+                }
+            },
+            {
+                key: {
+                    classes: "govuk-!-width-one-third",
+                    text: "Date"
+                },
+                value: {
+                    classes: "govuk-!-width-two-thirds",
+                    text: "26 May 2015"
+                }
+            },
+            {
+                key: {
+                    classes: "govuk-!-width-one-third",
+                    text: "Type"
+                },
+                value: {
+                    classes: "govuk-!-width-two-thirds",
+                    text: "AP01"
+                }
+            },
+            {
+                key: {
+                    classes: "govuk-!-width-one-third",
+                    text: "Description"
+                },
+                value: {
+                    classes: "govuk-!-width-two-thirds",
+                    text: "Appointment of Mr Richard John Harris as a director"
+                }
+            },
+            {
+                key: {
+                    classes: "govuk-!-width-one-third",
+                    text: "Fee"
+                },
+                value: {
+                    classes: "govuk-!-width-two-thirds",
+                    text: "£3"
+                }
+            }
+        ]
+    },
+    backLinkUrl: "/orders/ORD-123456-123456"
 };
