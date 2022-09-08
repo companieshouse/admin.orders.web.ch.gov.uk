@@ -1,7 +1,7 @@
-import {AbstractViewComponent} from "../core/AbstractViewComponent";
-import {ViewModel} from "../core/ViewModel";
+import {AbstractViewComponent} from "./AbstractViewComponent";
+import {ViewModel} from "./ViewModel";
 
-export class MissingImageItemSummaryPage extends AbstractViewComponent {
+export class Page extends AbstractViewComponent {
 
     constructor(private title: string) {
         super("page", []);

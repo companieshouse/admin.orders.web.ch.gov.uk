@@ -1,7 +1,7 @@
 import { OrderItemMapper } from "./OrderItemMapper";
 import { ItemOptions as MissingImageDeliveryItemOptions } from "@companieshouse/api-sdk-node/dist/services/order/mid";
 import { MapperRequest } from "../mappers/MapperRequest";
-import {MissingImageItemSummaryPage} from "./MissingImageItemSummaryPage";
+import {Page} from "../core/Page";
 import {MissingImageDeliverySummary} from "./MissingImageDeliverySummary";
 import {MissingImageDeliveryDetailsComponent} from "./MissingImageDeliveryDetailsComponent";
 import {ViewModel} from "../core/ViewModel";
@@ -22,7 +22,7 @@ export class MissingImageDeliveryMapper implements OrderItemMapper {
     }
 
     getMappedOrder (): ViewModel {
-        const result = new MissingImageItemSummaryPage(`Summary of item ${this.data.itemId} in order ${this.data.orderId}`);
+        const result = new Page(`Summary of item ${this.data.itemId} in order ${this.data.orderId}`);
         result.add(new MissingImageDeliveryDetailsComponent(this.data));
         return result.render();
     }
