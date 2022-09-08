@@ -1,6 +1,5 @@
 import { Item } from "@companieshouse/api-sdk-node/dist/services/order/order/types";
-import {CertificateItemSummaryView} from "../../src/orderitemsummary/CertificateItemSummaryView";
-import {ItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/certificates";
+import {ItemOptions as CertificateItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/certificates";
 import {ViewModel} from "../../dist/core/ViewModel";
 
 export const ORDER_ID = "ORD-123456-123456";
@@ -104,7 +103,7 @@ export const mockCertificateItem: Item = {
         },
         surname: "surname",
         companyType: "ltd"
-    } as ItemOptions,
+    } as CertificateItemOptions,
     etag: "abcdefg123456",
     kind: "item#certificate",
     links: {
@@ -146,7 +145,7 @@ export const mockDissolvedCertificateItem: Item = {
         registeredOfficeAddressDetails: {},
         secretaryDetails: {},
         surname: "surname"
-    } as ItemOptions,
+    } as CertificateItemOptions,
     etag: "abcdefg123456",
     kind: "item#certificate",
     links: {
@@ -348,7 +347,7 @@ export const mockLiquidatedLtdCertificateItemView: ViewModel = {
     template: "page"
 };
 
-export const mockDissolvedLtdCertificateItemView: ViewModel = {
+export const mockDissolvedCertificateItemView: ViewModel = {
     controls: [{
         controls: [],
         data: {
@@ -366,6 +365,242 @@ export const mockDissolvedLtdCertificateItemView: ViewModel = {
                 {
                     key: "Certificate type",
                     value: "Dissolution with all company name changes"
+                },
+                {
+                    key: "Delivery method",
+                    value: "Standard delivery (aim to dispatch within 10 working days)"
+                },
+                {
+                    key: "Email copy required",
+                    value: "Email only available for express delivery method"
+                },
+                {
+                    key: "Fee",
+                    value: "£15"
+                }
+            ],
+            backLinkUrl: "javascript:history.back()"
+        },
+        template: "orderItemSummary/order_item_summary_certificate.njk"
+    }],
+    data: {
+        title: "Summary of item CRT-123456-123456 in order ORD-123456-123456"
+    },
+    template: "page"
+};
+
+export const mockActiveLLPCertificateItemView: ViewModel = {
+    controls: [{
+        controls: [],
+        data: {
+            orderId: ORDER_ID,
+            itemId: CERTIFICATE_ID,
+            itemDetails: [
+                {
+                    key: "Company name",
+                    value: "Company Name"
+                },
+                {
+                    key: "Company number",
+                    value: "00000000"
+                },
+                {
+                    key: "Certificate type",
+                    value: "Incorporation with all company name changes"
+                },
+                {
+                    key: "Statement of good standing",
+                    value: "Yes"
+                },
+                {
+                    key: "Registered office address",
+                    value: "Current address and the one previous"
+                },
+                {
+                    key: "The names of all current designated members",
+                    value: "Yes"
+                },
+                {
+                    key: "The names of all current members",
+                    value: "Yes"
+                },
+                {
+                    key: "Delivery method",
+                    value: "Standard delivery (aim to dispatch within 10 working days)"
+                },
+                {
+                    key: "Email copy required",
+                    value: "Email only available for express delivery method"
+                },
+                {
+                    key: "Fee",
+                    value: "£15"
+                }
+            ],
+            backLinkUrl: "javascript:history.back()"
+        },
+        template: "orderItemSummary/order_item_summary_certificate.njk"
+    }],
+    data: {
+        title: "Summary of item CRT-123456-123456 in order ORD-123456-123456"
+    },
+    template: "page"
+};
+
+export const mockAdministratedLLPCertificateItemView: ViewModel = {
+    controls: [{
+        controls: [],
+        data: {
+            orderId: ORDER_ID,
+            itemId: CERTIFICATE_ID,
+            itemDetails: [
+                {
+                    key: "Company name",
+                    value: "Company Name"
+                },
+                {
+                    key: "Company number",
+                    value: "00000000"
+                },
+                {
+                    key: "Certificate type",
+                    value: "Incorporation with all company name changes"
+                },
+                {
+                    key: "Registered office address",
+                    value: "Current address and the one previous"
+                },
+                {
+                    key: "The names of all current designated members",
+                    value: "Including designated members':\n\nCorrespondence address\nAppointment date\nCountry of residence\nDate of birth (month and year)\n"
+                },
+                {
+                    key: "The names of all current members",
+                    value: "Including members':\n\nCorrespondence address\nAppointment date\nCountry of residence\nDate of birth (month and year)\n"
+                },
+                {
+                    key: "Administrators' details",
+                    value: "No"
+                },
+                {
+                    key: "Delivery method",
+                    value: "Standard delivery (aim to dispatch within 10 working days)"
+                },
+                {
+                    key: "Email copy required",
+                    value: "Email only available for express delivery method"
+                },
+                {
+                    key: "Fee",
+                    value: "£15"
+                }
+            ],
+            backLinkUrl: "javascript:history.back()"
+        },
+        template: "orderItemSummary/order_item_summary_certificate.njk"
+    }],
+    data: {
+        title: "Summary of item CRT-123456-123456 in order ORD-123456-123456"
+    },
+    template: "page"
+};
+
+export const mockLiquidatedLLPCertificateItemView: ViewModel = {
+    controls: [{
+        controls: [],
+        data: {
+            orderId: ORDER_ID,
+            itemId: CERTIFICATE_ID,
+            itemDetails: [
+                {
+                    key: "Company name",
+                    value: "Company Name"
+                },
+                {
+                    key: "Company number",
+                    value: "00000000"
+                },
+                {
+                    key: "Certificate type",
+                    value: "Incorporation with all company name changes"
+                },
+                {
+                    key: "Registered office address",
+                    value: "Current address and the one previous"
+                },
+                {
+                    key: "The names of all current designated members",
+                    value: "No"
+                },
+                {
+                    key: "The names of all current members",
+                    value: "No"
+                },
+                {
+                    key: "Liquidators' details",
+                    value: "Yes"
+                },
+                {
+                    key: "Delivery method",
+                    value: "Standard delivery (aim to dispatch within 10 working days)"
+                },
+                {
+                    key: "Email copy required",
+                    value: "Email only available for express delivery method"
+                },
+                {
+                    key: "Fee",
+                    value: "£15"
+                }
+            ],
+            backLinkUrl: "javascript:history.back()"
+        },
+        template: "orderItemSummary/order_item_summary_certificate.njk"
+    }],
+    data: {
+        title: "Summary of item CRT-123456-123456 in order ORD-123456-123456"
+    },
+    template: "page"
+};
+
+export const mockActiveLPCertificateItemView = {
+    controls: [{
+        controls: [],
+        data: {
+            orderId: ORDER_ID,
+            itemId: CERTIFICATE_ID,
+            itemDetails: [
+                {
+                    key: "Company name",
+                    value: "Company Name"
+                },
+                {
+                    key: "Company number",
+                    value: "00000000"
+                },
+                {
+                    key: "Certificate type",
+                    value: "Incorporation with all company name changes"
+                },
+                {
+                    key: "Statement of good standing",
+                    value: "Yes"
+                },
+                {
+                    key: "Principal place of business",
+                    value: "Current address and the one previous"
+                },
+                {
+                    key: "The names of all current general partners",
+                    value: "Yes"
+                },
+                {
+                    key: "The names of all current limited partners",
+                    value: "Yes"
+                },
+                {
+                    key: "General nature of business",
+                    value: "Yes"
                 },
                 {
                     key: "Delivery method",

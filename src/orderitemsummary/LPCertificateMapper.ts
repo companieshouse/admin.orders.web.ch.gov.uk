@@ -1,7 +1,7 @@
 import { AbstractCertificateMapper } from "./AbstractCertificateMapper";
 import { MapperRequest } from "../mappers/MapperRequest";
 import { ItemOptions as CertificateItemOptions } from "@companieshouse/api-sdk-node/dist/services/order/certificates/types";
-import { MapUtil } from "../service/MapUtil";
+import {CertificateTextMapper} from "../orderdetails/CertificateTextMapper";
 
 export class LPCertificateMapper extends AbstractCertificateMapper {
 
@@ -11,11 +11,11 @@ export class LPCertificateMapper extends AbstractCertificateMapper {
 
     protected mapCertificateDetails (): void {
         const itemOptions = this.mapperRequest.item.itemOptions as CertificateItemOptions;
-        this.addText("Certificate type", MapUtil.mapCertificateType(itemOptions.certificateType) || "");
-        this.addText("Statement of good standing", MapUtil.determineItemOptionsSelectedText(itemOptions.includeGoodStandingInformation));
-        this.addText("Principal place of business", MapUtil.mapAddressOptions(itemOptions.principalPlaceOfBusinessDetails));
-        this.addText("The names of all current general partners", MapUtil.determineItemOptionsSelectedText(itemOptions.generalPartnerDetails?.includeBasicInformation));
-        this.addText("The names of all current limited partners", MapUtil.determineItemOptionsSelectedText(itemOptions.limitedPartnerDetails?.includeBasicInformation));
-        this.addText("General nature of business", MapUtil.determineItemOptionsSelectedText(itemOptions.includeGeneralNatureOfBusinessInformation));
+        this.addField("Certificate type", CertificateTextMapper.mapCertificateType(itemOptions.certificateType) || "");
+        this.addField("Statement of good standing", CertificateTextMapper.isOptionSelected(itemOptions.includeGoodStandingInformation));
+        this.addField("Principal place of business", CertificateTextMapper.mapAddressOption(itemOptions.principalPlaceOfBusinessDetails?.includeAddressRecordsType));
+        this.addField("The names of all current general partners", CertificateTextMapper.isOptionSelected(itemOptions.generalPartnerDetails?.includeBasicInformation));
+        this.addField("The names of all current limited partners", CertificateTextMapper.isOptionSelected(itemOptions.limitedPartnerDetails?.includeBasicInformation));
+        this.addField("General nature of business", CertificateTextMapper.isOptionSelected(itemOptions.includeGeneralNatureOfBusinessInformation));
     }
 }

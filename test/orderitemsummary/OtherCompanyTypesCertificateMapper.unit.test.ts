@@ -4,7 +4,7 @@ import {
     mockAdministratedLtdCertificateItemView,
     mockCertificateItem,
     mockDissolvedCertificateItem,
-    mockDissolvedLtdCertificateItemView,
+    mockDissolvedCertificateItemView,
     mockLiquidatedLtdCertificateItemView,
     ORDER_ID
 } from "../__mocks__/mocks";
@@ -91,7 +91,7 @@ describe("OtherCompanyTypesCertificateMapper", () => {
             const actual = mapper.getMappedOrder();
 
             // then
-            expect(actual).toEqual(mockDissolvedLtdCertificateItemView);
+            expect(actual).toEqual(mockDissolvedCertificateItemView);
         });
     });
 });
