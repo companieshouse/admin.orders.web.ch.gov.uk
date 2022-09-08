@@ -18,7 +18,7 @@ export class ZombieBrowserAgent implements BrowserAgent, AgentService {
 
     async stop(): Promise<void> {
     }
-    
+
     async openPage(url: string): Promise<void> {
         if (this.browser == null) {
             throw new Error("Driver not started");
@@ -46,7 +46,7 @@ export class ZombieBrowserAgent implements BrowserAgent, AgentService {
             await this.browser.click(selector);
 
             if (element.href === "javascript:history.back()") {
-                this.openPage("/orders-admin/search");
+                await this.openPage("/orders-admin/search");
             }
         }
     }

@@ -1,0 +1,17 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">
+            Delivery details
+        </h2>
+        <dl class="govuk-summary-list" id="deliveryDetailsList">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Delivery address
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.deliveryAddress | striptags(true) | escape | nl2br }}
+                </dd>
+            </div>
+        </dl>
+    </div>
+</div>

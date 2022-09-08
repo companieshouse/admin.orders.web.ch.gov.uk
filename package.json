@@ -9,8 +9,8 @@
     "clean": "rm -rf ./dist",
     "test": "npx jest --verbose",
     "coverage": "npx jest --verbose --coverage",
-    "test-integration": "agent=zombie ADMIN_ORDERS_DEVELOPMENT_MODE=true npx cucumber-js",
-    "test-automation": "agent=selenium ADMIN_ORDERS_DEVELOPMENT_MODE=true npx cucumber-js",
+    "test-integration": "agent=zombie ADMIN_ORDERS_DEVELOPMENT_MODE=true npx --node-arg=\"--inspect-brk\" cucumber-js",
+    "test-automation": "agent=selenium ADMIN_ORDERS_DEVELOPMENT_MODE=true npx --node-arg=\"--inspect-brk\" cucumber-js",
     "sonarqube": "sonar-scanner"
   },
   "dependencies": {
@@ -40,6 +40,7 @@
     "@types/express": "^4.17.13",
     "@types/gulp": "^4.0.9",
     "@types/gulp-sass": "^5.0.0",
+    "@types/http-errors": "~1.6.3",
     "@types/jest": "^27.4.1",
     "@types/js-yaml": "^3.12.5",
     "@types/node": "^11.15.54",
