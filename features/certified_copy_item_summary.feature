@@ -52,8 +52,7 @@ Feature: Item summary for certified copies
     Then I should be taken to the signout handler
 
   Scenario: Click back button
-    Given The order summary page will load successfully
-    And The order item summary page will load successfully
+    Given The order item summary page will load successfully
     And I have opened an item via the order summary page
     When I click the back button on the order item summary page
     Then I should be returned from the order item summary page to the order summary page

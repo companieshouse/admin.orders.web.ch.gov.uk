@@ -2,7 +2,7 @@ import "reflect-metadata";
 import {binding, given, then, when} from "cucumber-tsflow/dist";
 import {
     AnticipateItemNotFound,
-    AnticipateOrderItemSummaryPage, AnticipateServiceUnavailable, ItemNotFound,
+    AnticipateOrderItemSummaryPage, AnticipateServiceUnavailable, BackFromOrderItemSummary, ItemNotFound,
     NoPage,
     OrderItemSummary,
     OrderItemSummaryPageState, ServiceUnavailable
@@ -23,6 +23,7 @@ export class OrderItemSummarySteps {
     readonly orderItemSummary: OrderItemSummaryPageState;
     readonly itemNotFound: OrderItemSummaryPageState;
     readonly serviceUnavailable: OrderItemSummaryPageState;
+    readonly backFromOrderItemSummary: OrderItemSummaryPageState;
 
     currentState: OrderItemSummaryPageState;
 
@@ -33,6 +34,7 @@ export class OrderItemSummarySteps {
         this.orderItemSummary = new OrderItemSummary(this, browserAgent);
         this.itemNotFound = new ItemNotFound(this, browserAgent);
         this.serviceUnavailable = new ServiceUnavailable(this, browserAgent);
+        this.backFromOrderItemSummary = new BackFromOrderItemSummary(this, browserAgent);
         this.currentState = new NoPage(this, apiFactory);
     }
 

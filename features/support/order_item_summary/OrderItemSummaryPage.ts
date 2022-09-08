@@ -155,6 +155,7 @@ export class OrderItemSummary extends AbstractOrderItemSummaryPageState {
 
     async clickBackLink(): Promise<void> {
         await this.interactor.clickElement(".govuk-back-link");
+        this.stateMachine.currentState = this.stateMachine.backFromOrderItemSummary;
     }
 
     async clickSignOut(): Promise<void> {
