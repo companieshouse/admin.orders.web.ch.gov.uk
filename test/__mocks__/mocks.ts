@@ -120,7 +120,7 @@ export const mockCertifiedCopyItem: Item = {
     satisfiedAt: "2020-05-15T08:41:05.798Z"
 };
 
-export const mockCertCopyOrderItemView = {
+export const mockCertCopyOrderItemView: ViewModel = {
     controls: [{
         controls: [],
         data: {
@@ -133,6 +133,29 @@ export const mockCertCopyOrderItemView = {
             type: "CH01",
             description: "Director's details changed for Thomas David Wheare on 12 February 2010",
             fee: "£15",
+            backLinkUrl: "javascript:history.back()"
+        },
+        template: "orderItemSummary/order_item_summary_ccd.njk"
+    }],
+    data: {
+        title: "Summary of item CCD-123456-123456 in order ORD-123456-123456"
+    },
+    template: "page"
+};
+
+export const mockExpressCertCopyItemView: ViewModel = {
+    controls: [{
+        controls: [],
+        data: {
+            orderId: "ORD-123456-123456",
+            itemId: "CCD-123456-123456",
+            companyName: "Company Name",
+            companyNumber: "00000000",
+            deliveryMethod: "Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day)",
+            dateFiled: "12 Feb 2010",
+            type: "CH01",
+            description: "Director's details changed for Thomas David Wheare on 12 February 2010",
+            fee: "£50",
             backLinkUrl: "javascript:history.back()"
         },
         template: "orderItemSummary/order_item_summary_ccd.njk"
@@ -636,7 +659,7 @@ export const mockLiquidatedLLPCertificateItemView: ViewModel = {
     template: "page"
 };
 
-export const mockActiveLPCertificateItemView = {
+export const mockActiveLPCertificateItemView: ViewModel = {
     controls: [{
         controls: [],
         data: {

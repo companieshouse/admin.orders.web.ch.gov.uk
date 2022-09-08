@@ -3,10 +3,10 @@ import { ItemOptions as CertifiedCopyItemOptions } from "@companieshouse/api-sdk
 import { MapperRequest } from "../mappers/MapperRequest";
 import { CertifiedCopySummary } from "./CertifiedCopySummary";
 import { ViewModel } from "../core/ViewModel";
-import { CertifiedCopyItemSummaryPage } from "./CertifiedCopyItemSummaryPage";
 import { CertifiedCopyDetailsComponent } from "./CertifiedCopyDetailsComponent"
-import { DISPATCH_DAYS } from "../config/EnvironmentProperties";
 import { mapFilingHistory, mapFilingHistoryDate } from "../mappers/FilingHistoryMapper";
+import { CertificateTextMapper } from "../orderdetails/CertificateTextMapper";
+import { Page } from "../core/Page";
 
 export class CertifiedCopyMapper implements OrderItemMapper {
     private readonly data: CertifiedCopySummary;
@@ -24,7 +24,7 @@ export class CertifiedCopyMapper implements OrderItemMapper {
     }
 
     getMappedOrder (): ViewModel {
-        const result = new CertifiedCopyItemSummaryPage(`Summary of item ${this.data.itemId} in order ${this.data.orderId}`);
+        const result = new Page(`Summary of item ${this.data.itemId} in order ${this.data.orderId}`);
         result.add(new CertifiedCopyDetailsComponent(this.data));
         return result.render();
     }
@@ -32,7 +32,7 @@ export class CertifiedCopyMapper implements OrderItemMapper {
     private mapItemDetails (): void {
         this.data.companyName = this.mapperRequest.item.companyName;
         this.data.companyNumber = this.mapperRequest.item.companyNumber;
-        this.data.deliveryMethod = this.mapDeliveryMethod(this.mapperRequest.item.itemOptions) || "";
+        this.data.deliveryMethod = CertificateTextMapper.mapDeliveryMethod(this.mapperRequest.item.itemOptions) || "";
     }
 
     private mapDocumentDetails (): void {
@@ -43,15 +43,5 @@ export class CertifiedCopyMapper implements OrderItemMapper {
         this.data.description = mapFilingHistory(filingHistoryDocument.filingHistoryDescription,
             filingHistoryDocument.filingHistoryDescriptionValues || {});
         this.data.fee = `£${this.mapperRequest.item.totalItemCost}`;
-    }
-
-    private mapDeliveryMethod = (itemOptions: Record<string, any>): string | null => {
-        if (itemOptions?.deliveryTimescale === "standard") {
-            return "Standard delivery (aim to dispatch within " + DISPATCH_DAYS + " working days)";
-        }
-        if (itemOptions?.deliveryTimescale === "same-day") {
-            return "Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day)";
-        }
-        return null;
     }
 }
