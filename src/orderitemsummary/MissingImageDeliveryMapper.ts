@@ -18,7 +18,7 @@ export class MissingImageDeliveryMapper implements OrderItemMapper {
         this.data.orderId = this.mapperRequest.orderId;
         this.data.itemId = this.mapperRequest.item.id;
         this.mapItemDetails();
-        this.data.backLinkUrl = `/orders-admin/order-summaries/${this.mapperRequest.orderId}`;
+        this.data.backLinkUrl = "javascript:history.back()";
     }
 
     getMappedOrder (): ViewModel {
@@ -31,7 +31,7 @@ export class MissingImageDeliveryMapper implements OrderItemMapper {
         const itemOptions = this.mapperRequest.item.itemOptions as MissingImageDeliveryItemOptions;
         this.data.companyName = this.mapperRequest.item.companyName;
         this.data.companyNumber = this.mapperRequest.item.companyNumber;
-        this.data.date = mapFilingHistoryDate(itemOptions.filingHistoryDate);
+        this.data.date = mapFilingHistoryDate(itemOptions.filingHistoryDate, false);
         this.data.type = itemOptions.filingHistoryType;
         this.data.description = mapFilingHistory(itemOptions.filingHistoryDescription, itemOptions.filingHistoryDescriptionValues);
         this.data.fee = `£${this.mapperRequest.item.totalItemCost}`;

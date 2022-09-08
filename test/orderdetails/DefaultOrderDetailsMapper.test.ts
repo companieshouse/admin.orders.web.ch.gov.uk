@@ -18,6 +18,7 @@ describe("DefaultOrderDetailsMapper", () => {
                     poBox: "poBox",
                     country: "UK",
                     forename: "John",
+                    companyName: "Weyland Yutani",
                     locality: "Cardiff",
                     postalCode: "CF14 3UZ",
                     region: "Cardiff",
@@ -120,7 +121,7 @@ describe("DefaultOrderDetailsMapper", () => {
                 },
                 deliveryInfo: {
                     deliveryMethod: "Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day)",
-                    deliveryDetails: "John Test\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
+                    deliveryDetails: "John Test\nWeyland Yutani\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
                     emailCopyRequired: "Yes"
                 },
                 paymentDetails: {

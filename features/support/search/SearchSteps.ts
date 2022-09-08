@@ -9,6 +9,7 @@ import {
     AnticipateResultsPage, AnticipateNoResultsPage, AnticipateErrorPage
 } from "./SearchPage";
 import Container from "typedi";
+import "../order_summary/OrderSummarySteps";
 import "reflect-metadata";
 import {BrowserAgent} from "../core/BrowserAgent";
 import {DataTable} from "@cucumber/cucumber";
@@ -121,6 +122,14 @@ export class SearchSteps {
         await this.currentPage.clickSearch();
         await this.currentPage.verifyLayout();
         await this.currentPage.verifyMatchingOrdersDisplayed(results.rows());
+        await this.currentPage.clickLinkableCertificate();
+    }
+
+    @given(/^I have navigated to the order from the search page$/)
+    public async navigateToOrderFromSearchPage() {
+        await this.currentPage.openSearchPage();
+        await this.currentPage.harnessOrdersApiWithResults();
+        await this.currentPage.clickSearch();
         await this.currentPage.clickLinkableCertificate();
     }
 

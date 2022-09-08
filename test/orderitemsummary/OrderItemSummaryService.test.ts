@@ -1,4 +1,4 @@
-import {mockMidOrderItemView, mockMissingImageDeliveryItem} from "../__mocks__/order.mocks";
+import {mockMidOrderItemView, mockMissingImageDeliveryItem} from "../__mocks__/mocks";
 import {OrderItemSummaryService} from "../../src/orderitemsummary/OrderItemSummaryService";
 import {Failure, Success} from "@companieshouse/api-sdk-node/dist/services/result";
 import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order/types";
@@ -63,13 +63,22 @@ describe("OrderItemSummaryService", () => {
         it("Returns client error when api returns 404 not found", async () => {
             // given
             const response = new Failure<Item, OrderItemErrorResponse>({
-                httpStatusCode: 404
+                httpStatusCode: 404,
+                error: "Not found"
             });
 
             const orderItem: any = {};
             orderItem.getOrderItem = jest.fn(() => {
                 return response;
             });
+
+            const mapper: any = {};
+            mapper.map = jest.fn(() => {})
+            mapper.getMappedOrder = jest.fn(() => {})
+
+            const factory: any = {};
+            factory.getMapper = jest.fn(() => {});
+
             const apiClientFactory: any = {};
             apiClientFactory.newApiClient = jest.fn(() => {
                 return {
@@ -90,6 +99,9 @@ describe("OrderItemSummaryService", () => {
             expect(result).toStrictEqual(mappedResults);
             expect(apiClientFactory.newApiClient).toHaveBeenCalled();
             expect(orderItem.getOrderItem).toHaveBeenCalledWith("ORD-123456-123456", "MID-123456-123456");
+            expect(mapper.map).toHaveBeenCalledTimes(0);
+            expect(mapper.getMappedOrder).toHaveBeenCalledTimes(0);
+            expect(factory.getMapper).toHaveBeenCalledTimes(0);
         });
 
         it("Returns client error when api returns 404 not found", async () => {

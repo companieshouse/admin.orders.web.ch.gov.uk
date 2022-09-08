@@ -1,10 +1,9 @@
-import { mapFilingHistoryDate, mapFilingHistory, mapFilingHistoryDescriptionValues,
-    mapDateFullMonth, removeAsterisks } from "../../src/mappers/FilingHistoryMapper";
+import { mapFilingHistoryDate, mapFilingHistory, mapFilingHistoryDescriptionValues, removeAsterisks } from "../../src/mappers/FilingHistoryMapper";
 
 describe("FilingHistoryMapper", () => {
     describe("mapFilingHistoryDate", () => {
         it("maps short month date correctly", () => {
-            const result = mapFilingHistoryDate("2009-12-23");
+            const result = mapFilingHistoryDate("2009-12-23", false);
             expect(result).toBe("23 Dec 2009");
         });
     });
@@ -44,7 +43,7 @@ describe("FilingHistoryMapper", () => {
 
     describe("mapDateFullMonth", () => {
         it("maps full month date correctly", () => {
-            const result = mapDateFullMonth("2009-12-23");
+            const result = mapFilingHistoryDate("2009-12-23", true);
             expect(result).toBe("23 December 2009");
         });
     });
