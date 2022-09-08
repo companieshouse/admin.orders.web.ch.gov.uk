@@ -7,7 +7,7 @@ import {SearchController} from "../search/SearchController";
 import "../security/MiddlewareProvider";
 import { OrderDetailsController } from "../orderdetails/OrderDetailsController";
 import {OrderSummaryController} from "../order_summary/OrderSummaryController";
-import {FEATURE_FLAGS} from "../config/FeatureOptions";
+import {OrderItemSummaryController} from "../orderitemsummary/OrderItemSummaryController";
 
 @Service()
 export class Registrar {
@@ -16,7 +16,8 @@ export class Registrar {
                 private readonly serverPaths: ServerPaths,
                 private readonly searchController: SearchController,
                 private readonly orderDetailsController: OrderDetailsController,
-                private readonly orderSummaryController: OrderSummaryController) {
+                private readonly orderSummaryController: OrderSummaryController,
+                private readonly orderItemSummaryController: OrderItemSummaryController) {
     }
 
     public start(): void {
@@ -25,6 +26,7 @@ export class Registrar {
         this.app.bindPost(this.serverPaths.webContextPath + "/search", this.searchController.handlePost.bind(this.searchController), this.middlewareProvider.middlewareables);
         this.app.bindGet(this.serverPaths.webContextPath + "/orders/:orderId", this.orderDetailsController.handleGet.bind(this.orderDetailsController), this.middlewareProvider.middlewareables);
         this.app.bindGet(this.serverPaths.webContextPath + "/order-summaries/:orderId", this.orderSummaryController.readOrder.bind(this.orderSummaryController), this.middlewareProvider.middlewareables);
+        this.app.bindGet(this.serverPaths.webContextPath + "/order-summaries/:orderId/items/:itemId", this.orderItemSummaryController.viewSummary.bind(this.orderItemSummaryController), this.middlewareProvider.middlewareables);
         this.app.start();
     }
 

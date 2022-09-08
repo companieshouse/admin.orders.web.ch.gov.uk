@@ -5,7 +5,10 @@ import { MissingImageDeliveryMapper } from "../../src/orderitemsummary/MissingIm
 import { NullOrderItemMapper } from "../../src/orderitemsummary/NullOrderItemMapper";
 import { MapperRequest } from "../../src/mappers/MapperRequest";
 import { CertifiedCopyMapper } from "../../src/orderitemsummary/CertifiedCopyMapper";
-import { mockCertifiedCopyItem, mockMissingImageDeliveryItem} from "../__mocks__/mocks";
+import { mockCertifiedCopyItem, mockMissingImageDeliveryItem, mockCertificateItem} from "../__mocks__/mocks";
+import { OtherCompanyTypesCertificateMapper } from "../../src/orderitemsummary/OtherCompanyTypesCertificateMapper";
+import { LLPCertificateMapper } from "../../src/orderitemsummary/LLPCertificateMapper";
+import { LPCertificateMapper } from "../../src/orderitemsummary/LPCertificateMapper";
 
 describe("OrderItemSummaryFactory", () => {
     describe("getMapper", () => {
@@ -25,6 +28,39 @@ describe("OrderItemSummaryFactory", () => {
             const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", mockCertifiedCopyItem));
             // then
             expect(mapper).toBeInstanceOf(CertifiedCopyMapper);
+        });
+
+        it("Returns a certificate mapper for other company types", async () => {
+            // given
+            const factory = new OrderItemSummaryFactory();
+            // when
+            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", mockCertificateItem));
+            // then
+            expect(mapper).toBeInstanceOf(OtherCompanyTypesCertificateMapper);
+        });
+
+        it("Returns an LLP certificate mapper for certificate item kind for LLP company", async () => {
+            // given
+            const factory = new OrderItemSummaryFactory();
+            // when
+            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", {
+                ...mockCertificateItem,
+                itemOptions: {...mockCertificateItem.itemOptions, companyType: "llp"}
+            }));
+            // then
+            expect(mapper).toBeInstanceOf(LLPCertificateMapper);
+        });
+
+        it("Returns a limited partnership certificate mapper for certificate item kind for limited partnership company", async () => {
+            // given
+            const factory = new OrderItemSummaryFactory();
+            // when
+            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", {
+                ...mockCertificateItem,
+                itemOptions: {...mockCertificateItem.itemOptions, companyType: "limited-partnership"}
+            }));
+            // then
+            expect(mapper).toBeInstanceOf(LPCertificateMapper);
         });
 
         it("Returns a null item mapper for unknown item kind", async () => {
