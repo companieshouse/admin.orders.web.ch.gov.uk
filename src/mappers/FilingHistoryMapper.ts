@@ -1,9 +1,10 @@
 import fs from "fs";
-import yaml from "yaml";
+import yaml from "js-yaml";
 
 const FILING_HISTORY_DESCRIPTIONS_PATH: string = "api-enumerations/filing_history_descriptions.yml";
 const DESCRIPTIONS_CONSTANT: string = "description";
-const filingHistoryDescriptions = yaml.parse(fs.readFileSync(FILING_HISTORY_DESCRIPTIONS_PATH, "utf8"));
+
+const filingHistoryDescriptions: any = yaml.safeLoad(fs.readFileSync(FILING_HISTORY_DESCRIPTIONS_PATH, "utf8"));
 
 export const mapFilingHistoryDate = (dateString: string): string => {
     const d = new Date(dateString);

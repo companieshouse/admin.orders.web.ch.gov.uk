@@ -1,8 +1,8 @@
 import { OrderItemMapper } from "./OrderItemMapper";
-import { OrderItemView } from "./OrderItemView";
+import {ViewModel} from "../core/ViewModel";
 
 export class NullOrderItemMapper implements OrderItemMapper {
-    getMappedOrder (): OrderItemView {
+    getMappedOrder (): ViewModel {
         throw new Error("Mapper not found");
     }
 
