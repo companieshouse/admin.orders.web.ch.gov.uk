@@ -1,157 +1,62 @@
-import { mockCertifiedCopyItem } from "../__mocks__/order.mocks";
+import { mockCertifiedCopyItem, mockCertCopyOrderItemView } from "../__mocks__/mocks";
 import { MapperRequest } from "../../src/mappers/MapperRequest";
 import { CertifiedCopyMapper } from "../../src/orderitemsummary/CertifiedCopyMapper";
-import { OrderItemView } from "../../src/orderitemsummary/OrderItemView";
 import { Item } from "@companieshouse/api-sdk-node/dist/services/order/order";
-import { GovUkOrderCertifiedCopyItemSummaryView } from "../../src/orderitemsummary/GovUkOrderCertifiedCopyItemSummaryView";
 
 describe("CertifiedCopyMapper", () => {
     describe("map", () => {
-        it("Maps a mapper request for a certified copy item to a GovUkOrderCertifiedCopyItemSummaryView with standard delivery", async () => {
+        it("Maps a mapper request for a certified copy item to a CertifiedCopyDetailsComponent with standard delivery", async () => {
             // given
-            const mapper: CertifiedCopyMapper = new CertifiedCopyMapper(new MapperRequest("ORD-123123-123123", mockCertifiedCopyItem));
+            const mapper: CertifiedCopyMapper = new CertifiedCopyMapper(new MapperRequest("ORD-123456-123456", mockCertifiedCopyItem));
 
             // when
             mapper.map();
-            const actual: OrderItemView = mapper.getMappedOrder();
+            const actual = mapper.getMappedOrder();
 
             // then
-            const mockCertCopyOrderItemView: GovUkOrderCertifiedCopyItemSummaryView = {
-                orderDetails: {
-                    orderId: "ORD-123123-123123",
-                    itemId: "CCD-123456-123456",
-                    itemDetails: {
-                        entries: [
-                            {
-                                key: {
-                                    classes: "govuk-!-width-one-third",
-                                    text: "Company name"
-                                },
-                                value: {
-                                    classes: "govuk-!-width-two-thirds",
-                                    text: "Company Name"
-                                }
-                            },
-                            {
-                                key: {
-                                    classes: "govuk-!-width-one-third",
-                                    text: "Company number"
-                                },
-                                value: {
-                                    classes: "govuk-!-width-two-thirds",
-                                    text: "00000000"
-                                }
-                            },
-                            {
-                                key: {
-                                    classes: "govuk-!-width-one-third",
-                                    text: "Delivery method"
-                                },
-                                value: {
-                                    classes: "govuk-!-width-two-thirds",
-                                    text: "Standard delivery (aim to dispatch within 10 working days)"
-                                }
-                            }
-                        ]
-                    },
-                    backLinkUrl: "/orders/ORD-123123-123123"
-                },
-                documentDetails: [
-                    [
-                        {
-                            text: "12 Feb 2010"
-                        },
-                        {
-                            text: "CH01"
-                        },
-                        {
-                            text: "Director's details changed for Thomas David Wheare on 12 February 2010"
-                        },
-                        {
-                            text: "£15"
-                        }
-                    ]
-                ]
-            };
-            expect(actual.data).toEqual(mockCertCopyOrderItemView);
-            expect(actual.template).toEqual("order-item-summary-ccd");
+            expect(actual).toEqual(mockCertCopyOrderItemView);
         });
 
-        it("Maps a mapper request for a certified copy item to a GovUkOrderCertifiedCopyItemSummaryView with standard delivery", async () => {
+        it("Maps a mapper request for a certified copy item to a CertifiedCopyDetailsComponent with express delivery", async () => {
             // given
-            const expressDeliveryCertCopy: Item = {
+            const expressCertCopyItem: Item = {
                 ...mockCertifiedCopyItem,
                 itemOptions: {
                     ...mockCertifiedCopyItem.itemOptions,
                     deliveryTimescale: "same-day",
-                }
+                },
+                totalItemCost: "50"
             };
-            const mapper: CertifiedCopyMapper = new CertifiedCopyMapper(new MapperRequest("ORD-123123-123123", expressDeliveryCertCopy));
+            const mapper: CertifiedCopyMapper = new CertifiedCopyMapper(new MapperRequest("ORD-123456-123456", expressCertCopyItem));
 
             // when
             mapper.map();
-            const actual: OrderItemView = mapper.getMappedOrder();
+            const actual = mapper.getMappedOrder();
 
             // then
-            const mockCertCopyOrderExpressItemView: GovUkOrderCertifiedCopyItemSummaryView = {
-                orderDetails: {
-                    orderId: "ORD-123123-123123",
-                    itemId: "CCD-123456-123456",
-                    itemDetails: {
-                        entries: [
-                            {
-                                key: {
-                                    classes: "govuk-!-width-one-third",
-                                    text: "Company name"
-                                },
-                                value: {
-                                    classes: "govuk-!-width-two-thirds",
-                                    text: "Company Name"
-                                }
-                            },
-                            {
-                                key: {
-                                    classes: "govuk-!-width-one-third",
-                                    text: "Company number"
-                                },
-                                value: {
-                                    classes: "govuk-!-width-two-thirds",
-                                    text: "00000000"
-                                }
-                            },
-                            {
-                                key: {
-                                    classes: "govuk-!-width-one-third",
-                                    text: "Delivery method"
-                                },
-                                value: {
-                                    classes: "govuk-!-width-two-thirds",
-                                    text: "Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day)"
-                                }
-                            }
-                        ]
+            const expressCertCopyItemView = {
+                controls: [{
+                    controls: [],
+                    data: {
+                        orderId: "ORD-123456-123456",
+                        itemId: "CCD-123456-123456",
+                        companyName: "Company Name",
+                        companyNumber: "00000000",
+                        deliveryMethod: "Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day)",
+                        dateFiled: "12 Feb 2010",
+                        type: "CH01",
+                        description: "Director's details changed for Thomas David Wheare on 12 February 2010",
+                        fee: "£50",
+                        backLinkUrl: "javascript:history.back()"
                     },
-                    backLinkUrl: "/orders/ORD-123123-123123"
+                    template: "orderItemSummary/order_item_summary_ccd.njk"
+                }],
+                data: {
+                    title: "Summary of item CCD-123456-123456 in order ORD-123456-123456"
                 },
-                documentDetails: [
-                    [
-                        {
-                            text: "12 Feb 2010"
-                        },
-                        {
-                            text: "CH01"
-                        },
-                        {
-                            text: "Director's details changed for Thomas David Wheare on 12 February 2010"
-                        },
-                        {
-                            text: "£15"
-                        }
-                    ]
-                ]
+                template: "page"
             };
-            expect(actual.data).toEqual(mockCertCopyOrderExpressItemView);
-            expect(actual.template).toEqual("order-item-summary-ccd");
+            expect(actual).toEqual(expressCertCopyItemView);
         });
     });
 });
