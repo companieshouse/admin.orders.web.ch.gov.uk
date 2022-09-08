@@ -26,12 +26,12 @@
     "gulp-cli": "^2.3.0",
     "http-errors": "~1.6.3",
     "ioredis": "^5.0.4",
+    "js-yaml": "^3.14.0",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "nunjucks": "^3.2.3",
     "reflect-metadata": "^0.1.13",
-    "typedi": "^0.10.0",
-    "yaml": "^2.1.1"
+    "typedi": "^0.10.0"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^7.3.2",
@@ -41,6 +41,7 @@
     "@types/gulp": "^4.0.9",
     "@types/gulp-sass": "^5.0.0",
     "@types/jest": "^27.4.1",
+    "@types/js-yaml": "^3.12.5",
     "@types/node": "^11.15.54",
     "@types/sass": "^1.43.1",
     "@types/selenium-webdriver": "^4.0.18",
