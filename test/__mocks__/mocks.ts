@@ -1,5 +1,4 @@
 import { Item } from "@companieshouse/api-sdk-node/dist/services/order/order/types";
-import {GovUkOrderItemSummaryView} from "../../src/orderitemsummary/GovUkOrderItemSummaryView";
 
 export const mockMissingImageDeliveryItem: Item = {
     id: "MID-123456-123456",
@@ -56,9 +55,9 @@ export const mockMidOrderItemView = {
             type: "AP01",
             description: "Appointment of Mr Richard John Harris as a director",
             fee: "£3",
-            backLinkUrl: "/orders-admin/order-summaries/ORD-123456-123456"
+            backLinkUrl: "javascript:history.back()"
         },
-        template: "orderItemSummary/order-item-summary-mid.njk"
+        template: "orderItemSummary/order_item_summary_mid.njk"
     }],
     data: {
         title: "Summary of item MID-123456-123456 in order ORD-123456-123456"

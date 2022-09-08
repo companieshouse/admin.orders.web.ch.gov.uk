@@ -5,7 +5,7 @@ import {ViewModel} from "../core/ViewModel";
 export class MissingImageDeliveryDetailsComponent extends AbstractViewComponent {
 
     constructor(private summary: MissingImageDeliverySummary) {
-        super("orderItemSummary/order-item-summary-mid.njk", []);
+        super("orderItemSummary/order_item_summary_mid.njk", []);
     }
 
     render(): ViewModel {

@@ -18,7 +18,7 @@ export class MissingImageDeliveryMapper implements OrderItemMapper {
         this.data.orderId = this.mapperRequest.orderId;
         this.data.itemId = this.mapperRequest.item.id;
         this.mapItemDetails();
-        this.data.backLinkUrl = `/orders-admin/order-summaries/${this.mapperRequest.orderId}`;
+        this.data.backLinkUrl = "javascript:history.back()";
     }
 
     getMappedOrder (): ViewModel {

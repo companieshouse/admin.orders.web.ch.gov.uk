@@ -1,6 +1,6 @@
 import { MissingImageDeliveryMapper } from "../../src/orderitemsummary/MissingImageDeliveryMapper";
 import { MapperRequest } from "../../src/mappers/MapperRequest";
-import {mockMidOrderItemView, mockMissingImageDeliveryItem} from "../__mocks__/order.mocks";
+import {mockMidOrderItemView, mockMissingImageDeliveryItem} from "../__mocks__/mocks";
 
 describe("MissingImageDeliveryMapper", () => {
     describe("map", () => {

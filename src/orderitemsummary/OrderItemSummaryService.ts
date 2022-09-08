@@ -17,7 +17,7 @@ import {Status} from "../core/Status";
 export class OrderItemSummaryService {
     private static readonly logger = createLogger("OrderItemSummaryService");
 
-    constructor(@Inject("default.client") public apiClientFactory: ApiClientFactory,
+    constructor(@Inject((process.env.ADMIN_ORDERS_DEVELOPMENT_MODE === "true" ? "stub.client" : "default.client")) public apiClientFactory: ApiClientFactory,
                 @Inject() private factory: OrderItemSummaryFactory) {
     }
 
@@ -32,7 +32,7 @@ export class OrderItemSummaryService {
                 status: Status.SUCCESS,
                 viewModel: mapper.getMappedOrder()
             };
-        } else if (response.isFailure() && response.value.httpStatusCode === 404) {
+        } else if (response.isFailure() && response.value.httpStatusCode === 404 &&  response.value.error) {
             OrderItemSummaryService.logger.error("Order item not found");
             return {
                 status: Status.CLIENT_ERROR
