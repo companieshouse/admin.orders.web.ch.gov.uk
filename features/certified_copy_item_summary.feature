@@ -5,7 +5,7 @@ Feature: Item summary for certified copies
 
   Scenario: Certified copy with standard delivery
     Given The item is a certified copy with standard delivery requested
-    When I view the order item summary
+    When I view the certified copy order item summary
     Then The following item details should be displayed:
       | Company name    | COMPANY NAME LIMITED                                       |
       | Company number  | 12345678                                                   |
@@ -52,7 +52,7 @@ Feature: Item summary for certified copies
     Then I should be taken to the signout handler
 
   Scenario: Click back button
-    Given The order item summary page will load successfully
+    Given The certified copy order item summary page will load successfully
     And I have opened an item via the order summary page
     When I click the back button on the order item summary page
     Then I should be returned from the order item summary page to the order summary page
