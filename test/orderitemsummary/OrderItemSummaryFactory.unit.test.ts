@@ -1,11 +1,11 @@
 import { OrderItemMapper } from "../../src/orderitemsummary/OrderItemMapper";
 import { OrderItemSummaryFactory } from "../../src/orderitemsummary/OrderItemSummaryFactory";
 import { Item } from "@companieshouse/api-sdk-node/dist/services/order/order/types";
-import { mockCertifiedCopyItem, mockMissingImageDeliveryItem } from "../__mocks__/order.mocks";
 import { MissingImageDeliveryMapper } from "../../src/orderitemsummary/MissingImageDeliveryMapper";
 import { NullOrderItemMapper } from "../../src/orderitemsummary/NullOrderItemMapper";
 import { MapperRequest } from "../../src/mappers/MapperRequest";
 import { CertifiedCopyMapper } from "../../src/orderitemsummary/CertifiedCopyMapper";
+import { mockCertifiedCopyItem, mockMissingImageDeliveryItem} from "../__mocks__/mocks";
 
 describe("OrderItemSummaryFactory", () => {
     describe("getMapper", () => {

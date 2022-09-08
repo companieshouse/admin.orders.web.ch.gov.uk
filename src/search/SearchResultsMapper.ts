@@ -56,7 +56,7 @@ export class SearchResultsMapper {
 
     private mapLink(summary: CheckoutSummaryResource): string {
         if (FEATURE_FLAGS.multiItemBasketEnabled) {
-            return "javascript:void(0)";
+            return `/orders-admin/order-summaries/${summary.id}`;
         } else if (summary.productLine === "item#certificate" && summary.paymentStatus === "paid") {
             return `/orders-admin/orders/${summary.id}`;
         } else {

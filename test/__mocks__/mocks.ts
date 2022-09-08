@@ -1,5 +1,4 @@
 import { Item } from "@companieshouse/api-sdk-node/dist/services/order/order/types";
-import { GovUkOrderCertifiedCopyItemSummaryView } from "../../src/orderitemsummary/GovUkOrderCertifiedCopyItemSummaryView";
 
 export const mockMissingImageDeliveryItem: Item = {
     id: "MID-123456-123456",
@@ -42,6 +41,28 @@ export const mockMissingImageDeliveryItem: Item = {
     postageCost: "0",
     totalItemCost: "3",
     postalDelivery: false
+};
+
+export const mockMidOrderItemView = {
+    controls: [{
+        controls: [],
+        data: {
+            orderId: "ORD-123456-123456",
+            itemId: "MID-123456-123456",
+            companyName: "The Company",
+            companyNumber: "00000000",
+            date: "26 May 2015",
+            type: "AP01",
+            description: "Appointment of Mr Richard John Harris as a director",
+            fee: "£3",
+            backLinkUrl: "javascript:history.back()"
+        },
+        template: "orderItemSummary/order_item_summary_mid.njk"
+    }],
+    data: {
+        title: "Summary of item MID-123456-123456 in order ORD-123456-123456"
+    },
+    template: "page"
 };
 
 export const mockCertifiedCopyItem: Item = {
