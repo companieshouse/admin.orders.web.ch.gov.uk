@@ -18,14 +18,14 @@ describe("OrderItemSummaryService", () => {
             // given
             const response = new Success<Item, OrderItemErrorResponse>(mockMissingImageDeliveryItem);
 
-            const orderItem: any = {};
-            orderItem.getOrderItem = jest.fn(() => {
+            const checkoutItem: any = {};
+            checkoutItem.getCheckoutItem = jest.fn(() => {
                 return response;
             });
             const apiClientFactory: any = {};
             apiClientFactory.newApiClient = jest.fn(() => {
                 return {
-                    orderItem: orderItem
+                    checkoutItem: checkoutItem
                 };
             });
 
@@ -56,7 +56,7 @@ describe("OrderItemSummaryService", () => {
                 viewModel: mappedResults
             });
             expect(apiClientFactory.newApiClient).toHaveBeenCalled();
-            expect(orderItem.getOrderItem).toHaveBeenCalledWith("ORD-123456-123456", "MID-123456-123456");
+            expect(checkoutItem.getCheckoutItem).toHaveBeenCalledWith("ORD-123456-123456", "MID-123456-123456");
             expect(mapper.map).toHaveBeenCalled();
             expect(mapper.getMappedOrder).toHaveBeenCalled();
             expect(factory.getMapper).toHaveBeenCalledWith(new MapperRequest( "ORD-123456-123456", mockMissingImageDeliveryItem));
@@ -69,8 +69,8 @@ describe("OrderItemSummaryService", () => {
                 error: "Not found"
             });
 
-            const orderItem: any = {};
-            orderItem.getOrderItem = jest.fn(() => {
+            const checkoutItem: any = {};
+            checkoutItem.getCheckoutItem = jest.fn(() => {
                 return response;
             });
 
@@ -84,7 +84,7 @@ describe("OrderItemSummaryService", () => {
             const apiClientFactory: any = {};
             apiClientFactory.newApiClient = jest.fn(() => {
                 return {
-                    orderItem: orderItem
+                    checkoutItem: checkoutItem
                 };
             });
 
@@ -102,7 +102,7 @@ describe("OrderItemSummaryService", () => {
             // then
             expect(result).toStrictEqual(mappedResults);
             expect(apiClientFactory.newApiClient).toHaveBeenCalled();
-            expect(orderItem.getOrderItem).toHaveBeenCalledWith("ORD-123456-123456", "MID-123456-123456");
+            expect(checkoutItem.getCheckoutItem).toHaveBeenCalledWith("ORD-123456-123456", "MID-123456-123456");
             expect(mapper.map).toHaveBeenCalledTimes(0);
             expect(mapper.getMappedOrder).toHaveBeenCalledTimes(0);
             expect(factory.getMapper).toHaveBeenCalledTimes(0);
@@ -114,14 +114,14 @@ describe("OrderItemSummaryService", () => {
                 httpStatusCode: 500
             });
 
-            const orderItem: any = {};
-            orderItem.getOrderItem = jest.fn(() => {
+            const checkoutItem: any = {};
+            checkoutItem.getCheckoutItem = jest.fn(() => {
                 return response;
             });
             const apiClientFactory: any = {};
             apiClientFactory.newApiClient = jest.fn(() => {
                 return {
-                    orderItem: orderItem
+                    checkoutItem: checkoutItem
                 };
             });
 
@@ -139,7 +139,7 @@ describe("OrderItemSummaryService", () => {
             // then
             expect(result).toStrictEqual(mappedResults);
             expect(apiClientFactory.newApiClient).toHaveBeenCalled();
-            expect(orderItem.getOrderItem).toHaveBeenCalledWith("ORD-123456-123456", "MID-123456-123456");
+            expect(checkoutItem.getCheckoutItem).toHaveBeenCalledWith("ORD-123456-123456", "MID-123456-123456");
         });
     });
 });
