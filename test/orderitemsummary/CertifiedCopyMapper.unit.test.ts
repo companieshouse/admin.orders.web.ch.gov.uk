@@ -2,12 +2,18 @@ import { mockCertifiedCopyItem, mockCertCopyOrderItemView, mockExpressCertCopyIt
 import { MapperRequest } from "../../src/mappers/MapperRequest";
 import { CertifiedCopyMapper } from "../../src/orderitemsummary/CertifiedCopyMapper";
 import { Item } from "@companieshouse/api-sdk-node/dist/services/order/order";
+import {FilingHistoryMapper} from "../../src/mappers/FilingHistoryMapper";
+import {ServerPaths} from "../../src/application/ServerPaths";
+
+const filingHistoryMapper = new FilingHistoryMapper({
+    applicationRootDir: "."
+} as ServerPaths);
 
 describe("CertifiedCopyMapper", () => {
     describe("map", () => {
         it("Maps a mapper request for a certified copy item to a CertifiedCopyDetailsComponent with standard delivery", async () => {
             // given
-            const mapper: CertifiedCopyMapper = new CertifiedCopyMapper(new MapperRequest("ORD-123456-123456", mockCertifiedCopyItem));
+            const mapper: CertifiedCopyMapper = new CertifiedCopyMapper(new MapperRequest("ORD-123456-123456", mockCertifiedCopyItem), filingHistoryMapper);
 
             // when
             mapper.map();
@@ -27,7 +33,7 @@ describe("CertifiedCopyMapper", () => {
                 },
                 totalItemCost: "50"
             };
-            const mapper: CertifiedCopyMapper = new CertifiedCopyMapper(new MapperRequest("ORD-123456-123456", expressCertCopyItem));
+            const mapper: CertifiedCopyMapper = new CertifiedCopyMapper(new MapperRequest("ORD-123456-123456", expressCertCopyItem), filingHistoryMapper);
 
             // when
             mapper.map();

@@ -31,7 +31,7 @@ export class OrderItemSummaryFactory {
         } else if (mapperRequest.item.kind === "item#missing-image-delivery") {
             return new MissingImageDeliveryMapper(mapperRequest, this.filingHistoryMapper);
         } else if (mapperRequest.item.kind === "item#certified-copy") {
-            return new CertifiedCopyMapper(mapperRequest);
+            return new CertifiedCopyMapper(mapperRequest, this.filingHistoryMapper);
         } else {
             return new NullOrderItemMapper();
         }

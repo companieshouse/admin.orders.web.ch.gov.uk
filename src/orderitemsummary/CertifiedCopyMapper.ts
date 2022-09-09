@@ -4,14 +4,14 @@ import { MapperRequest } from "../mappers/MapperRequest";
 import { CertifiedCopySummary } from "./CertifiedCopySummary";
 import { ViewModel } from "../core/ViewModel";
 import { CertifiedCopyDetailsComponent } from "./CertifiedCopyDetailsComponent"
-import { mapFilingHistory, mapFilingHistoryDate } from "../mappers/FilingHistoryMapper";
+import { FilingHistoryMapper } from "../mappers/FilingHistoryMapper";
 import { CertificateTextMapper } from "../orderdetails/CertificateTextMapper";
 import { Page } from "../core/Page";
 
 export class CertifiedCopyMapper implements OrderItemMapper {
     private readonly data: CertifiedCopySummary;
 
-    constructor (private mapperRequest: MapperRequest) {
+    constructor (private mapperRequest: MapperRequest, private filingHistoryMapper: FilingHistoryMapper) {
         this.data = new CertifiedCopySummary();
     }
 
@@ -38,9 +38,9 @@ export class CertifiedCopyMapper implements OrderItemMapper {
     private mapDocumentDetails (): void {
         const filingHistoryDocument =
             (this.mapperRequest.item.itemOptions as CertifiedCopyItemOptions).filingHistoryDocuments[0];
-        this.data.dateFiled = mapFilingHistoryDate(filingHistoryDocument.filingHistoryDate, false);
+        this.data.dateFiled = this.filingHistoryMapper.mapFilingHistoryDate(filingHistoryDocument.filingHistoryDate, false);
         this.data.type = filingHistoryDocument.filingHistoryType;
-        this.data.description = mapFilingHistory(filingHistoryDocument.filingHistoryDescription,
+        this.data.description = this.filingHistoryMapper.mapFilingHistory(filingHistoryDocument.filingHistoryDescription,
             filingHistoryDocument.filingHistoryDescriptionValues || {});
         this.data.fee = `£${this.mapperRequest.item.totalItemCost}`;
     }
