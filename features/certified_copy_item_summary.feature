@@ -16,7 +16,7 @@ Feature: Item summary for certified copies
 
   Scenario: Certified copy with express delivery
     Given The item is a certified copy with express delivery requested
-    When I view the order item summary
+    When I view the certified copy order item summary
     Then The following item details should be displayed:
       | Company name    | OTHER NAME LIMITED                                                                                                                        |
       | Company number  | 12345679                                                                                                                                  |
@@ -27,7 +27,7 @@ Feature: Item summary for certified copies
 
   Scenario: Certified copy with unhandled filing history description
     Given The item is a certified copy of a document with an unhandled description
-    When I view the order item summary
+    When I view the certified copy order item summary
     Then The following item details should be displayed:
       | Company name    | UNHANDLED COMPANY NAME LIMITED                             |
       | Company number  | 12345670                                                   |
@@ -38,12 +38,12 @@ Feature: Item summary for certified copies
 
   Scenario: Display item not found if nonexistent item fetched
     Given The requested order item resource does not exist
-    When I view the order item summary
+    When I view the certified copy order item summary
     Then The order item summary page should display item not found
 
   Scenario: Display service unavailable if an error occurs when displaying the order summary
     Given An error will occur when the order item is fetched
-    When I view the order item summary
+    When I view the certified copy order item summary
     Then The order item summary page should display service unavailable
 
   Scenario: User signs out
@@ -53,6 +53,6 @@ Feature: Item summary for certified copies
 
   Scenario: Click back button
     Given The certified copy order item summary page will load successfully
-    And I have opened an item via the order summary page
+    And I have opened an certified copy item via the order summary page
     When I click the back button on the order item summary page
     Then I should be returned from the order item summary page to the order summary page

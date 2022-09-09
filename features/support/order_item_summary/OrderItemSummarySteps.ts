@@ -98,7 +98,7 @@ export class OrderItemSummarySteps {
         await this.openOrderItemSummaryPage(itemType);
     }
 
-    @when(/^I view (certified copy|missing image delivery) the order item summary$/)
+    @when(/^I view the (certified copy|missing image delivery) order item summary$/)
     async openOrderItemSummaryPage(itemType: string) {
         await this.currentState.openPage(itemType);
     }
