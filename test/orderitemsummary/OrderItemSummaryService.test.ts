@@ -9,6 +9,8 @@ import {MapperRequest} from "../../src/mappers/MapperRequest";
 import {Status} from "../../dist/core/Status";
 import {OrderItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/order-item/service";
 import {OrderItemSummaryFactory} from "../../src/orderitemsummary/OrderItemSummaryFactory";
+import {FilingHistoryMapper} from "../../src/mappers/FilingHistoryMapper";
+import {ServerPaths} from "../../src/application/ServerPaths";
 
 describe("OrderItemSummaryService", () => {
     describe("getOrderItem", () => {
@@ -90,7 +92,9 @@ describe("OrderItemSummaryService", () => {
                 status: Status.CLIENT_ERROR,
             }
 
-            const service = new OrderItemSummaryService(apiClientFactory, new OrderItemSummaryFactory());
+            const service = new OrderItemSummaryService(apiClientFactory, new OrderItemSummaryFactory(new FilingHistoryMapper({
+                applicationRootDir: "."
+            } as ServerPaths)));
 
             // when
             const result = await service.getOrderItem(new OrderItemRequest("123123", "ORD-123456-123456", "MID-123456-123456"));
@@ -125,7 +129,9 @@ describe("OrderItemSummaryService", () => {
                 status: Status.SERVER_ERROR,
             }
 
-            const service = new OrderItemSummaryService(apiClientFactory, new OrderItemSummaryFactory());
+            const service = new OrderItemSummaryService(apiClientFactory, new OrderItemSummaryFactory(new FilingHistoryMapper({
+                applicationRootDir: "."
+            } as ServerPaths)));
 
             // when
             const result = await service.getOrderItem(new OrderItemRequest("123123", "ORD-123456-123456", "MID-123456-123456"));

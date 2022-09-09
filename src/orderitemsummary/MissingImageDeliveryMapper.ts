@@ -5,12 +5,12 @@ import {Page} from "../core/Page";
 import {MissingImageDeliverySummary} from "./MissingImageDeliverySummary";
 import {MissingImageDeliveryDetailsComponent} from "./MissingImageDeliveryDetailsComponent";
 import {ViewModel} from "../core/ViewModel";
-import { mapFilingHistory, mapFilingHistoryDate } from "../mappers/FilingHistoryMapper";
+import {FilingHistoryMapper} from "../mappers/FilingHistoryMapper";
 
 export class MissingImageDeliveryMapper implements OrderItemMapper {
     private readonly data: MissingImageDeliverySummary;
 
-    constructor (private mapperRequest: MapperRequest) {
+    constructor (private mapperRequest: MapperRequest, private filingHistoryMapper: FilingHistoryMapper) {
         this.data = new MissingImageDeliverySummary();
     }
 
@@ -31,9 +31,9 @@ export class MissingImageDeliveryMapper implements OrderItemMapper {
         const itemOptions = this.mapperRequest.item.itemOptions as MissingImageDeliveryItemOptions;
         this.data.companyName = this.mapperRequest.item.companyName;
         this.data.companyNumber = this.mapperRequest.item.companyNumber;
-        this.data.date = mapFilingHistoryDate(itemOptions.filingHistoryDate, false);
+        this.data.date = this.filingHistoryMapper.mapFilingHistoryDate(itemOptions.filingHistoryDate, false);
         this.data.type = itemOptions.filingHistoryType;
-        this.data.description = mapFilingHistory(itemOptions.filingHistoryDescription, itemOptions.filingHistoryDescriptionValues);
+        this.data.description = this.filingHistoryMapper.mapFilingHistory(itemOptions.filingHistoryDescription, itemOptions.filingHistoryDescriptionValues);
         this.data.fee = `£${this.mapperRequest.item.totalItemCost}`;
     }
 }
