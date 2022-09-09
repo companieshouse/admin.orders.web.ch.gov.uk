@@ -9,8 +9,8 @@
     "clean": "rm -rf ./dist",
     "test": "npx jest --verbose",
     "coverage": "npx jest --verbose --coverage",
-    "test-integration": "agent=zombie ADMIN_ORDERS_DEVELOPMENT_MODE=true npx --node-arg=\"--inspect-brk\" cucumber-js",
-    "test-automation": "agent=selenium ADMIN_ORDERS_DEVELOPMENT_MODE=true npx --node-arg=\"--inspect-brk\" cucumber-js",
+    "test-integration": "agent=zombie ADMIN_ORDERS_DEVELOPMENT_MODE=true npx cucumber-js",
+    "test-automation": "agent=selenium ADMIN_ORDERS_DEVELOPMENT_MODE=true npx cucumber-js",
     "sonarqube": "sonar-scanner"
   },
   "dependencies": {
