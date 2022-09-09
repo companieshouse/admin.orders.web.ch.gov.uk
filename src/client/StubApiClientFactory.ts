@@ -11,6 +11,7 @@ import {Checkout} from "@companieshouse/api-sdk-node/dist/services/order/checkou
 import {ItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/order";
 import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order/types";
 import {OrderItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/order-item/service";
+import {CheckoutItemErrorResponse} from "../../../api-sdk-node/dist/services/order/checkout-item/service";
 
 @Service("stub.client")
 export class StubApiClientFactory implements ApiClientFactory {
@@ -24,7 +25,7 @@ export class StubApiClientFactory implements ApiClientFactory {
     };
     private searchResponse: ApiResult<ApiResponse<SearchResponse>> | undefined;
     private checkoutResponse: ApiResult<ApiResponse<Checkout>> | undefined;
-    private orderItemResponse: Result<Item, OrderItemErrorResponse> | undefined;
+    private checkoutItemResponse: Result<Item, OrderItemErrorResponse> | undefined;
     private readonly defaultSearchResponse: ApiResult<ApiResponse<SearchResponse>> = new Success<ApiResponse<SearchResponse>, ApiErrorResponse>({
         httpStatusCode: 200,
         resource: {
@@ -136,7 +137,7 @@ export class StubApiClientFactory implements ApiClientFactory {
         }
     });
 
-    private defaultOrderItemResponse: ApiResult<Item> = new Success<Item, OrderItemErrorResponse>({
+    private defaultCheckoutItemResponse: Result<Item, CheckoutItemErrorResponse> = new Success<Item, OrderItemErrorResponse>({
         id: "CRT-123456-123456",
         companyName: "TEST COMPANY LIMITED",
         companyNumber: "00000000",
@@ -213,12 +214,12 @@ export class StubApiClientFactory implements ApiClientFactory {
         });
     }
 
-    willReturnSuccessfulOrderItemResponse(body: any): void {
-        this.orderItemResponse = new Success<Item, OrderItemErrorResponse>(Mapping.camelCaseKeys(body, StubApiClientFactory.EXCLUDED_FIELDS));
+    willReturnSuccessfulCheckoutItemResponse(body: any): void {
+        this.checkoutItemResponse = new Success<Item, CheckoutItemErrorResponse>(Mapping.camelCaseKeys(body, StubApiClientFactory.EXCLUDED_FIELDS));
     }
 
-    willReturnErrorOrderItemResponse(statusCode: number, body: any): void {
-        this.orderItemResponse = new Failure<Item, OrderItemErrorResponse>({
+    willReturnErrorCheckoutItemResponse(statusCode: number, body: any): void {
+        this.checkoutItemResponse = new Failure<Item, CheckoutItemErrorResponse>({
             httpStatusCode: statusCode,
             error: Mapping.camelCaseKeys(body)
         });
@@ -237,9 +238,9 @@ export class StubApiClientFactory implements ApiClientFactory {
                     return self.searchResponse || self.defaultSearchResponse;
                 }
             },
-            orderItem: {
-                async getOrderItem(orderId: string, itemId: string): Promise<ApiResult<Item>> {
-                    return self.orderItemResponse || self.defaultOrderItemResponse;
+            checkoutItem: {
+                async getCheckoutItem(orderId: string, itemId: string): Promise<Result<Item, CheckoutItemErrorResponse>> {
+                    return self.checkoutItemResponse || self.defaultCheckoutItemResponse;
                 }
             }
         } as ApiClient;
