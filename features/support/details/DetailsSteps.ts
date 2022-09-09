@@ -118,7 +118,6 @@ export class DetailsSteps {
     @when(/^I click the back link$/)
     async clickBackLink(): Promise<void> {
         await this.currentPage.anticipateValidOrder(paidDefaultActive);
-        await this.currentPage.openPage();
         await this.currentPage.clickBackLink();
     }
 

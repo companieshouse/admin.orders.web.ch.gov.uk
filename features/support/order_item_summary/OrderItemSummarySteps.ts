@@ -99,7 +99,7 @@ export class OrderItemSummarySteps {
         await this.currentState.verifyDocumentDetails(dataTable.rows());
     }
 
-    @then(/^The order item summary page should display item not found$/)
+    @then(/^The order item summary page should display order not found$/)
     async verifyItemNotFound() {
         await this.currentState.verifyItemNotFound();
     }
