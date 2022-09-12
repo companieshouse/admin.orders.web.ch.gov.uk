@@ -1,0 +1,52 @@
+{
+  "id": "CCD-123123-123123",
+  "company_name": "OTHER NAME LIMITED",
+  "company_number": "12345679",
+  "description": "certified copy for company 12345679",
+  "description_identifier": "certified-copy",
+  "description_values": {
+    "company_number": "12345678",
+    "certified-copy": "certified copy for company 12345679"
+  },
+  "item_costs": [
+    {
+      "discount_applied": "0",
+      "item_cost": "50",
+      "calculated_cost": "50",
+      "product_type": "certified-copy"
+    }
+  ],
+  "item_options": {
+    "delivery_method": "postal",
+    "delivery_timescale": "same-day",
+    "filing_history_documents": [
+      {
+        "filing_history_date": "2022-05-12",
+        "filing_history_description": "capital-allotment-shares",
+        "filing_history_description_values": {
+          "date": "2022-05-12",
+          "capital": [
+            {
+              "figure": "12,345,678",
+              "currency": "GBP"
+            }
+          ]
+        },
+        "filing_history_id": "CAFE",
+        "filing_history_type": "SH01",
+        "filing_history_cost": "50"
+      }
+    ]
+  },
+  "etag": "F00DFACE",
+  "kind": "item#certified-copy",
+  "links": {
+    "self": "/orderable/certified-copies/CCD-123123-123123"
+  },
+  "quantity": 1,
+  "item_uri": "/orderable/certified-copies/CCD-123123-123123",
+  "status": "unknown",
+  "postage_cost": "0",
+  "total_item_cost": "50",
+  "postal_delivery": true
+}

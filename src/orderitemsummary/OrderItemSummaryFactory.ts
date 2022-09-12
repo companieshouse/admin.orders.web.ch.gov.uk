@@ -5,10 +5,11 @@ import { NullOrderItemMapper } from "./NullOrderItemMapper";
 import { ItemOptions as CertificateItemOptions } from "@companieshouse/api-sdk-node/dist/services/order/certificates";
 import {Service} from "typedi";
 import "reflect-metadata";
+import { CertifiedCopyMapper } from "./CertifiedCopyMapper";
 import { OtherCompanyTypesCertificateMapper } from "./OtherCompanyTypesCertificateMapper";
 import {LPCertificateMapper} from "./LPCertificateMapper";
 import {LLPCertificateMapper} from "./LLPCertificateMapper";
-import {CompanyType} from "./CompanyType";
+import { CompanyType } from "./CompanyType";
 import {FilingHistoryMapper} from "../mappers/FilingHistoryMapper";
 
 @Service()
@@ -29,6 +30,8 @@ export class OrderItemSummaryFactory {
             }
         } else if (mapperRequest.item.kind === "item#missing-image-delivery") {
             return new MissingImageDeliveryMapper(mapperRequest, this.filingHistoryMapper);
+        } else if (mapperRequest.item.kind === "item#certified-copy") {
+            return new CertifiedCopyMapper(mapperRequest, this.filingHistoryMapper);
         } else {
             return new NullOrderItemMapper();
         }

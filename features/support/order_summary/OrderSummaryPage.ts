@@ -11,6 +11,7 @@ export interface OrderSummaryPageState {
     openOrderSummaryPageViaLink(): Promise<void>;
     clickBackLink(): Promise<void>;
     clickSignOut(): Promise<void>;
+    clickOrderItemSummaryLink(): Promise<void>;
     verifyLayout(): Promise<void>;
     verifyItems(expectedItems: string[][]): Promise<void>;
     verifyDeliveryDetails(expectedDeliveryDetails: string[][]): Promise<void>;
@@ -50,6 +51,10 @@ export abstract class AbstractSummaryPage implements OrderSummaryPageState {
     }
 
     clickSignOut(): Promise<void> {
+        throw new Error("Invalid operation");
+    }
+
+    clickOrderItemSummaryLink(): Promise<void> {
         throw new Error("Invalid operation");
     }
 
@@ -133,6 +138,10 @@ export class OrderSummaryPage extends AbstractSummaryPage {
 
     async clickSignOut(): Promise<void> {
         await this.interactor.clickElement(".sign-out-link");
+    }
+
+    async clickOrderItemSummaryLink(): Promise<void> {
+        await this.interactor.clickElement(".govuk-table a:nth-of-type(1)");
     }
 
     async verifyLayout(): Promise<void> {

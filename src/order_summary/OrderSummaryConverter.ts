@@ -39,7 +39,8 @@ export class OrderSummaryConverter {
             orderType: itemType,
             companyNumber: request.item.companyNumber,
             deliveryMethod: deliveryMethod,
-            fee: `£${request.item.totalItemCost}`
+            fee: `£${request.item.totalItemCost}`,
+            itemLink: `/orders-admin/order-summaries/${request.orderId}/items/${request.item.id}`
         });
     }
 

@@ -1,0 +1,48 @@
+{
+  "id": "CCD-123123-123123",
+  "company_name": "COMPANY NAME LIMITED",
+  "company_number": "12345678",
+  "description": "certified copy for company 12345678",
+  "description_identifier": "certified-copy",
+  "description_values": {
+    "company_number": "12345678",
+    "certified-copy": "certified copy for company 12345678"
+  },
+  "item_costs": [
+    {
+      "discount_applied": "0",
+      "item_cost": "15",
+      "calculated_cost": "15",
+      "product_type": "certified-copy"
+    }
+  ],
+  "item_options": {
+    "delivery_method": "postal",
+    "delivery_timescale": "standard",
+    "filing_history_documents": [
+      {
+        "filing_history_barcode": "barcode",
+        "filing_history_category": "category",
+        "filing_history_cost": "cost",
+        "filing_history_date": "2015-05-26",
+        "filing_history_description": "appoint-person-director-company-with-name",
+        "filing_history_description_values": {
+          "officer_name": "Mr Richard John Harris"
+        },
+        "filing_history_id": "MzEyMzcyNDc2OWFkaXF6a2N4",
+        "filing_history_type": "AP01"
+      }
+    ]
+  },
+  "etag": "F00DFACE",
+  "kind": "item#certified-copy",
+  "links": {
+    "self": "/orderable/certified-copies/CCD-123123-123123"
+  },
+  "quantity": 1,
+  "item_uri": "/orderable/certified-copies/CCD-123123-123123",
+  "status": "unknown",
+  "postage_cost": "0",
+  "total_item_cost": "15",
+  "postal_delivery": true
+}
