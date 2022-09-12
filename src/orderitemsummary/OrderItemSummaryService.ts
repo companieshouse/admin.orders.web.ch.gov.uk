@@ -23,7 +23,7 @@ export class OrderItemSummaryService {
 
     async getOrderItem (request: OrderItemRequest): Promise<OrderItemView> {
         const apiClient: ApiClient = this.apiClientFactory.newApiClient(request.apiToken);
-        const response: Result<Item, OrderItemErrorResponse> = await apiClient.orderItem.getOrderItem(request.orderId, request.itemId);
+        const response: Result<Item, OrderItemErrorResponse> = await apiClient.checkoutItem.getCheckoutItem(request.orderId, request.itemId);
 
         if (response.isSuccess()) {
             const mapper = this.factory.getMapper(new MapperRequest(request.orderId, response.value));

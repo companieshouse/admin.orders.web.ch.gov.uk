@@ -84,17 +84,17 @@ export class NoPage extends AbstractOrderItemSummaryPageState {
     }
 
     async anticipateSuccessfulResponse(json: any): Promise<void> {
-        this.stubApiClient.willReturnSuccessfulOrderItemResponse(json);
+        this.stubApiClient.willReturnSuccessfulCheckoutItemResponse(json);
         this.stateMachine.currentState = this.stateMachine.anticipateOrderItemSummary;
     }
 
     async anticipateClientError(json: any): Promise<void> {
-        this.stubApiClient.willReturnErrorOrderItemResponse(404, json);
+        this.stubApiClient.willReturnErrorCheckoutItemResponse(404, json);
         this.stateMachine.currentState = this.stateMachine.anticipateItemNotFound;
     }
 
     async anticipateServerError(json: any): Promise<void> {
-        this.stubApiClient.willReturnErrorOrderItemResponse(500, json);
+        this.stubApiClient.willReturnErrorCheckoutItemResponse(500, json);
         this.stateMachine.currentState = this.stateMachine.anticipateServiceUnavailable;
     }
 }
