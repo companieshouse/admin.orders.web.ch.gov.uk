@@ -84,17 +84,17 @@ export class NoPage extends AbstractOrderItemSummaryPageState {
     }
 
     async anticipateSuccessfulResponse(json: any): Promise<void> {
-        this.stubApiClient.willReturnSuccessfulCheckoutResponse(json);
+        this.stubApiClient.willReturnSuccessfulCheckoutItemResponse(json);
         this.stateMachine.currentState = this.stateMachine.anticipateOrderItemSummary;
     }
 
     async anticipateClientError(json: any): Promise<void> {
-        this.stubApiClient.willReturnErrorCheckoutResponse(404, json);
+        this.stubApiClient.willReturnErrorCheckoutItemResponse(404, json);
         this.stateMachine.currentState = this.stateMachine.anticipateItemNotFound;
     }
 
     async anticipateServerError(json: any): Promise<void> {
-        this.stubApiClient.willReturnErrorCheckoutResponse(500, json);
+        this.stubApiClient.willReturnErrorCheckoutItemResponse(500, json);
         this.stateMachine.currentState = this.stateMachine.anticipateServiceUnavailable;
     }
 }
@@ -193,7 +193,7 @@ export class ItemNotFound extends AbstractOrderItemSummaryPageState {
     async verifyItemNotFound(): Promise<void> {
         const headingText = await this.interactor.getElementText("h1");
         const bodyText = await this.interactor.getElementText("#main-content p.govuk-body");
-        expect(headingText).to.equal("Item not found");
+        expect(headingText).to.equal("Order not found");
         expect(bodyText).to.equal("Check that you have entered the correct web address or try using the search.");
     }
 }

@@ -6,6 +6,7 @@ import { DeliveryDetails } from "@companieshouse/api-sdk-node/dist/services/orde
 import { AddressRecordsType } from "./AddressRecordsType";
 import { CompanyStatus } from "./CompanyStatus";
 import { CertificateDetails } from "./OrderDetails";
+import { DISPATCH_DAYS } from "../config/EnvironmentProperties";
 
 export abstract class CertificateTextMapper {
     static readonly DISSOLUTION = "dissolution";
@@ -197,7 +198,7 @@ export abstract class CertificateTextMapper {
 
     static mapDeliveryMethod (itemOptions: Record<string, any>): string | null {
         if (itemOptions?.deliveryTimescale === "standard") {
-            return "Standard delivery (aim to dispatch within 10 working days)";
+            return "Standard delivery (aim to dispatch within " + DISPATCH_DAYS + " working days)";
         }
         if (itemOptions?.deliveryTimescale === "same-day") {
             return "Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day)";

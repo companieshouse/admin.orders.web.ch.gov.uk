@@ -7,9 +7,8 @@ Feature: Item summary for certified copies
     Given The item is a certified copy with standard delivery requested
     When I view the certified copy order item summary
     Then The following item details should be displayed:
-      | Company name    | COMPANY NAME LIMITED                                       |
-      | Company number  | 12345678                                                   |
-      | Delivery method | Standard delivery (aim to dispatch within 10 working days) |
+      | Company name         | Company number | Delivery method                                            |
+      | COMPANY NAME LIMITED | 12345678       | Standard delivery (aim to dispatch within 10 working days) |
     And The following document details should be displayed:
       | Date filed  | Type | Description                                         | Fee |
       | 26 May 2015 | AP01 | Appointment of Mr Richard John Harris as a director | £15 |
@@ -18,9 +17,8 @@ Feature: Item summary for certified copies
     Given The item is a certified copy with express delivery requested
     When I view the certified copy order item summary
     Then The following item details should be displayed:
-      | Company name    | OTHER NAME LIMITED                                                                                                                        |
-      | Company number  | 12345679                                                                                                                                  |
-      | Delivery method | Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day) |
+      | Company name       | Company number | Delivery method                                                                                                                           |
+      | OTHER NAME LIMITED | 12345679       | Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day) |
     And The following document details should be displayed:
       | Date filed  | Type | Description                                                          | Fee |
       | 12 May 2022 | SH01 | Statement of capital following an allotment of shares on 12 May 2022 | £50 |
@@ -29,9 +27,8 @@ Feature: Item summary for certified copies
     Given The item is a certified copy of a document with an unhandled description
     When I view the certified copy order item summary
     Then The following item details should be displayed:
-      | Company name    | UNHANDLED COMPANY NAME LIMITED                             |
-      | Company number  | 12345670                                                   |
-      | Delivery method | Standard delivery (aim to dispatch within 10 working days) |
+      | Company name                   | Company number | Delivery method                                            |
+      | UNHANDLED COMPANY NAME LIMITED | 12345670       | Standard delivery (aim to dispatch within 10 working days) |
     And The following document details should be displayed:
       | Date filed  | Type | Description    | Fee |
       | 26 May 2015 | AP02 | something-else | £15 |
