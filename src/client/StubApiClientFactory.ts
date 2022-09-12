@@ -11,7 +11,7 @@ import {Checkout} from "@companieshouse/api-sdk-node/dist/services/order/checkou
 import {ItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/order";
 import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order/types";
 import {OrderItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/order-item/service";
-import {CheckoutItemErrorResponse} from "../../../api-sdk-node/dist/services/order/checkout-item/service";
+import {CheckoutItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/checkout-item/service";
 
 @Service("stub.client")
 export class StubApiClientFactory implements ApiClientFactory {
