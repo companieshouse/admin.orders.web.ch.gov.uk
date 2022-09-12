@@ -1,5 +1,5 @@
 import {ApiClientFactory} from "./ApiClientFactory";
-import {Failure, Success} from "@companieshouse/api-sdk-node/dist/services/result";
+import {Failure, Result, Success} from "@companieshouse/api-sdk-node/dist/services/result";
 import {ApiErrorResponse, ApiResponse, ApiResult} from "@companieshouse/api-sdk-node/dist/services/resource";
 import {SearchResponse} from "@companieshouse/api-sdk-node/dist/services/order/search";
 import Mapping from "@companieshouse/api-sdk-node/dist/mapping/mapping";
@@ -9,11 +9,23 @@ import {SearchRequest} from "@companieshouse/api-sdk-node/dist/services/order/se
 import ApiClient from "@companieshouse/api-sdk-node/dist/client";
 import {Checkout} from "@companieshouse/api-sdk-node/dist/services/order/checkout";
 import {ItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/order";
+import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order/types";
+import {OrderItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/order-item/service";
+import {CheckoutItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/checkout-item/service";
 
 @Service("stub.client")
 export class StubApiClientFactory implements ApiClientFactory {
+    private static readonly EXCLUDED_FIELDS = {
+        deep: true,
+        stopPaths: [
+            "description_values", // all items
+            "item_options.filing_history_description_values", // missing image delivery
+            "item_options.filing_history_documents.filing_history_description_values" // certified copies
+        ]
+    };
     private searchResponse: ApiResult<ApiResponse<SearchResponse>> | undefined;
     private checkoutResponse: ApiResult<ApiResponse<Checkout>> | undefined;
+    private checkoutItemResponse: Result<Item, OrderItemErrorResponse> | undefined;
     private readonly defaultSearchResponse: ApiResult<ApiResponse<SearchResponse>> = new Success<ApiResponse<SearchResponse>, ApiErrorResponse>({
         httpStatusCode: 200,
         resource: {
@@ -125,6 +137,55 @@ export class StubApiClientFactory implements ApiClientFactory {
         }
     });
 
+    private defaultCheckoutItemResponse: Result<Item, CheckoutItemErrorResponse> = new Success<Item, OrderItemErrorResponse>({
+        id: "CRT-123456-123456",
+        companyName: "TEST COMPANY LIMITED",
+        companyNumber: "00000000",
+        description: "certificate for company 00000000",
+        descriptionIdentifier: "certificate",
+        descriptionValues: {
+            certificate: "certificate for company 00000000",
+            companyNumber: "00000000"
+        },
+        itemCosts: [{
+            discountApplied: "0",
+            itemCost: "15",
+            calculatedCost: "15",
+            productType: "certificate"
+        }],
+        itemOptions: {
+            certificateType: "incorporation-with-all-name-changes",
+            deliveryMethod: "postal",
+            deliveryTimescale: "standard",
+            directorDetails: {
+                includeBasicInformation: true
+            },
+            forename: "forename",
+            includeGoodStandingInformation: true,
+            registeredOfficeAddressDetails: {
+                includeAddressRecordsType: "current-and-previous"
+            },
+            secretaryDetails: {
+                includeBasicInformation: true
+            },
+            surname: "surname",
+            companyType: "ltd"
+        } as ItemOptions,
+        etag: "abcdefg123456",
+        kind: "item#certificate",
+        links: {
+            self: "/orderable/certificates/CRT-123456-123456"
+        },
+        postalDelivery: true,
+        quantity: 1,
+        itemUri: "/orderable/certificates/CRT-123456-123456",
+        status: "unknown",
+        postageCost: "0",
+        totalItemCost: "15",
+        customerReference: "mycert",
+        satisfiedAt: "2022-01-01T12:00:00.000Z"
+    });
+
     willReturnSuccessfulSearchResponse(body: any): void {
         this.searchResponse = new Success<ApiResponse<SearchResponse>, ApiErrorResponse>({
             httpStatusCode: 200,
@@ -142,14 +203,25 @@ export class StubApiClientFactory implements ApiClientFactory {
     willReturnSuccessfulCheckoutResponse(body: any): void {
         this.checkoutResponse = new Success<ApiResponse<Checkout>, ApiErrorResponse>({
             httpStatusCode: 200,
-            resource: Mapping.camelCaseKeys(body)
+            resource: Mapping.camelCaseKeys(body, StubApiClientFactory.EXCLUDED_FIELDS)
         });
     }
 
     willReturnErrorCheckoutResponse(statusCode: number, body: any): void {
         this.checkoutResponse = new Failure<ApiResponse<Checkout>, ApiErrorResponse>({
             httpStatusCode: statusCode,
-            errors: Mapping.camelCaseKeys(body)
+            errors: Mapping.camelCaseKeys(body, StubApiClientFactory.EXCLUDED_FIELDS)
+        });
+    }
+
+    willReturnSuccessfulCheckoutItemResponse(body: any): void {
+        this.checkoutItemResponse = new Success<Item, CheckoutItemErrorResponse>(Mapping.camelCaseKeys(body, StubApiClientFactory.EXCLUDED_FIELDS));
+    }
+
+    willReturnErrorCheckoutItemResponse(statusCode: number, body: any): void {
+        this.checkoutItemResponse = new Failure<Item, CheckoutItemErrorResponse>({
+            httpStatusCode: statusCode,
+            error: Mapping.camelCaseKeys(body)
         });
     }
 
@@ -164,6 +236,11 @@ export class StubApiClientFactory implements ApiClientFactory {
             checkoutSearchService: {
                 async search(request: SearchRequest): Promise<ApiResult<ApiResponse<SearchResponse>>> {
                     return self.searchResponse || self.defaultSearchResponse;
+                }
+            },
+            checkoutItem: {
+                async getCheckoutItem(orderId: string, itemId: string): Promise<Result<Item, CheckoutItemErrorResponse>> {
+                    return self.checkoutItemResponse || self.defaultCheckoutItemResponse;
                 }
             }
         } as ApiClient;

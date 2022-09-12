@@ -9,6 +9,7 @@ const Browser = require("zombie");
 @Service("zombie")
 export class ZombieBrowserAgent implements BrowserAgent, AgentService {
     private browser: any;
+    private browserHistory: string[] = [];
 
     async start(baseUrl: string): Promise<void> {
         const url = new URL(baseUrl);
@@ -23,6 +24,7 @@ export class ZombieBrowserAgent implements BrowserAgent, AgentService {
         if (this.browser == null) {
             throw new Error("Driver not started");
         }
+        this.browserHistory = [];
         await this.browser.visit(url);
         this.browser.assert.success();
     }
@@ -43,10 +45,19 @@ export class ZombieBrowserAgent implements BrowserAgent, AgentService {
         if (element.nodeName === "BUTTON") {
             await this.browser.pressButton(selector);
         } else {
+            const locationBeforeClick = await this.getLocation();
             await this.browser.click(selector);
-
+            const locationAfterClick = await this.getLocation();
+            if (locationBeforeClick !== locationAfterClick) {
+                this.browserHistory.push(locationBeforeClick);
+            }
             if (element.href === "javascript:history.back()") {
-                await this.openPage("/orders-admin/search");
+                const backLink = this.browserHistory.pop();
+                if (!backLink) {
+                    throw new Error("No browser history");
+                } else {
+                    await this.openPage(backLink);
+                }
             }
         }
     }

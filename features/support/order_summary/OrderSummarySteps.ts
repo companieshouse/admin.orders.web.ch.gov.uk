@@ -7,6 +7,7 @@ import Container from "typedi";
 import {StubApiClientFactory} from "../../../dist/client/StubApiClientFactory";
 import successfulCheckoutResponse from "../stubbing/order_summary/checkout_with_all_item_combos.json";
 import checkoutNoDeliverableItems from "../stubbing/order_summary/checkout_with_no_deliverable_items.json";
+import checkoutWithCertifiedCopy from "../stubbing/order_summary/checkout_with_certified_copy.json";
 
 @binding()
 export class OrderSummarySteps {
@@ -55,6 +56,13 @@ export class OrderSummarySteps {
     async harnessAndAutotransition() {
         await this.checkoutResourceContainsItems();
         await this.currentPage.openOrderSummaryPageViaLink();
+    }
+
+    @given(/^I have opened an item via the order summary page$/)
+    async openOrderItemSummary() {
+        await this.currentPage.anticipateSuccessfulResponse(checkoutWithCertifiedCopy);
+        await this.currentPage.openOrderSummaryPage();
+        await this.currentPage.clickOrderItemSummaryLink();
     }
 
     @when(/^I view the order summary$/)
