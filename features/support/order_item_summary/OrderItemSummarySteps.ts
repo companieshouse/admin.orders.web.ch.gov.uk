@@ -65,12 +65,12 @@ export class OrderItemSummarySteps {
         await this.currentState.anticipateSuccessfulResponse(certifiedCopyExpress);
     }
 
-    @given(/^The item is a (certified copy|missing image delivery) of a document with an unhandled description$/)
+    @given(/^The item is a (certified copy|missing image delivery) with an unhandled description$/)
     async expectCertifiedCopyWithUnhandledDescription(itemType: string) {
         if (itemType === "certified copy") {
-            await this.currentState.anticipateSuccessfulResponse(missingImageDeliveryUnhandledDescription)
+            await this.currentState.anticipateSuccessfulResponse(certifiedCopyUnhandledDescription)
         } else if (itemType === "missing image delivery") {
-            await this.currentState.anticipateSuccessfulResponse(certifiedCopyUnhandledDescription);
+            await this.currentState.anticipateSuccessfulResponse(missingImageDeliveryUnhandledDescription);
         }
     }
 
@@ -88,12 +88,12 @@ export class OrderItemSummarySteps {
         });
     }
 
-    @given(/^I am viewing an (certified copy|missing image delivery) order item summary$/)
+    @given(/^I am viewing a (certified copy|missing image delivery) order item summary$/)
     async setupAndOpenOrderItemSummaryPage(itemType: string) {
         if (itemType === "certified copy") {
             await this.expectCertifiedCopyWithStandardDelivery();
         } else if (itemType === "missing image delivery") {
-            await  this.expectMissingImageDeliveryItem();
+            await this.expectMissingImageDeliveryItem();
         }
         await this.openOrderItemSummaryPage(itemType);
     }

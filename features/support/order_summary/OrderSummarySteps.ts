@@ -59,7 +59,7 @@ export class OrderSummarySteps {
         await this.currentPage.openOrderSummaryPageViaLink();
     }
 
-    @given(/^I have opened an (certified copy | missing image delivery) item via the order summary page$/)
+    @given(/^I have opened a (certified copy|missing image delivery) item via the order summary page$/)
     async openOrderItemSummary(itemType: string) {
         if (itemType === "certified copy") {
             await this.currentPage.anticipateSuccessfulResponse(checkoutWithCertifiedCopy);

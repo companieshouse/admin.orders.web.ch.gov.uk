@@ -24,7 +24,7 @@ Feature: Item summary for certified copies
       | 12 May 2022 | SH01 | Statement of capital following an allotment of shares on 12 May 2022 | £50 |
 
   Scenario: Certified copy with unhandled filing history description
-    Given The item is a certified copy of a document with an unhandled description
+    Given The item is a certified copy with an unhandled description
     When I view the certified copy order item summary
     Then The following item details should be displayed:
       | Company name                   | Company number | Delivery method                                            |
@@ -36,7 +36,7 @@ Feature: Item summary for certified copies
   Scenario: Display item not found if nonexistent item fetched
     Given The requested order item resource does not exist
     When I view the certified copy order item summary
-    Then The order item summary page should display item not found
+    Then The order item summary page should display order not found
 
   Scenario: Display service unavailable if an error occurs when displaying the order summary
     Given An error will occur when the order item is fetched
@@ -44,12 +44,12 @@ Feature: Item summary for certified copies
     Then The order item summary page should display service unavailable
 
   Scenario: User signs out
-    Given I am viewing an order item summary
+    Given I am viewing a certified copy order item summary
     When I click sign out
     Then I should be taken to the signout handler
 
   Scenario: Click back button
     Given The certified copy order item summary page will load successfully
-    And I have opened an certified copy item via the order summary page
+    And I have opened a certified copy item via the order summary page
     When I click the back button on the order item summary page
     Then I should be returned from the order item summary page to the order summary page

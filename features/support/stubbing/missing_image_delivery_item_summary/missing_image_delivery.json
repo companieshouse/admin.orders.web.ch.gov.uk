@@ -17,16 +17,16 @@
     }
   ],
   "item_options": {
-    "filingHistoryBarcode": "barcode",
-    "filingHistoryCategory": "category",
-    "filingHistoryCost": "cost",
-    "filingHistoryDate": "2015-05-26",
-    "filingHistoryDescription": "appoint-person-director-company-with-name",
-    "filingHistoryDescriptionValues": {
+    "filing_history_barcode": "barcode",
+    "filing_history_category": "category",
+    "filing_history_cost": "cost",
+    "filing_history_date": "2015-05-26",
+    "filing_history_description": "appoint-person-director-company-with-name",
+    "filing_history_description_values": {
       "officer_name": "Mr Richard John Harris"
     },
-    "filingHistoryId": "MzEyMzcyNDc2OWFkaXF6a2N4",
-    "filingHistoryType": "AP01"
+    "filing_history_id": "MzEyMzcyNDc2OWFkaXF6a2N4",
+    "filing_history_type": "AP01"
   },
   "etag": "F00DFACE",
   "kind": "item#missing-image-delivery",

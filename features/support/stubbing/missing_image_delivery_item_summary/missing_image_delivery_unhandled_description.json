@@ -1,7 +1,7 @@
 {
   "id": "MID-123123-123123",
-  "company_name": "COMPANY NAME LIMITED",
-  "company_number": "12345678",
+  "company_name": "UNHANDLED COMPANY NAME LIMITED",
+  "company_number": "12345670",
   "description": "missing image delivery for company 12345678",
   "description_identifier": "missing-image-delivery",
   "description_values": {
@@ -17,14 +17,14 @@
     }
   ],
   "item_options": {
-    "filingHistoryBarcode": "barcode",
-    "filingHistoryCategory": "category",
-    "filingHistoryCost": "cost",
-    "filingHistoryDate": "2015-05-26",
-    "filingHistoryDescription": "default-description-no-value-provided",
-    "filingHistoryDescriptionValues": {},
-    "filingHistoryId": "MzEyMzcyNDc2OWFkaXF6a2N4",
-    "filingHistoryType": "AP02"
+    "filing_history_barcode": "barcode",
+    "filing_history_category": "category",
+    "filing_history_cost": "cost",
+    "filing_history_date": "2015-05-26",
+    "filing_history_description": "something-else",
+    "filing_history_description_values": {},
+    "filing_history_id": "MzEyMzcyNDc2OWFkaXF6a2N4",
+    "filing_history_type": "AP02"
   },
   "etag": "F00DFACE",
   "kind": "item#missing-image-delivery",
