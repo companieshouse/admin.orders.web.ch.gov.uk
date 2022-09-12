@@ -2,61 +2,57 @@
     <div class="govuk-column-full">
         <h1 id="item-reference" class="govuk-heading-xl">{{ control.data.itemId }}</h1>
         <h2 class="govuk-heading-m">Item details</h2>
+        <dl class="govuk-summary-list" id="itemDetailsList">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Company name
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.companyName }}
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Company number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.companyNumber }}
+                </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Delivery method
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.deliveryMethod }}
+                </dd>
+            </div>
+        </dl>
     </div>
 </div>
-
-<dl class="govuk-summary-list" id="itemDetailsList">
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-            Company name
-        </dt>
-        <dd class="govuk-summary-list__value">
-            {{ control.data.companyName }}
-        </dd>
-    </div>
-
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-            Company number
-        </dt>
-        <dd class="govuk-summary-list__value">
-            {{ control.data.companyNumber }}
-        </dd>
-    </div>
-
-    <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-            Delivery method
-        </dt>
-        <dd class="govuk-summary-list__value">
-            {{ control.data.deliveryMethod }}
-        </dd>
-    </div>
-</dl>
-
 <div class="govuk-grid-row">
     <div class="govuk-column-full">
         <h2 class="govuk-heading-m">Document details</h2>
+        <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Date filed</th>
+                <th scope="col" class="govuk-table__header">Type</th>
+                <th scope="col" class="govuk-table__header">Description</th>
+                <th scope="col" class="govuk-table__header">Fee</th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">{{ control.data.dateFiled }}</td>
+                    <td class="govuk-table__cell">{{ control.data.type }}</td>
+                    <td class="govuk-table__cell">{{ control.data.description }}</td>
+                    <td class="govuk-table__cell">{{ control.data.fee }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
-
-<table class="govuk-table">
-    <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">Date filed</th>
-        <th scope="col" class="govuk-table__header">Type</th>
-        <th scope="col" class="govuk-table__header">Description</th>
-        <th scope="col" class="govuk-table__header">Fee</th>
-    </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-            <td>{{ control.data.dateFiled }}</td>
-            <td>{{ control.data.type }}</td>
-            <td>{{ control.data.description }}</td>
-            <td>{{ control.data.fee }}</td>
-        </tr>
-    </tbody>
-</table>
-
 
