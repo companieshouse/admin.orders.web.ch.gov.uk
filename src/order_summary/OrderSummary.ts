@@ -13,6 +13,7 @@ export class ItemSummary {
     public companyNumber?: string;
     public deliveryMethod?: string;
     public fee?: string;
+    public itemLink?: string;
 }
 
 export class PaymentDetails {
