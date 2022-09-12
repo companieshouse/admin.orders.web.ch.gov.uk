@@ -70,6 +70,102 @@ export const mockMidOrderItemView: ViewModel = {
     template: "page"
 };
 
+export const mockCertifiedCopyItem: Item = {
+    id: "CCD-123456-123456",
+    companyName: "Company Name",
+    companyNumber: "00000000",
+    description: "certified-copy for company 00000000",
+    descriptionIdentifier: "certified-copy",
+    descriptionValues: {
+        certificate: "certified-copy for company 00000000",
+        companyNumber: "00000000"
+    },
+    itemCosts: [{
+        discountApplied: "0",
+        itemCost: "30",
+        calculatedCost: "30",
+        productType: "certified-copy"
+    }],
+    itemOptions: {
+        collectionLocation: "cardiff",
+        contactNumber: "0123456789",
+        deliveryMethod: "postal",
+        deliveryTimescale: "standard",
+        filingHistoryDocuments: [{
+            filingHistoryDate: "2010-02-12",
+            filingHistoryDescription: "change-person-director-company-with-change-date",
+            filingHistoryDescriptionValues: {
+                change_date: "2010-02-12",
+                officer_name: "Thomas David Wheare"
+            },
+            filingHistoryId: "MzAwOTM2MDg5OWFkaXF6a2N4",
+            filingHistoryType: "CH01",
+            filingHistoryCost: "15"
+        }],
+        forename: "forename",
+        surname: "surname"
+    },
+    etag: "abcdefg123456",
+    kind: "item#certified-copy",
+    links: {
+        self: "/orderable/certified-copies/CCD-123456-123456"
+    },
+    postalDelivery: true,
+    quantity: 1,
+    itemUri: "/orderable/certified-copies/CCD-123456-123456",
+    status: "unknown",
+    postageCost: "0",
+    totalItemCost: "15",
+    customerReference: "mycert",
+    satisfiedAt: "2020-05-15T08:41:05.798Z"
+};
+
+export const mockCertCopyOrderItemView: ViewModel = {
+    controls: [{
+        controls: [],
+        data: {
+            orderId: "ORD-123456-123456",
+            itemId: "CCD-123456-123456",
+            companyName: "Company Name",
+            companyNumber: "00000000",
+            deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
+            dateFiled: "12 Feb 2010",
+            type: "CH01",
+            description: "Director's details changed for Thomas David Wheare on 12 February 2010",
+            fee: "£15",
+            backLinkUrl: "javascript:history.back()"
+        },
+        template: "orderItemSummary/order_item_summary_ccd.njk"
+    }],
+    data: {
+        title: "Summary of item CCD-123456-123456 in order ORD-123456-123456"
+    },
+    template: "page"
+};
+
+export const mockExpressCertCopyItemView: ViewModel = {
+    controls: [{
+        controls: [],
+        data: {
+            orderId: "ORD-123456-123456",
+            itemId: "CCD-123456-123456",
+            companyName: "Company Name",
+            companyNumber: "00000000",
+            deliveryMethod: "Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day)",
+            dateFiled: "12 Feb 2010",
+            type: "CH01",
+            description: "Director's details changed for Thomas David Wheare on 12 February 2010",
+            fee: "£50",
+            backLinkUrl: "javascript:history.back()"
+        },
+        template: "orderItemSummary/order_item_summary_ccd.njk"
+    }],
+    data: {
+        title: "Summary of item CCD-123456-123456 in order ORD-123456-123456"
+    },
+    template: "page"
+};
+
 export const mockCertificateItem: Item = {
     id: CERTIFICATE_ID,
     companyName: "Company Name",
@@ -229,52 +325,52 @@ export const mockAdministratedLtdCertificateItemView: ViewModel = {
         data: {
             orderId: ORDER_ID,
             itemId: CERTIFICATE_ID,
-                itemDetails: [
-                    {
-                        key: "Company name",
-                        value: "Company Name"
-                    },
-                    {
-                        key: "Company number",
-                        value: "00000000"
-                    },
-                    {
-                        key: "Certificate type",
-                        value: "Incorporation with all company name changes"
-                    },
-                    {
-                        key: "Registered office address",
-                        value: "Current address and the one previous"
-                    },
-                    {
-                        key: "The names of all current company directors",
-                        value:  "Yes"
-                    },
-                    {
-                        key: "The names of all current secretaries",
-                        value: "Yes"
-                    },
-                    {
-                        key: "Company objects",
-                        value: "No"
-                    },
-                    {
-                        key: "Administrators' details",
-                        value: "No"
-                    },
-                    {
-                        key: "Delivery method",
-                        value: "Standard delivery (aim to dispatch within 10 working days)"
-                    },
-                    {
-                        key: "Email copy required",
-                        value: "Email only available for express delivery method"
-                    },
-                    {
-                        key: "Fee",
-                        value: "£15"
-                    }
-                ],
+            itemDetails: [
+                {
+                    key: "Company name",
+                    value: "Company Name"
+                },
+                {
+                    key: "Company number",
+                    value: "00000000"
+                },
+                {
+                    key: "Certificate type",
+                    value: "Incorporation with all company name changes"
+                },
+                {
+                    key: "Registered office address",
+                    value: "Current address and the one previous"
+                },
+                {
+                    key: "The names of all current company directors",
+                    value:  "Yes"
+                },
+                {
+                    key: "The names of all current secretaries",
+                    value: "Yes"
+                },
+                {
+                    key: "Company objects",
+                    value: "No"
+                },
+                {
+                    key: "Administrators' details",
+                    value: "No"
+                },
+                {
+                    key: "Delivery method",
+                    value: "Standard delivery (aim to dispatch within 10 working days)"
+                },
+                {
+                    key: "Email copy required",
+                    value: "Email only available for express delivery method"
+                },
+                {
+                    key: "Fee",
+                    value: "£15"
+                }
+            ],
             backLinkUrl: "javascript:history.back()"
         },
         template: "orderItemSummary/order_item_summary_certificate.njk"
@@ -563,7 +659,7 @@ export const mockLiquidatedLLPCertificateItemView: ViewModel = {
     template: "page"
 };
 
-export const mockActiveLPCertificateItemView = {
+export const mockActiveLPCertificateItemView: ViewModel = {
     controls: [{
         controls: [],
         data: {
