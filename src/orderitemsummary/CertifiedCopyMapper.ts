@@ -3,10 +3,11 @@ import { ItemOptions as CertifiedCopyItemOptions } from "@companieshouse/api-sdk
 import { MapperRequest } from "../mappers/MapperRequest";
 import { CertifiedCopySummary } from "./CertifiedCopySummary";
 import { ViewModel } from "../core/ViewModel";
-import { CertifiedCopyDetailsComponent } from "./CertifiedCopyDetailsComponent"
+import { CertifiedCopyItemDetailsComponent } from "./CertifiedCopyItemDetailsComponent"
 import { FilingHistoryMapper } from "../mappers/FilingHistoryMapper";
 import { CertificateTextMapper } from "../orderdetails/CertificateTextMapper";
 import { Page } from "../core/Page";
+import {CertifiedCopyDocumentDetailsComponent} from "./CertifiedCopyDocumentDetailsComponent";
 
 export class CertifiedCopyMapper implements OrderItemMapper {
     private readonly data: CertifiedCopySummary;
@@ -25,7 +26,8 @@ export class CertifiedCopyMapper implements OrderItemMapper {
 
     getMappedOrder (): ViewModel {
         const result = new Page(`Summary of item ${this.data.itemId} in order ${this.data.orderId}`);
-        result.add(new CertifiedCopyDetailsComponent(this.data));
+        result.add(new CertifiedCopyItemDetailsComponent(this.data));
+        result.add(new CertifiedCopyDocumentDetailsComponent(this.data));
         return result.render();
     }
 
