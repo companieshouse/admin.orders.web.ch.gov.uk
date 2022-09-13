@@ -11,6 +11,8 @@ import {DataTable} from "@cucumber/cucumber";
 import certifiedCopyStandard from "../stubbing/certified_copy_summary/certified_copy_with_standard_delivery.json";
 import certifiedCopyExpress from "../stubbing/certified_copy_summary/certified_copy_with_express_delivery.json";
 import certifiedCopyUnhandledDescription from "../stubbing/certified_copy_summary/certified_copy_with_unhandled_description.json";
+import missingImageDelivery from "../stubbing/missing_image_delivery_item_summary/missing_image_delivery.json";
+import missingImageDeliveryUnhandledDescription from "../stubbing/missing_image_delivery_item_summary/missing_image_delivery_unhandled_description.json";
 import {BrowserAgent} from "../core/BrowserAgent";
 import Container from "typedi";
 import {StubApiClientFactory} from "../../../dist/client/StubApiClientFactory";
@@ -43,9 +45,18 @@ export class OrderItemSummarySteps {
         await this.currentState.anticipateSuccessfulResponse(certifiedCopyStandard);
     }
 
-    @given(/^The order item summary page will load successfully$/)
-    async expectOrderItemSummaryToLoad() {
-        await this.expectCertifiedCopyWithStandardDelivery();
+    @given(/^The item is of type missing image delivery$/)
+    async expectMissingImageDeliveryItem() {
+        await this.currentState.anticipateSuccessfulResponse(missingImageDelivery);
+    }
+
+    @given(/^The (certified copy|missing image delivery) order item summary page will load successfully$/)
+    async expectOrderItemSummaryToLoad(itemType: string) {
+        if (itemType === "certified copy") {
+            await this.expectCertifiedCopyWithStandardDelivery();
+        } else if (itemType === "missing image delivery") {
+            await this.expectMissingImageDeliveryItem();
+        }
         await this.currentState.openPageViaLink();
     }
 
@@ -54,9 +65,13 @@ export class OrderItemSummarySteps {
         await this.currentState.anticipateSuccessfulResponse(certifiedCopyExpress);
     }
 
-    @given(/^The item is a certified copy of a document with an unhandled description$/)
-    async expectCertifiedCopyWithUnhandledDescription() {
-        await this.currentState.anticipateSuccessfulResponse(certifiedCopyUnhandledDescription);
+    @given(/^The item is a (certified copy|missing image delivery) with an unhandled description$/)
+    async expectCertifiedCopyWithUnhandledDescription(itemType: string) {
+        if (itemType === "certified copy") {
+            await this.currentState.anticipateSuccessfulResponse(certifiedCopyUnhandledDescription)
+        } else if (itemType === "missing image delivery") {
+            await this.currentState.anticipateSuccessfulResponse(missingImageDeliveryUnhandledDescription);
+        }
     }
 
     @given(/^The requested order item resource does not exist$/)
@@ -73,15 +88,19 @@ export class OrderItemSummarySteps {
         });
     }
 
-    @given(/^I am viewing an order item summary$/)
-    async setupAndOpenOrderItemSummaryPage() {
-        await this.expectCertifiedCopyWithStandardDelivery();
-        await this.openOrderItemSummaryPage();
+    @given(/^I am viewing a (certified copy|missing image delivery) order item summary$/)
+    async setupAndOpenOrderItemSummaryPage(itemType: string) {
+        if (itemType === "certified copy") {
+            await this.expectCertifiedCopyWithStandardDelivery();
+        } else if (itemType === "missing image delivery") {
+            await this.expectMissingImageDeliveryItem();
+        }
+        await this.openOrderItemSummaryPage(itemType);
     }
 
-    @when(/^I view the order item summary$/)
-    async openOrderItemSummaryPage() {
-        await this.currentState.openPage();
+    @when(/^I view the (certified copy|missing image delivery) order item summary$/)
+    async openOrderItemSummaryPage(itemType: string) {
+        await this.currentState.openPage(itemType);
     }
 
     @when(/^I click the back button on the order item summary page$/)

@@ -7,7 +7,7 @@ export interface OrderItemSummaryPageState {
     anticipateSuccessfulResponse(json: any): Promise<void>;
     anticipateClientError(json: any): Promise<void>;
     anticipateServerError(json: any): Promise<void>;
-    openPage(): Promise<void>;
+    openPage(itemType: string): Promise<void>;
     openPageViaLink(): Promise<void>;
     verifyPageLayout(): Promise<void>;
     verifyItemDetails(expected: string[][]): Promise<void>;
@@ -44,7 +44,7 @@ export abstract class AbstractOrderItemSummaryPageState implements OrderItemSumm
         throw new Error("Unsupported operation");
     }
 
-    openPage(): Promise<void> {
+    openPage(itemType: string): Promise<void> {
         throw new Error("Unsupported operation");
     }
 
@@ -104,8 +104,12 @@ export class AbstractAnticipateOrderItemSummary extends AbstractOrderItemSummary
         super(stateMachine);
     }
 
-    async openPage(): Promise<void> {
-        await this.interactor.openPage("/orders-admin/order-summaries/ORD-123123-123123/items/CCD-123123-123123");
+    async openPage(itemType: string): Promise<void> {
+        if (itemType === "certified copy") {
+            await this.interactor.openPage("/orders-admin/order-summaries/ORD-123123-123123/items/CCD-123123-123123");
+        } else if (itemType === "missing image delivery") {
+            await this.interactor.openPage("/orders-admin/order-summaries/ORD-123123-123123/items/MID-123123-123123");
+        }
     }
 
     async openPageViaLink(): Promise<void> {
@@ -119,8 +123,8 @@ export class AnticipateOrderItemSummaryPage extends AbstractAnticipateOrderItemS
         super(stateMachine, interactor);
     }
 
-    async openPage(): Promise<void> {
-        await super.openPage();
+    async openPage(itemType: string): Promise<void> {
+        await super.openPage(itemType);
         this.stateMachine.currentState = this.stateMachine.orderItemSummary;
     }
 }
@@ -130,8 +134,8 @@ export class AnticipateItemNotFound extends AbstractAnticipateOrderItemSummary {
         super(stateMachine, interactor);
     }
 
-    async openPage(): Promise<void> {
-        await super.openPage();
+    async openPage(itemType: string): Promise<void> {
+        await super.openPage(itemType);
         this.stateMachine.currentState = this.stateMachine.itemNotFound;
     }
 }
@@ -141,8 +145,8 @@ export class AnticipateServiceUnavailable extends AbstractAnticipateOrderItemSum
         super(stateMachine, interactor);
     }
 
-    async openPage(): Promise<void> {
-        await super.openPage();
+    async openPage(itemType: string): Promise<void> {
+        await super.openPage(itemType);
         this.stateMachine.currentState = this.stateMachine.serviceUnavailable;
     }
 }
