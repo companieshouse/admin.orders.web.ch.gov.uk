@@ -1,6 +1,6 @@
 {
   "id": "CRT-123123-123123",
-  "company_name": "TEST COMPANY LIMITED",
+  "company_name": "COMPANY NAME LIMITED",
   "company_number": "12345678",
   "customer_reference": "customer reference",
   "description": "certificate for company 12345678",
@@ -26,14 +26,7 @@
     "surname": "surname",
     "certificate_type": "incorporation-with-all-name-changes",
     "director_details": {
-      "include_address": false,
-      "include_appointment_date": false,
-      "include_basic_information": false,
-      "include_country_of_residence": false,
-      "include_nationality": false,
-      "include_occupation": false
     },
-    "include_company_objects_information": false,
     "include_email_copy": false,
     "include_good_standing_information": true,
     "registered_office_address_details": {
@@ -41,9 +34,6 @@
       "include_dates": false
     },
     "secretary_details": {
-      "include_address": false,
-      "include_appointment_date": false,
-      "include_basic_information": false
     },
     "company_type": "ltd",
     "company_status": "active"

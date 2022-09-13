@@ -1,6 +1,6 @@
 {
   "id": "CRT-123123-123123",
-  "company_name": "TEST COMPANY LIMITED",
+  "company_name": "COMPANY NAME LIMITED",
   "company_number": "12345678",
   "customer_reference": "customer reference",
   "description": "certificate for company 12345678",
@@ -21,7 +21,7 @@
     "collection_location": "collection location",
     "contact_number": "0",
     "delivery_method": "collection",
-    "delivery_timescale": "standard",
+    "delivery_timescale": "same-day",
     "forename": "forename",
     "surname": "surname",
     "certificate_type": "incorporation-with-all-name-changes",

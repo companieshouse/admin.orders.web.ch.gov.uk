@@ -69,7 +69,7 @@ export class OrderItemSummarySteps {
         await this.currentState.anticipateSuccessfulResponse(certificateAdministratedDefault);
     }
 
-    @given(/^The item is a certificate requested for an liquidated limited company$/)
+    @given(/^The item is a certificate requested for a liquidated limited company$/)
     async expectCertificateForLiquidatedLimitedCompany() {
         await this.currentState.anticipateSuccessfulResponse(certificateLiquidatedDefault);
     }
@@ -89,7 +89,7 @@ export class OrderItemSummarySteps {
         await this.currentState.anticipateSuccessfulResponse(certificateAdministratedLLP);
     }
 
-    @given(/^The item is a certificate requested for an liquidated LLP$/)
+    @given(/^The item is a certificate requested for a liquidated LLP$/)
     async expectCertificateForLiquidatedLLP() {
         await this.currentState.anticipateSuccessfulResponse(certificateLiquidatedLLP);
     }
@@ -146,7 +146,9 @@ export class OrderItemSummarySteps {
 
     @given(/^I am viewing a (certificate|certified copy|missing image delivery) order item summary$/)
     async setupAndOpenOrderItemSummaryPage(itemType: string) {
-        if (itemType === "certified copy") {
+        if (itemType === "certificate") {
+            await this.expectCertificateForActiveLimitedCompany();
+        } else if (itemType === "certified copy") {
             await this.expectCertifiedCopyWithStandardDelivery();
         } else if (itemType === "missing image delivery") {
             await this.expectMissingImageDeliveryItem();
