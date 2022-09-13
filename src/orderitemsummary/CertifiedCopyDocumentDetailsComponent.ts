@@ -2,9 +2,9 @@ import { AbstractViewComponent } from "../core/AbstractViewComponent";
 import { ViewModel } from "../core/ViewModel";
 import { CertifiedCopySummary } from "./CertifiedCopySummary";
 
-export class CertifiedCopyDetailsComponent extends AbstractViewComponent {
+export class CertifiedCopyDocumentDetailsComponent extends AbstractViewComponent {
     constructor(private summary: CertifiedCopySummary) {
-        super("orderItemSummary/order_item_summary_ccd.njk", []);
+        super("orderItemSummary/certified_copy_document_details_component.njk", []);
     }
 
     render(): ViewModel {

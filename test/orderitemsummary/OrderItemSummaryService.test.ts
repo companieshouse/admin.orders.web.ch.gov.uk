@@ -6,7 +6,7 @@ import {OrderItemRequest} from "../../src/orderitemsummary/OrderItemRequest";
 import {jest} from "@jest/globals";
 import {OrderItemView} from "../../src/orderitemsummary/OrderItemView";
 import {MapperRequest} from "../../src/mappers/MapperRequest";
-import {Status} from "../../dist/core/Status";
+import {Status} from "../../src/core/Status";
 import {OrderItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/order-item/service";
 import {OrderItemSummaryFactory} from "../../src/orderitemsummary/OrderItemSummaryFactory";
 import {FilingHistoryMapper} from "../../src/mappers/FilingHistoryMapper";
