@@ -1,0 +1,55 @@
+{
+  "id": "CRT-123123-123123",
+  "company_name": "TEST COMPANY LIMITED",
+  "company_number": "12345678",
+  "customer_reference": "customer reference",
+  "description": "certificate for company 12345678",
+  "description_identifier": "certificate",
+  "description_values": {
+    "certificate": "certificate for company 12345678",
+    "company_number": "12345678"
+  },
+  "item_costs": [
+    {
+      "discount_applied": "0",
+      "item_cost": "15",
+      "calculated_cost": "15",
+      "product_type": "certificate"
+    }
+  ],
+  "item_options": {
+    "collection_location": "collection location",
+    "contact_number": "0",
+    "delivery_method": "collection",
+    "delivery_timescale": "standard",
+    "forename": "forename",
+    "surname": "surname",
+    "certificate_type": "incorporation-with-all-name-changes",
+    "limited_partner_details": {
+      "include_basic_information": true
+    },
+    "include_general_nature_of_business_information": true,
+    "include_email_copy": false,
+    "include_good_standing_information": true,
+    "principal_place_of_business_details": {
+      "include_address_records_type": "current-previous-and-prior",
+      "include_dates": false
+    },
+    "general_partner_details": {
+      "include_basic_information": true
+    },
+    "company_type": "limited-partnership",
+    "company_status": "active"
+  },
+  "etag": "F00DFACE",
+  "kind": "item#certificate",
+  "links": {
+    "self": "/orderable/certificates/CRT-123123-123123"
+  },
+  "quantity": 1,
+  "item_uri": "/orderable/certificates/CRT-123123-123123",
+  "status": "unknown",
+  "postage_cost": "0",
+  "total_item_cost": "15",
+  "postal_delivery": true
+}

@@ -105,7 +105,9 @@ export class AbstractAnticipateOrderItemSummary extends AbstractOrderItemSummary
     }
 
     async openPage(itemType: string): Promise<void> {
-        if (itemType === "certified copy") {
+        if (itemType === "certificate") {
+            await this.interactor.openPage("/orders-admin/order-summaries/ORD-123123-123123/items/CRT-123123-123123");
+        } else if (itemType === "certified copy") {
             await this.interactor.openPage("/orders-admin/order-summaries/ORD-123123-123123/items/CCD-123123-123123");
         } else if (itemType === "missing image delivery") {
             await this.interactor.openPage("/orders-admin/order-summaries/ORD-123123-123123/items/MID-123123-123123");

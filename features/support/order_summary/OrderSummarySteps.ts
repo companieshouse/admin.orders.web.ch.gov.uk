@@ -9,6 +9,7 @@ import successfulCheckoutResponse from "../stubbing/order_summary/checkout_with_
 import checkoutNoDeliverableItems from "../stubbing/order_summary/checkout_with_no_deliverable_items.json";
 import checkoutWithCertifiedCopy from "../stubbing/order_summary/checkout_with_certified_copy.json";
 import checkoutWithMissingImageDelivery from "../stubbing/order_summary/checkout_with_missing_image_delivery.json"
+import checkoutWithCertificate from "../stubbing/order_summary/checkout_with_certificate.json";
 
 @binding()
 export class OrderSummarySteps {
@@ -59,9 +60,11 @@ export class OrderSummarySteps {
         await this.currentPage.openOrderSummaryPageViaLink();
     }
 
-    @given(/^I have opened a (certified copy|missing image delivery) item via the order summary page$/)
+    @given(/^I have opened a (certificate|certified copy|missing image delivery) item via the order summary page$/)
     async openOrderItemSummary(itemType: string) {
-        if (itemType === "certified copy") {
+        if (itemType === "certificate") {
+            await this.currentPage.anticipateSuccessfulResponse(checkoutWithCertificate);
+        } else if (itemType === "certified copy") {
             await this.currentPage.anticipateSuccessfulResponse(checkoutWithCertifiedCopy);
         } else if (itemType === "missing image delivery") {
             await this.currentPage.anticipateSuccessfulResponse(checkoutWithMissingImageDelivery)
