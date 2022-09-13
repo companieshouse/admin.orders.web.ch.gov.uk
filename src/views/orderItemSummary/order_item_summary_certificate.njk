@@ -9,7 +9,7 @@
                         {{ itemDetail.key }}
                     </dt>
                     <dd class="govuk-summary-list__value">
-                        {{ itemDetail.value }}
+                        {{ itemDetail.value | striptags(true) | escape | nl2br }}
                     </dd>
                 </div>
             {% endfor %}
