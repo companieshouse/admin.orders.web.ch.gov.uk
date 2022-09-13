@@ -6,7 +6,7 @@ import {GlobalPageFactory} from "../../src/core/GlobalPageFactory";
 import {OrderItemView} from "../../src/orderitemsummary/OrderItemView";
 import "../../src/session/OrderAdminSession";
 import {SessionModel} from "../../src/session/SessionModel";
-import {ViewModel} from "../../dist/core/ViewModel";
+import {ViewModel} from "../../src/core/ViewModel";
 
 describe("OrderItemSummaryController", () => {
     describe("viewSummary", () => {
