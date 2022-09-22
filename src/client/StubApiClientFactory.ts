@@ -18,14 +18,14 @@ export class StubApiClientFactory implements ApiClientFactory {
     private static readonly EXCLUDED_FIELDS = {
         deep: true,
         stopPaths: [
-            "description_values", // all items
-            "item_options.filing_history_description_values", // missing image delivery
-            "item_options.filing_history_documents.filing_history_description_values" // certified copies
+            "items.description_values", // all items
+            "items.item_options.filing_history_description_values", // missing image delivery
+            "items.item_options.filing_history_documents.filing_history_description_values" // certified copies
         ]
     };
     private searchResponse: ApiResult<ApiResponse<SearchResponse>> | undefined;
     private checkoutResponse: ApiResult<ApiResponse<Checkout>> | undefined;
-    private checkoutItemResponse: Result<Item, OrderItemErrorResponse> | undefined;
+    private checkoutItemResponse: Result<Checkout, OrderItemErrorResponse> | undefined;
     private readonly defaultSearchResponse: ApiResult<ApiResponse<SearchResponse>> = new Success<ApiResponse<SearchResponse>, ApiErrorResponse>({
         httpStatusCode: 200,
         resource: {
@@ -137,54 +137,82 @@ export class StubApiClientFactory implements ApiClientFactory {
         }
     });
 
-    private defaultCheckoutItemResponse: Result<Item, CheckoutItemErrorResponse> = new Success<Item, OrderItemErrorResponse>({
-        id: "CRT-123456-123456",
-        companyName: "TEST COMPANY LIMITED",
-        companyNumber: "00000000",
-        description: "certificate for company 00000000",
-        descriptionIdentifier: "certificate",
-        descriptionValues: {
-            certificate: "certificate for company 00000000",
-            companyNumber: "00000000"
+    private defaultCheckoutItemResponse: Result<Checkout, CheckoutItemErrorResponse> = new Success<Checkout, CheckoutItemErrorResponse>({
+        paidAt: "2022-01-01T12:00:00.000Z",
+        status: "paid",
+        checkedOutBy: {
+            id: "123456",
+            email: "demo@ch.gov.uk"
         },
-        itemCosts: [{
-            discountApplied: "0",
-            itemCost: "15",
-            calculatedCost: "15",
-            productType: "certificate"
-        }],
-        itemOptions: {
-            certificateType: "incorporation-with-all-name-changes",
-            deliveryMethod: "postal",
-            deliveryTimescale: "standard",
-            directorDetails: {
-                includeBasicInformation: true
-            },
-            forename: "forename",
-            includeGoodStandingInformation: true,
-            registeredOfficeAddressDetails: {
-                includeAddressRecordsType: "current-and-previous"
-            },
-            secretaryDetails: {
-                includeBasicInformation: true
-            },
-            surname: "surname",
-            companyType: "ltd"
-        } as ItemOptions,
-        etag: "abcdefg123456",
-        kind: "item#certificate",
         links: {
-            self: "/orderable/certificates/CRT-123456-123456"
+            self: `/orders/ORD-123123-123123`,
+            payment: `"/basket/checkouts/ORD-123123-123123/payment"`
         },
-        postalDelivery: true,
-        quantity: 1,
-        itemUri: "/orderable/certificates/CRT-123456-123456",
-        status: "unknown",
-        postageCost: "0",
-        totalItemCost: "15",
-        customerReference: "mycert",
-        satisfiedAt: "2022-01-01T12:00:00.000Z"
-    });
+        paymentReference: "F00DFACE",
+        etag: "CAFE",
+        deliveryDetails: {
+            addressLine1: "address line 1",
+            addressLine2: "address line 2",
+            country: "country",
+            forename: "forename",
+            locality: "locality",
+            postalCode: "postal code",
+            region: "region",
+            surname: "surname",
+            poBox: "po box"
+        },
+        items: [{
+            id: "CRT-123456-123456",
+            companyName: "TEST COMPANY LIMITED",
+            companyNumber: "00000000",
+            description: "certificate for company 00000000",
+            descriptionIdentifier: "certificate",
+            descriptionValues: {
+                certificate: "certificate for company 00000000",
+                companyNumber: "00000000"
+            },
+            itemCosts: [{
+                discountApplied: "0",
+                itemCost: "15",
+                calculatedCost: "15",
+                productType: "certificate"
+            }],
+            itemOptions: {
+                certificateType: "incorporation-with-all-name-changes",
+                deliveryMethod: "postal",
+                deliveryTimescale: "standard",
+                directorDetails: {
+                    includeBasicInformation: true
+                },
+                forename: "forename",
+                includeGoodStandingInformation: true,
+                registeredOfficeAddressDetails: {
+                    includeAddressRecordsType: "current-and-previous"
+                },
+                secretaryDetails: {
+                    includeBasicInformation: true
+                },
+                surname: "surname",
+                companyType: "ltd"
+            } as ItemOptions,
+                etag: "abcdefg123456",
+                kind: "item#certificate",
+                links: {
+                    self: "/orderable/certificates/CRT-123456-123456"
+                },
+                postalDelivery: true,
+                quantity: 1,
+                itemUri: "/orderable/certificates/CRT-123456-123456",
+                status: "unknown",
+                postageCost: "0",
+                totalItemCost: "15",
+                customerReference: "mycert",
+                satisfiedAt: "2022-01-01T12:00:00.000Z"
+        }],
+        kind: "order",
+        totalOrderCost: "15",
+        reference: "ORD-123123-123123"
+});
 
     willReturnSuccessfulSearchResponse(body: any): void {
         this.searchResponse = new Success<ApiResponse<SearchResponse>, ApiErrorResponse>({
@@ -215,11 +243,11 @@ export class StubApiClientFactory implements ApiClientFactory {
     }
 
     willReturnSuccessfulCheckoutItemResponse(body: any): void {
-        this.checkoutItemResponse = new Success<Item, CheckoutItemErrorResponse>(Mapping.camelCaseKeys(body, StubApiClientFactory.EXCLUDED_FIELDS));
+        this.checkoutItemResponse = new Success<Checkout, CheckoutItemErrorResponse>(Mapping.camelCaseKeys(body, StubApiClientFactory.EXCLUDED_FIELDS));
     }
 
     willReturnErrorCheckoutItemResponse(statusCode: number, body: any): void {
-        this.checkoutItemResponse = new Failure<Item, CheckoutItemErrorResponse>({
+        this.checkoutItemResponse = new Failure<Checkout, CheckoutItemErrorResponse>({
             httpStatusCode: statusCode,
             error: Mapping.camelCaseKeys(body)
         });
@@ -239,7 +267,7 @@ export class StubApiClientFactory implements ApiClientFactory {
                 }
             },
             checkoutItem: {
-                async getCheckoutItem(orderId: string, itemId: string): Promise<Result<Item, CheckoutItemErrorResponse>> {
+                async getCheckoutItem(orderId: string, itemId: string): Promise<Result<Checkout, CheckoutItemErrorResponse>> {
                     return self.checkoutItemResponse || self.defaultCheckoutItemResponse;
                 }
             }

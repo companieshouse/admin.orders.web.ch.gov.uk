@@ -16,7 +16,6 @@ export abstract class AbstractCertificateMapper implements OrderItemMapper {
 
     map (): void {
         this.data.orderId = this.mapperRequest.orderId;
-        this.data.itemId = this.mapperRequest.item.id;
         this.mapCompanyDetails();
         this.mapCertificateDetails();
         this.mapDeliveryDetails();
@@ -25,7 +24,7 @@ export abstract class AbstractCertificateMapper implements OrderItemMapper {
     }
 
     getMappedOrder (): ViewModel {
-        const page = new Page(`Summary of item ${this.data.itemId} in order ${this.data.orderId}`);
+        const page = new Page(`Summary of item ${this.mapperRequest.item.id} in order ${this.mapperRequest.orderId}`);
         page.add(new CertificateDetailsComponent(this.data));
         return page.render();
     }
@@ -37,6 +36,7 @@ export abstract class AbstractCertificateMapper implements OrderItemMapper {
     }
 
     private mapCompanyDetails(): void {
+        this.addField("Item number", this.mapperRequest.item.id);
         this.addField("Company name", this.mapperRequest.item.companyName);
         this.addField("Company number", this.mapperRequest.item.companyNumber);
     }
@@ -44,7 +44,9 @@ export abstract class AbstractCertificateMapper implements OrderItemMapper {
     private mapDeliveryDetails(): void {
         const itemOptions = this.mapperRequest.item.itemOptions as CertificateItemOptions;
         this.addField("Delivery method", CertificateTextMapper.mapDeliveryMethod(itemOptions) || "");
+        this.addField("Delivery address", CertificateTextMapper.mapDeliveryDetails(this.mapperRequest.checkout.deliveryDetails));
         this.addField("Email copy required", CertificateTextMapper.mapEmailCopyRequired(itemOptions));
+        this.addField("Email address", this.mapperRequest.checkout.checkedOutBy.email);
     }
 
     private mapFee(): void {

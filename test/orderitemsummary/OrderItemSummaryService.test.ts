@@ -1,4 +1,8 @@
-import {mockMidOrderItemView, mockMissingImageDeliveryItem} from "../__mocks__/mocks";
+import {
+    mockCheckoutNoItems,
+    mockMidOrderItemView,
+    mockMissingImageDeliveryItem
+} from "../__mocks__/mocks";
 import {OrderItemSummaryService} from "../../src/orderitemsummary/OrderItemSummaryService";
 import {Failure, Success} from "@companieshouse/api-sdk-node/dist/services/result";
 import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order/types";
@@ -11,12 +15,13 @@ import {OrderItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services
 import {OrderItemSummaryFactory} from "../../src/orderitemsummary/OrderItemSummaryFactory";
 import {FilingHistoryMapper} from "../../src/mappers/FilingHistoryMapper";
 import {ServerPaths} from "../../src/application/ServerPaths";
+import {Checkout} from "../../../api-sdk-node/dist/services/order/checkout";
 
 describe("OrderItemSummaryService", () => {
     describe("getOrderItem", () => {
         it("Returns a mapped order item", async () => {
             // given
-            const response = new Success<Item, OrderItemErrorResponse>(mockMissingImageDeliveryItem);
+            const response = new Success<Checkout, OrderItemErrorResponse>({...mockCheckoutNoItems, items: [mockMissingImageDeliveryItem]});
 
             const checkoutItem: any = {};
             checkoutItem.getCheckoutItem = jest.fn(() => {
@@ -59,7 +64,8 @@ describe("OrderItemSummaryService", () => {
             expect(checkoutItem.getCheckoutItem).toHaveBeenCalledWith("ORD-123456-123456", "MID-123456-123456");
             expect(mapper.map).toHaveBeenCalled();
             expect(mapper.getMappedOrder).toHaveBeenCalled();
-            expect(factory.getMapper).toHaveBeenCalledWith(new MapperRequest( "ORD-123456-123456", mockMissingImageDeliveryItem));
+            expect(factory.getMapper).toHaveBeenCalledWith(new MapperRequest( "ORD-123456-123456",
+                {...mockCheckoutNoItems, items: [mockMissingImageDeliveryItem]}, mockMissingImageDeliveryItem));
         });
 
         it("Returns client error when api returns 404 not found", async () => {

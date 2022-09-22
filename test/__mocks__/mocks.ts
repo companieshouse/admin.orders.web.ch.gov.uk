@@ -1,9 +1,41 @@
 import { Item } from "@companieshouse/api-sdk-node/dist/services/order/order/types";
 import {ItemOptions as CertificateItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/certificates";
 import {ViewModel} from "../../src/core/ViewModel";
+import {Checkout} from "../../../api-sdk-node/dist/services/order/checkout";
 
 export const ORDER_ID = "ORD-123456-123456";
 export const CERTIFICATE_ID = "CRT-123456-123456";
+
+export const mockCheckoutNoItems: Checkout = {
+    status: "paid",
+    paymentReference: "PN8h8EHBLddO94R",
+    etag: "f90bd3844c44b640728be9ee70ffbda8ff5ec316",
+    deliveryDetails: {
+        country: "United Kingdom",
+        forename: "bob",
+        locality: "local",
+        postalCode: "postcode",
+        region: "region",
+        surname: "bob",
+        addressLine1: "address line 1",
+        addressLine2: "address line 2",
+        companyName: "company name",
+        poBox: "po box"
+    },
+    items: [],
+        kind: "order",
+        totalOrderCost: "45",
+        reference: "ORD-123456-123456",
+        paidAt: "2020-08-28T11:43:36.817",
+        checkedOutBy: {
+            email: "example@email.com",
+            id: "Y2VkZWVlMzhlZWFjY2M4MzQ3MT"
+    },
+    links: {
+        self: `/checkouts/ORD-123456-123456`,
+        payment: `/basket/checkouts/ORD-123456-123456/payment`
+    }
+}
 
 export const mockMissingImageDeliveryItem: Item = {
     id: "MID-123456-123456",
@@ -294,8 +326,11 @@ export const mockActiveLtdCertificateItemView: ViewModel = {
         controls: [],
         data: {
             orderId: ORDER_ID,
-            itemId: CERTIFICATE_ID,
             itemDetails: [
+                {
+                    key: "Item number",
+                    value: CERTIFICATE_ID,
+                },
                 {
                     key: "Company name",
                     value: "Company Name"
@@ -333,8 +368,16 @@ export const mockActiveLtdCertificateItemView: ViewModel = {
                     value: "Standard delivery (aim to dispatch within 10 working days)"
                 },
                 {
+                    key: "Delivery address",
+                    value: "bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom\n"
+                },
+                {
                     key: "Email copy required",
                     value: "Email only available for express delivery method"
+                },
+                {
+                    key: "Email address",
+                    value: "example@email.com"
                 },
                 {
                     key: "Fee",
@@ -356,8 +399,11 @@ export const mockAdministratedLtdCertificateItemView: ViewModel = {
         controls: [],
         data: {
             orderId: ORDER_ID,
-            itemId: CERTIFICATE_ID,
             itemDetails: [
+                {
+                    key: "Item number",
+                    value: CERTIFICATE_ID,
+                },
                 {
                     key: "Company name",
                     value: "Company Name"
@@ -395,8 +441,16 @@ export const mockAdministratedLtdCertificateItemView: ViewModel = {
                     value: "Standard delivery (aim to dispatch within 10 working days)"
                 },
                 {
+                    key: "Delivery address",
+                    value: "bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom\n"
+                },
+                {
                     key: "Email copy required",
                     value: "Email only available for express delivery method"
+                },
+                {
+                    key: "Email address",
+                    value: "example@email.com"
                 },
                 {
                     key: "Fee",
@@ -418,8 +472,11 @@ export const mockLiquidatedLtdCertificateItemView: ViewModel = {
         controls: [],
         data: {
             orderId: ORDER_ID,
-            itemId: CERTIFICATE_ID,
             itemDetails: [
+                {
+                    key: "Item number",
+                    value: CERTIFICATE_ID,
+                },
                 {
                     key: "Company name",
                     value: "Company Name"
@@ -457,8 +514,16 @@ export const mockLiquidatedLtdCertificateItemView: ViewModel = {
                     value: "Standard delivery (aim to dispatch within 10 working days)"
                 },
                 {
+                    key: "Delivery address",
+                    value: "bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom\n"
+                },
+                {
                     key: "Email copy required",
                     value: "Email only available for express delivery method"
+                },
+                {
+                    key: "Email address",
+                    value: "example@email.com"
                 },
                 {
                     key: "Fee",
@@ -480,8 +545,11 @@ export const mockDissolvedCertificateItemView: ViewModel = {
         controls: [],
         data: {
             orderId: ORDER_ID,
-            itemId: CERTIFICATE_ID,
             itemDetails:  [
+                {
+                    key: "Item number",
+                    value: CERTIFICATE_ID,
+                },
                 {
                     key: "Company name",
                     value: "Company Name"
@@ -499,8 +567,16 @@ export const mockDissolvedCertificateItemView: ViewModel = {
                     value: "Standard delivery (aim to dispatch within 10 working days)"
                 },
                 {
+                    key: "Delivery address",
+                    value: "bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom\n"
+                },
+                {
                     key: "Email copy required",
                     value: "Email only available for express delivery method"
+                },
+                {
+                    key: "Email address",
+                    value: "example@email.com"
                 },
                 {
                     key: "Fee",
@@ -522,8 +598,11 @@ export const mockActiveLLPCertificateItemView: ViewModel = {
         controls: [],
         data: {
             orderId: ORDER_ID,
-            itemId: CERTIFICATE_ID,
             itemDetails: [
+                {
+                    key: "Item number",
+                    value: CERTIFICATE_ID,
+                },
                 {
                     key: "Company name",
                     value: "Company Name"
@@ -557,8 +636,16 @@ export const mockActiveLLPCertificateItemView: ViewModel = {
                     value: "Standard delivery (aim to dispatch within 10 working days)"
                 },
                 {
+                    key: "Delivery address",
+                    value: "bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom\n"
+                },
+                {
                     key: "Email copy required",
                     value: "Email only available for express delivery method"
+                },
+                {
+                    key: "Email address",
+                    value: "example@email.com"
                 },
                 {
                     key: "Fee",
@@ -580,8 +667,11 @@ export const mockAdministratedLLPCertificateItemView: ViewModel = {
         controls: [],
         data: {
             orderId: ORDER_ID,
-            itemId: CERTIFICATE_ID,
             itemDetails: [
+                {
+                    key: "Item number",
+                    value: CERTIFICATE_ID,
+                },
                 {
                     key: "Company name",
                     value: "Company Name"
@@ -615,8 +705,16 @@ export const mockAdministratedLLPCertificateItemView: ViewModel = {
                     value: "Standard delivery (aim to dispatch within 10 working days)"
                 },
                 {
+                    key: "Delivery address",
+                    value: "bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom\n"
+                },
+                {
                     key: "Email copy required",
                     value: "Email only available for express delivery method"
+                },
+                {
+                    key: "Email address",
+                    value: "example@email.com"
                 },
                 {
                     key: "Fee",
@@ -638,8 +736,11 @@ export const mockLiquidatedLLPCertificateItemView: ViewModel = {
         controls: [],
         data: {
             orderId: ORDER_ID,
-            itemId: CERTIFICATE_ID,
             itemDetails: [
+                {
+                    key: "Item number",
+                    value: CERTIFICATE_ID,
+                },
                 {
                     key: "Company name",
                     value: "Company Name"
@@ -673,8 +774,16 @@ export const mockLiquidatedLLPCertificateItemView: ViewModel = {
                     value: "Standard delivery (aim to dispatch within 10 working days)"
                 },
                 {
+                    key: "Delivery address",
+                    value: "bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom\n"
+                },
+                {
                     key: "Email copy required",
                     value: "Email only available for express delivery method"
+                },
+                {
+                    key: "Email address",
+                    value: "example@email.com"
                 },
                 {
                     key: "Fee",
@@ -696,8 +805,11 @@ export const mockActiveLPCertificateItemView: ViewModel = {
         controls: [],
         data: {
             orderId: ORDER_ID,
-            itemId: CERTIFICATE_ID,
             itemDetails: [
+                {
+                    key: "Item number",
+                    value: CERTIFICATE_ID,
+                },
                 {
                     key: "Company name",
                     value: "Company Name"
@@ -735,8 +847,16 @@ export const mockActiveLPCertificateItemView: ViewModel = {
                     value: "Standard delivery (aim to dispatch within 10 working days)"
                 },
                 {
+                    key: "Delivery address",
+                    value: "bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom\n"
+                },
+                {
                     key: "Email copy required",
                     value: "Email only available for express delivery method"
+                },
+                {
+                    key: "Email address",
+                    value: "example@email.com"
                 },
                 {
                     key: "Fee",

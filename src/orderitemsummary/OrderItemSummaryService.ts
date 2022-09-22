@@ -12,6 +12,7 @@ import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order";
 import {OrderItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/order-item/service";
 import {createLogger} from "@companieshouse/structured-logging-node";
 import {Status} from "../core/Status";
+import {Checkout} from "../../../api-sdk-node/dist/services/order/checkout";
 
 @Service()
 export class OrderItemSummaryService {
@@ -23,10 +24,10 @@ export class OrderItemSummaryService {
 
     async getOrderItem (request: OrderItemRequest): Promise<OrderItemView> {
         const apiClient: ApiClient = this.apiClientFactory.newApiClient(request.apiToken);
-        const response: Result<Item, OrderItemErrorResponse> = await apiClient.checkoutItem.getCheckoutItem(request.orderId, request.itemId);
+        const response: Result<Checkout, OrderItemErrorResponse> = await apiClient.checkoutItem.getCheckoutItem(request.orderId, request.itemId);
 
         if (response.isSuccess()) {
-            const mapper = this.factory.getMapper(new MapperRequest(request.orderId, response.value));
+            const mapper = this.factory.getMapper(new MapperRequest(request.orderId, response.value, response.value.items[0]));
             mapper.map();
             return {
                 status: Status.SUCCESS,
