@@ -67,14 +67,14 @@
   ],
   "kind": "order",
   "total_order_cost": "45",
-  "reference": "ORD-123456-123456",
+  "reference": "ORD-123123-123123",
   "paid_at": "2020-08-28T11:43:36.817",
   "checked_out_by": {
     "email": "example@email.com",
     "id": "Y2VkZWVlMzhlZWFjY2M4MzQ3MT"
   },
   "links": {
-    "self": "/checkouts/ORD-123456-123456",
-    "payment": "/basket/checkouts/ORD-123456-123456/payment"
+    "self": "/checkouts/ORD-123123-123123",
+    "payment": "/basket/checkouts/ORD-123123-123123/payment"
   }
 }

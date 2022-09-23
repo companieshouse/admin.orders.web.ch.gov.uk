@@ -9,7 +9,6 @@ import {SearchRequest} from "@companieshouse/api-sdk-node/dist/services/order/se
 import ApiClient from "@companieshouse/api-sdk-node/dist/client";
 import {Checkout} from "@companieshouse/api-sdk-node/dist/services/order/checkout";
 import {ItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/order";
-import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order/types";
 import {OrderItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/order-item/service";
 import {CheckoutItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/checkout-item/service";
 
