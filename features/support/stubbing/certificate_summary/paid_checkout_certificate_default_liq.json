@@ -1,0 +1,96 @@
+{
+  "status": "paid",
+  "payment_reference": "PN8h8EHBLddO94R",
+  "etag": "f90bd3844c44b640728be9ee70ffbda8ff5ec316",
+  "delivery_details": {
+    "country": "United Kingdom",
+    "forename": "bob",
+    "locality": "local",
+    "postal_code": "postcode",
+    "region": "region",
+    "surname": "bob",
+    "address_line_1": "address line 1",
+    "address_line_2": "address line 2",
+    "company_name": "company name",
+    "po_box": "po box"
+  },
+  "items": [
+    {
+      "id": "CRT-123123-123123",
+      "company_name": "COMPANY NAME LIMITED",
+      "company_number": "12345678",
+      "customer_reference": "customer reference",
+      "description": "certificate for company 12345678",
+      "description_identifier": "certificate",
+      "description_values": {
+        "certificate": "certificate for company 12345678",
+        "company_number": "12345678"
+      },
+      "item_costs": [
+        {
+          "discount_applied": "0",
+          "item_cost": "15",
+          "calculated_cost": "15",
+          "product_type": "certificate"
+        }
+      ],
+      "item_options": {
+        "collection_location": "collection location",
+        "contact_number": "0",
+        "delivery_method": "collection",
+        "delivery_timescale": "same-day",
+        "forename": "forename",
+        "surname": "surname",
+        "certificate_type": "incorporation-with-all-name-changes",
+        "director_details": {
+          "include_address": true,
+          "include_appointment_date": true,
+          "include_basic_information": true,
+          "include_country_of_residence": true,
+          "include_dob_type": "partial",
+          "include_nationality": true,
+          "include_occupation": true
+        },
+        "include_company_objects_information": true,
+        "include_email_copy": false,
+        "liquidators_details": {
+          "include_basic_information": true
+        },
+        "registered_office_address_details": {
+          "include_address_records_type": "current-previous-and-prior",
+          "include_dates": false
+        },
+        "secretary_details": {
+          "include_address": true,
+          "include_appointment_date": true,
+          "include_basic_information": true
+        },
+        "company_type": "ltd",
+        "company_status": "liquidation"
+      },
+      "etag": "F00DFACE",
+      "kind": "item#certificate",
+      "links": {
+        "self": "/orderable/certificates/CRT-123123-123123"
+      },
+      "quantity": 1,
+      "item_uri": "/orderable/certificates/CRT-123123-123123",
+      "status": "unknown",
+      "postage_cost": "0",
+      "total_item_cost": "15",
+      "postal_delivery": true
+    }
+  ],
+  "kind": "order",
+  "total_order_cost": "45",
+  "reference": "ORD-123456-123456",
+  "paid_at": "2020-08-28T11:43:36.817",
+  "checked_out_by": {
+    "email": "example@email.com",
+    "id": "Y2VkZWVlMzhlZWFjY2M4MzQ3MT"
+  },
+  "links": {
+    "self": "/checkouts/ORD-123456-123456",
+    "payment": "/basket/checkouts/ORD-123456-123456/payment"
+  }
+}
