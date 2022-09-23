@@ -8,7 +8,6 @@ import "reflect-metadata";
 import {MapperRequest} from "../mappers/MapperRequest";
 import ApiClient from "@companieshouse/api-sdk-node/dist/client";
 import {Result} from "@companieshouse/api-sdk-node/dist/services/result";
-import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order";
 import {OrderItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/order-item/service";
 import {createLogger} from "@companieshouse/structured-logging-node";
 import {Status} from "../core/Status";
