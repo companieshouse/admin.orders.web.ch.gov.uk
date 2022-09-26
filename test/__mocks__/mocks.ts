@@ -91,6 +91,7 @@ export const mockMidOrderItemView: ViewModel = {
             date: "26 May 2015",
             type: "AP01",
             description: "Appointment of Mr Richard John Harris as a director",
+            emailAddress: "example@email.com",
             fee: "£3",
             backLinkUrl: "javascript:history.back()"
         },

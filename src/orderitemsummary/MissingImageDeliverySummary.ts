@@ -8,6 +8,7 @@ export class MissingImageDeliverySummary {
                 public type?: string,
                 public description?: string,
                 public fee?: string,
+                public emailAddress?: string,
                 public backLinkUrl?: string) {
     }
 }
