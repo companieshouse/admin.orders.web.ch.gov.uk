@@ -2,7 +2,7 @@ import { OtherCompanyTypesCertificateMapper } from "../../src/orderitemsummary/O
 import {
     mockActiveLtdCertificateItemView,
     mockAdministratedLtdCertificateItemView,
-    mockCertificateItem, mockCertifiedCopyItem, mockCheckoutNoItems,
+    mockCertificateItem, mockCheckoutNoItems,
     mockDissolvedCertificateItem,
     mockDissolvedCertificateItemView,
     mockLiquidatedLtdCertificateItemView,
@@ -23,8 +23,7 @@ describe("OtherCompanyTypesCertificateMapper", () => {
 
             const mapper = new OtherCompanyTypesCertificateMapper({
                 orderId: ORDER_ID,
-                checkout: {...mockCheckoutNoItems, items: [mockItem]},
-                item: mockItem
+                checkout: {...mockCheckoutNoItems, items: [mockItem]}
             });
 
             // when
@@ -48,8 +47,7 @@ describe("OtherCompanyTypesCertificateMapper", () => {
             }
             const mapper = new OtherCompanyTypesCertificateMapper({
                 orderId: ORDER_ID,
-                checkout: {...mockCheckoutNoItems, items: [mockItem]},
-                item: mockItem
+                checkout: {...mockCheckoutNoItems, items: [mockItem]}
             });
 
             // when
@@ -74,8 +72,7 @@ describe("OtherCompanyTypesCertificateMapper", () => {
             }
             const mapper = new OtherCompanyTypesCertificateMapper({
                 orderId: ORDER_ID,
-                checkout: {...mockCheckoutNoItems, items: [mockItem]},
-                item: mockItem
+                checkout: {...mockCheckoutNoItems, items: [mockItem]}
             });
 
             // when
@@ -90,8 +87,7 @@ describe("OtherCompanyTypesCertificateMapper", () => {
             // given
             const mapper = new OtherCompanyTypesCertificateMapper({
                 orderId: ORDER_ID,
-                checkout: {...mockCheckoutNoItems, items: [mockDissolvedCertificateItem]},
-                item: mockDissolvedCertificateItem
+                checkout: {...mockCheckoutNoItems, items: [mockDissolvedCertificateItem]}
             });
 
             // when

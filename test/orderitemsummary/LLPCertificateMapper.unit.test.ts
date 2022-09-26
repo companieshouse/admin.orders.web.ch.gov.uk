@@ -34,8 +34,7 @@ describe("LLPCertificateMapper", () => {
             };
             const mapper = new LLPCertificateMapper({
                 orderId: ORDER_ID,
-                checkout: {...mockCheckoutNoItems, items: [mockItem]},
-                item: mockItem
+                checkout: {...mockCheckoutNoItems, items: [mockItem]}
             });
 
             // when
@@ -74,8 +73,7 @@ describe("LLPCertificateMapper", () => {
             };
             const mapper = new LLPCertificateMapper({
                 orderId: ORDER_ID,
-                checkout: {...mockCheckoutNoItems, items: [mockItem]},
-                item: mockItem
+                checkout: {...mockCheckoutNoItems, items: [mockItem]}
             });
 
             // when
@@ -105,8 +103,7 @@ describe("LLPCertificateMapper", () => {
             };
             const mapper = new LLPCertificateMapper({
                 orderId: ORDER_ID,
-                checkout: {...mockCheckoutNoItems, items: [mockItem]},
-                item: mockItem
+                checkout: {...mockCheckoutNoItems, items: [mockItem]}
             });
 
             // when
@@ -128,8 +125,7 @@ describe("LLPCertificateMapper", () => {
             };
             const mapper = new LLPCertificateMapper({
                 orderId: ORDER_ID,
-                checkout: {...mockCheckoutNoItems, items: [mockItem]},
-                item: mockItem
+                checkout: {...mockCheckoutNoItems, items: [mockItem]}
             });
 
             // when

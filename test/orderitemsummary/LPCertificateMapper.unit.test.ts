@@ -2,7 +2,7 @@ import { LPCertificateMapper } from "../../src/orderitemsummary/LPCertificateMap
 import {
     mockActiveLPCertificateItemView,
     mockCertificateItem,
-    mockCheckoutNoItems, mockMissingImageDeliveryItem,
+    mockCheckoutNoItems,
     ORDER_ID
 } from "../__mocks__/mocks";
 
@@ -30,8 +30,7 @@ describe("LPCertificateMapper", () => {
 
            const mapper = new LPCertificateMapper({
                orderId: ORDER_ID,
-               checkout: {...mockCheckoutNoItems, items: [mockItem]},
-               item: mockItem
+               checkout: {...mockCheckoutNoItems, items: [mockItem]}
            });
 
            // when

@@ -26,18 +26,12 @@ export class OrderItemSummaryService {
         const response: Result<Checkout, OrderItemErrorResponse> = await apiClient.checkoutItem.getCheckoutItem(request.orderId, request.itemId);
 
         if (response.isSuccess()) {
-            if (response.value.items) {
-                const mapper = this.factory.getMapper(new MapperRequest(request.orderId, response.value, response.value.items[0]));
-                mapper.map();
-                return {
-                    status: Status.SUCCESS,
-                    viewModel: mapper.getMappedOrder()
-                };
-            } else {
-                return {
-                    status: Status.SERVER_ERROR
-                };
-            }
+            const mapper = this.factory.getMapper(new MapperRequest(request.orderId, response.value));
+            mapper.map();
+            return {
+                status: Status.SUCCESS,
+                viewModel: mapper.getMappedOrder()
+            };
         } else if (response.isFailure() && response.value.httpStatusCode === 404 &&  response.value.error) {
             OrderItemSummaryService.logger.error("Order item not found");
             return {

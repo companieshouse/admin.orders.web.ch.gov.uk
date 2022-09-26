@@ -65,7 +65,7 @@ describe("OrderItemSummaryService", () => {
             expect(mapper.map).toHaveBeenCalled();
             expect(mapper.getMappedOrder).toHaveBeenCalled();
             expect(factory.getMapper).toHaveBeenCalledWith(new MapperRequest( "ORD-123456-123456",
-                {...mockCheckoutNoItems, items: [mockMissingImageDeliveryItem]}, mockMissingImageDeliveryItem));
+                {...mockCheckoutNoItems, items: [mockMissingImageDeliveryItem]}));
         });
 
         it("Returns client error when api returns 404 not found", async () => {

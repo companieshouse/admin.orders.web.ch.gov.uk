@@ -10,7 +10,7 @@ export class OtherCompanyTypesCertificateMapper extends AbstractCertificateMappe
     }
 
     mapCertificateDetails (): void {
-        const itemOptions = this.mapperRequest.item.itemOptions as CertificateItemOptions;
+        const itemOptions = this.mapperRequest.checkout.items[0].itemOptions as CertificateItemOptions;
         this.addField("Certificate type", CertificateTextMapper.mapCertificateType(itemOptions.certificateType) || "");
         if (itemOptions.certificateType === "dissolution") {
             return;

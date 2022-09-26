@@ -11,6 +11,7 @@ import {LPCertificateMapper} from "./LPCertificateMapper";
 import {LLPCertificateMapper} from "./LLPCertificateMapper";
 import { CompanyType } from "./CompanyType";
 import {FilingHistoryMapper} from "../mappers/FilingHistoryMapper";
+import {Item} from "../../../api-sdk-node/dist/services/order/order";
 
 @Service()
 export class OrderItemSummaryFactory {
@@ -19,8 +20,9 @@ export class OrderItemSummaryFactory {
     }
 
     getMapper (mapperRequest: MapperRequest): OrderItemMapper {
-        if (mapperRequest.item.kind === "item#certificate") {
-            const itemOptions = mapperRequest.item.itemOptions as CertificateItemOptions;
+        const item: Item = mapperRequest.checkout.items[0];
+        if (item.kind === "item#certificate") {
+            const itemOptions = item.itemOptions as CertificateItemOptions;
             if (itemOptions.companyType === CompanyType.LIMITED_LIABILITY_PARTNERSHIP) {
                 return new LLPCertificateMapper(mapperRequest);
             } else if (itemOptions.companyType === CompanyType.LIMITED_PARTNERSHIP) {
@@ -28,9 +30,9 @@ export class OrderItemSummaryFactory {
             } else {
                 return new OtherCompanyTypesCertificateMapper(mapperRequest);
             }
-        } else if (mapperRequest.item.kind === "item#missing-image-delivery") {
+        } else if (item.kind === "item#missing-image-delivery") {
             return new MissingImageDeliveryMapper(mapperRequest, this.filingHistoryMapper);
-        } else if (mapperRequest.item.kind === "item#certified-copy") {
+        } else if (item.kind === "item#certified-copy") {
             return new CertifiedCopyMapper(mapperRequest, this.filingHistoryMapper);
         } else {
             return new NullOrderItemMapper();

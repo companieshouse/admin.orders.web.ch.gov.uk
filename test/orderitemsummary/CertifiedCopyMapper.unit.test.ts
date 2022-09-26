@@ -18,7 +18,7 @@ describe("CertifiedCopyMapper", () => {
     describe("map", () => {
         it("Maps a mapper request for a certified copy item to a CertifiedCopyDetailsComponent with standard delivery", async () => {
             // given
-            const mapper: CertifiedCopyMapper = new CertifiedCopyMapper(new MapperRequest("ORD-123456-123456", {...mockCheckoutNoItems, items: [mockCertifiedCopyItem]}, mockCertifiedCopyItem), filingHistoryMapper);
+            const mapper: CertifiedCopyMapper = new CertifiedCopyMapper(new MapperRequest("ORD-123456-123456", {...mockCheckoutNoItems, items: [mockCertifiedCopyItem]}), filingHistoryMapper);
 
             // when
             mapper.map();
@@ -38,7 +38,7 @@ describe("CertifiedCopyMapper", () => {
                 },
                 totalItemCost: "50"
             };
-            const mapper: CertifiedCopyMapper = new CertifiedCopyMapper(new MapperRequest("ORD-123456-123456", {...mockCheckoutNoItems, items: [expressCertCopyItem]}, expressCertCopyItem), filingHistoryMapper);
+            const mapper: CertifiedCopyMapper = new CertifiedCopyMapper(new MapperRequest("ORD-123456-123456", {...mockCheckoutNoItems, items: [expressCertCopyItem]}), filingHistoryMapper);
 
             // when
             mapper.map();

@@ -8,7 +8,7 @@ describe("MissingImageDeliveryMapper", () => {
     describe("map", () => {
         it("Maps a mapper request for a missing image delivery item to a GovUkOrderItemSummaryView", async () => {
             // given
-            const mapper: MissingImageDeliveryMapper = new MissingImageDeliveryMapper(new MapperRequest("ORD-123456-123456", {...mockCheckoutNoItems, items: [mockMissingImageDeliveryItem]}, mockMissingImageDeliveryItem), new FilingHistoryMapper({
+            const mapper: MissingImageDeliveryMapper = new MissingImageDeliveryMapper(new MapperRequest("ORD-123456-123456", {...mockCheckoutNoItems, items: [mockMissingImageDeliveryItem]}), new FilingHistoryMapper({
                 applicationRootDir: "."
             } as ServerPaths));
 

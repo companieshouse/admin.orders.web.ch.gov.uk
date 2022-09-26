@@ -26,7 +26,7 @@ describe("OrderItemSummaryFactory", () => {
             } as ServerPaths));
 
             // when
-            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", mockCheckoutNoItems, mockMissingImageDeliveryItem));
+            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", {...mockCheckoutNoItems, items: [mockMissingImageDeliveryItem]}));
             // then
             expect(mapper).toBeInstanceOf(MissingImageDeliveryMapper);
         });
@@ -37,7 +37,7 @@ describe("OrderItemSummaryFactory", () => {
                 applicationRootDir: "."
             } as ServerPaths));
             // when
-            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", mockCheckoutNoItems, mockCertifiedCopyItem));
+            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", {...mockCheckoutNoItems, items: [mockCertifiedCopyItem]}));
             // then
             expect(mapper).toBeInstanceOf(CertifiedCopyMapper);
         });
@@ -49,7 +49,7 @@ describe("OrderItemSummaryFactory", () => {
             } as ServerPaths));
 
             // when
-            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", mockCheckoutNoItems, mockCertificateItem));
+            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", {...mockCheckoutNoItems, items: [mockCertificateItem]}));
             // then
             expect(mapper).toBeInstanceOf(OtherCompanyTypesCertificateMapper);
         });
@@ -61,10 +61,10 @@ describe("OrderItemSummaryFactory", () => {
             } as ServerPaths));
 
             // when
-            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", mockCheckoutNoItems, {
-                ...mockCertificateItem,
-                itemOptions: {...mockCertificateItem.itemOptions, companyType: "llp"}
-            }));
+            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", {...mockCheckoutNoItems, items: [{
+                    ...mockCertificateItem,
+                    itemOptions: {...mockCertificateItem.itemOptions, companyType: "llp"}
+                }]}));
             // then
             expect(mapper).toBeInstanceOf(LLPCertificateMapper);
         });
@@ -76,10 +76,10 @@ describe("OrderItemSummaryFactory", () => {
             } as ServerPaths));
 
             // when
-            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", mockCheckoutNoItems,{
-                ...mockCertificateItem,
-                itemOptions: {...mockCertificateItem.itemOptions, companyType: "limited-partnership"}
-            }));
+            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", {...mockCheckoutNoItems, items: [{
+                    ...mockCertificateItem,
+                    itemOptions: {...mockCertificateItem.itemOptions, companyType: "limited-partnership"}
+                }]}));
             // then
             expect(mapper).toBeInstanceOf(LPCertificateMapper);
         });
@@ -95,7 +95,7 @@ describe("OrderItemSummaryFactory", () => {
                 kind: "unknown"
             };
             // when
-            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", mockCheckoutNoItems, unknownCert));
+            const mapper: OrderItemMapper = factory.getMapper(new MapperRequest("ORD-123123-123123", {...mockCheckoutNoItems, items: [unknownCert]}));
             // then
             expect(mapper).toBeInstanceOf(NullOrderItemMapper);
         });
