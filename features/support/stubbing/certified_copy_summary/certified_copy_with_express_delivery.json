@@ -1,52 +1,83 @@
 {
-  "id": "CCD-123123-123123",
-  "company_name": "OTHER NAME LIMITED",
-  "company_number": "12345679",
-  "description": "certified copy for company 12345679",
-  "description_identifier": "certified-copy",
-  "description_values": {
-    "company_number": "12345678",
-    "certified-copy": "certified copy for company 12345679"
+  "status": "paid",
+  "payment_reference": "PN8h8EHBLddO94R",
+  "etag": "f90bd3844c44b640728be9ee70ffbda8ff5ec316",
+  "delivery_details": {
+    "country": "United Kingdom",
+    "forename": "bob",
+    "locality": "local",
+    "postal_code": "postcode",
+    "region": "region",
+    "surname": "bob",
+    "address_line_1": "address line 1",
+    "address_line_2": "address line 2",
+    "company_name": "company name",
+    "po_box": "po box"
   },
-  "item_costs": [
+  "items": [
     {
-      "discount_applied": "0",
-      "item_cost": "50",
-      "calculated_cost": "50",
-      "product_type": "certified-copy"
+      "id": "CCD-123123-123123",
+      "company_name": "OTHER NAME LIMITED",
+      "company_number": "12345679",
+      "description": "certified copy for company 12345679",
+      "description_identifier": "certified-copy",
+      "description_values": {
+        "company_number": "12345678",
+        "certified-copy": "certified copy for company 12345679"
+      },
+      "item_costs": [
+        {
+          "discount_applied": "0",
+          "item_cost": "50",
+          "calculated_cost": "50",
+          "product_type": "certified-copy"
+        }
+      ],
+      "item_options": {
+        "delivery_method": "postal",
+        "delivery_timescale": "same-day",
+        "filing_history_documents": [
+          {
+            "filing_history_date": "2022-05-12",
+            "filing_history_description": "capital-allotment-shares",
+            "filing_history_description_values": {
+              "date": "2022-05-12",
+              "capital": [
+                {
+                  "figure": "12,345,678",
+                  "currency": "GBP"
+                }
+              ]
+            },
+            "filing_history_id": "CAFE",
+            "filing_history_type": "SH01",
+            "filing_history_cost": "50"
+          }
+        ]
+      },
+      "etag": "F00DFACE",
+      "kind": "item#certified-copy",
+      "links": {
+        "self": "/orderable/certified-copies/CCD-123123-123123"
+      },
+      "quantity": 1,
+      "item_uri": "/orderable/certified-copies/CCD-123123-123123",
+      "status": "unknown",
+      "postage_cost": "0",
+      "total_item_cost": "50",
+      "postal_delivery": true
     }
   ],
-  "item_options": {
-    "delivery_method": "postal",
-    "delivery_timescale": "same-day",
-    "filing_history_documents": [
-      {
-        "filing_history_date": "2022-05-12",
-        "filing_history_description": "capital-allotment-shares",
-        "filing_history_description_values": {
-          "date": "2022-05-12",
-          "capital": [
-            {
-              "figure": "12,345,678",
-              "currency": "GBP"
-            }
-          ]
-        },
-        "filing_history_id": "CAFE",
-        "filing_history_type": "SH01",
-        "filing_history_cost": "50"
-      }
-    ]
+  "kind": "order",
+  "total_order_cost": "45",
+  "reference": "ORD-123123-123123",
+  "paid_at": "2020-08-28T11:43:36.817",
+  "checked_out_by": {
+    "email": "example@ch.gov.uk",
+    "id": "Y2VkZWVlMzhlZWFjY2M4MzQ3MT"
   },
-  "etag": "F00DFACE",
-  "kind": "item#certified-copy",
   "links": {
-    "self": "/orderable/certified-copies/CCD-123123-123123"
-  },
-  "quantity": 1,
-  "item_uri": "/orderable/certified-copies/CCD-123123-123123",
-  "status": "unknown",
-  "postage_cost": "0",
-  "total_item_cost": "50",
-  "postal_delivery": true
+    "self": "/checkouts/ORD-123123-123123",
+    "payment": "/basket/checkouts/ORD-123123-123123/payment"
+  }
 }
