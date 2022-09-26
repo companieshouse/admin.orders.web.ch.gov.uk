@@ -11,7 +11,7 @@ import {LPCertificateMapper} from "./LPCertificateMapper";
 import {LLPCertificateMapper} from "./LLPCertificateMapper";
 import { CompanyType } from "./CompanyType";
 import {FilingHistoryMapper} from "../mappers/FilingHistoryMapper";
-import {Item} from "../../../api-sdk-node/dist/services/order/order";
+import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order";
 
 @Service()
 export class OrderItemSummaryFactory {

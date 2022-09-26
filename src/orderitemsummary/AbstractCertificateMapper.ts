@@ -6,7 +6,7 @@ import {ViewModel} from "../core/ViewModel";
 import {Page} from "../core/Page";
 import {CertificateDetailsComponent} from "./CertificateDetailsComponent";
 import {CertificateTextMapper} from "../orderdetails/CertificateTextMapper";
-import {Item} from "../../../api-sdk-node/dist/services/order/order";
+import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order";
 
 export abstract class AbstractCertificateMapper implements OrderItemMapper {
     protected readonly data: CertificateItemSummaryView
