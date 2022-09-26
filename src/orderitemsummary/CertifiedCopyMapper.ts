@@ -20,8 +20,8 @@ export class CertifiedCopyMapper implements OrderItemMapper {
     map (): void {
         const item: Item = this.mapperRequest.checkout.items[0];
         this.data.orderId = this.mapperRequest.orderId;
-        this.data.itemId = item.id;
         this.mapItemDetails(item);
+        this.mapDeliveryDetails(item);
         this.mapDocumentDetails(item);
         this.data.backLinkUrl = "javascript:history.back()";
     }
@@ -34,9 +34,15 @@ export class CertifiedCopyMapper implements OrderItemMapper {
     }
 
     private mapItemDetails (item: Item): void {
+        this.data.itemId = item.id;
         this.data.companyName = item.companyName;
         this.data.companyNumber = item.companyNumber;
+    }
+
+    private mapDeliveryDetails (item: Item): void {
         this.data.deliveryMethod = CertificateTextMapper.mapDeliveryMethod(item.itemOptions) || "";
+        this.data.deliveryAddress = CertificateTextMapper.mapDeliveryDetails(this.mapperRequest.checkout.deliveryDetails);
+        this.data.emailAddress = this.mapperRequest.checkout.checkedOutBy.email;
     }
 
     private mapDocumentDetails (item: Item): void {
