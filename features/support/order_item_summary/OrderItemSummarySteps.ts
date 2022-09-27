@@ -8,9 +8,9 @@ import {
     OrderItemSummaryPageState, ServiceUnavailable
 } from "./OrderItemSummaryPage";
 import {DataTable} from "@cucumber/cucumber";
-import certifiedCopyStandard from "../stubbing/certified_copy_summary/certified_copy_with_standard_delivery.json";
-import certifiedCopyExpress from "../stubbing/certified_copy_summary/certified_copy_with_express_delivery.json";
-import certifiedCopyUnhandledDescription from "../stubbing/certified_copy_summary/certified_copy_with_unhandled_description.json";
+import certifiedCopyStandard from "../stubbing/certified_copy_summary/paid_checkout_certified_copy_standard_delivery.json";
+import certifiedCopyExpress from "../stubbing/certified_copy_summary/paid_checkout_certified_copy_express_delivery.json";
+import certifiedCopyUnhandledDescription from "../stubbing/certified_copy_summary/paid_checkout_certified_copy_unhandled_description.json";
 import missingImageDelivery from "../stubbing/missing_image_delivery_item_summary/missing_image_delivery.json";
 import missingImageDeliveryUnhandledDescription from "../stubbing/missing_image_delivery_item_summary/missing_image_delivery_unhandled_description.json";
 import certificateActiveDefault from "../stubbing/certificate_summary/paid_checkout_certificate_default_active.json";

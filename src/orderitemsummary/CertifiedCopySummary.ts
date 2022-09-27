@@ -4,6 +4,8 @@ export class CertifiedCopySummary {
                 public companyName?: string,
                 public companyNumber?: string,
                 public deliveryMethod?: string,
+                public deliveryAddress?: string,
+                public emailAddress?: string,
                 public dateFiled?: string,
                 public type?: string,
                 public description?: string,
