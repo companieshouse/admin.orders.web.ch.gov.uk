@@ -1,7 +1,7 @@
 import { Item } from "@companieshouse/api-sdk-node/dist/services/order/order/types";
 import {ItemOptions as CertificateItemOptions} from "@companieshouse/api-sdk-node/dist/services/order/certificates";
 import {ViewModel} from "../../src/core/ViewModel";
-import {Checkout} from "../../../api-sdk-node/dist/services/order/checkout";
+import {Checkout} from "@companieshouse/api-sdk-node/dist/services/order/checkout";
 
 export const ORDER_ID = "ORD-123456-123456";
 export const CERTIFICATE_ID = "CRT-123456-123456";
