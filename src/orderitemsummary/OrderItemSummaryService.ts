@@ -11,7 +11,7 @@ import {Result} from "@companieshouse/api-sdk-node/dist/services/result";
 import {OrderItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services/order/order-item/service";
 import {createLogger} from "@companieshouse/structured-logging-node";
 import {Status} from "../core/Status";
-import {Checkout} from "../../../api-sdk-node/dist/services/order/checkout";
+import {Checkout} from "@companieshouse/api-sdk-node/dist/services/order/checkout";
 
 @Service()
 export class OrderItemSummaryService {

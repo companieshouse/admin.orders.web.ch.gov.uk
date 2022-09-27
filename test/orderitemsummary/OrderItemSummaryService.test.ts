@@ -15,7 +15,7 @@ import {OrderItemErrorResponse} from "@companieshouse/api-sdk-node/dist/services
 import {OrderItemSummaryFactory} from "../../src/orderitemsummary/OrderItemSummaryFactory";
 import {FilingHistoryMapper} from "../../src/mappers/FilingHistoryMapper";
 import {ServerPaths} from "../../src/application/ServerPaths";
-import {Checkout} from "../../../api-sdk-node/dist/services/order/checkout";
+import {Checkout} from "@companieshouse/api-sdk-node/dist/services/order/checkout";
 
 describe("OrderItemSummaryService", () => {
     describe("getOrderItem", () => {

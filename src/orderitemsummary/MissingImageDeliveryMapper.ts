@@ -6,7 +6,7 @@ import {MissingImageDeliverySummary} from "./MissingImageDeliverySummary";
 import {MissingImageDeliveryDetailsComponent} from "./MissingImageDeliveryDetailsComponent";
 import {ViewModel} from "../core/ViewModel";
 import {FilingHistoryMapper} from "../mappers/FilingHistoryMapper";
-import {Item} from "../../../api-sdk-node/dist/services/order/order";
+import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order";
 
 export class MissingImageDeliveryMapper implements OrderItemMapper {
     private readonly data: MissingImageDeliverySummary;
