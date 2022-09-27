@@ -6,6 +6,7 @@ import {ViewModel} from "../core/ViewModel";
 import {Page} from "../core/Page";
 import {CertificateDetailsComponent} from "./CertificateDetailsComponent";
 import {CertificateTextMapper} from "../orderdetails/CertificateTextMapper";
+import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order";
 
 export abstract class AbstractCertificateMapper implements OrderItemMapper {
     protected readonly data: CertificateItemSummaryView
@@ -15,17 +16,17 @@ export abstract class AbstractCertificateMapper implements OrderItemMapper {
     }
 
     map (): void {
+        const item: Item = this.mapperRequest.checkout.items[0];
         this.data.orderId = this.mapperRequest.orderId;
-        this.data.itemId = this.mapperRequest.item.id;
-        this.mapCompanyDetails();
+        this.mapCompanyDetails(item);
         this.mapCertificateDetails();
-        this.mapDeliveryDetails();
-        this.mapFee();
+        this.mapDeliveryDetails(item);
+        this.mapFee(item);
         this.data.backLinkUrl = "javascript:history.back()";
     }
 
     getMappedOrder (): ViewModel {
-        const page = new Page(`Summary of item ${this.data.itemId} in order ${this.data.orderId}`);
+        const page = new Page(`Summary of item ${this.mapperRequest.checkout.items[0].id} in order ${this.mapperRequest.orderId}`);
         page.add(new CertificateDetailsComponent(this.data));
         return page.render();
     }
@@ -36,18 +37,21 @@ export abstract class AbstractCertificateMapper implements OrderItemMapper {
         this.data.itemDetails.push({key, value});
     }
 
-    private mapCompanyDetails(): void {
-        this.addField("Company name", this.mapperRequest.item.companyName);
-        this.addField("Company number", this.mapperRequest.item.companyNumber);
+    private mapCompanyDetails(item: Item): void {
+        this.addField("Item number", item.id);
+        this.addField("Company name", item.companyName);
+        this.addField("Company number", item.companyNumber);
     }
 
-    private mapDeliveryDetails(): void {
-        const itemOptions = this.mapperRequest.item.itemOptions as CertificateItemOptions;
+    private mapDeliveryDetails(item: Item): void {
+        const itemOptions = item.itemOptions as CertificateItemOptions;
         this.addField("Delivery method", CertificateTextMapper.mapDeliveryMethod(itemOptions) || "");
+        this.addField("Delivery address", CertificateTextMapper.mapDeliveryDetails(this.mapperRequest.checkout.deliveryDetails));
         this.addField("Email copy required", CertificateTextMapper.mapEmailCopyRequired(itemOptions));
+        this.addField("Email address", this.mapperRequest.checkout.checkedOutBy.email);
     }
 
-    private mapFee(): void {
-        this.addField("Fee", `£${this.mapperRequest.item.totalItemCost}`);
+    private mapFee(item: Item): void {
+        this.addField("Fee", `£${item.totalItemCost}`);
     }
 }

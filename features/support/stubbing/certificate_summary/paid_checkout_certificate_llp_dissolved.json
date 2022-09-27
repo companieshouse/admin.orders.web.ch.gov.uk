@@ -16,47 +16,43 @@
   },
   "items": [
     {
-      "id": "CCD-123123-123123",
-      "company_name": "UNHANDLED COMPANY NAME LIMITED",
-      "company_number": "12345670",
-      "description": "certified copy for company 12345670",
-      "description_identifier": "certified-copy",
+      "id": "CRT-123123-123123",
+      "company_name": "COMPANY NAME LIMITED",
+      "company_number": "12345678",
+      "customer_reference": "customer reference",
+      "description": "certificate for company 12345678",
+      "description_identifier": "certificate",
       "description_values": {
-        "company_number": "12345670",
-        "certified-copy": "certified copy for company 12345670"
+        "certificate": "certificate for company 12345678",
+        "company_number": "12345678"
       },
       "item_costs": [
         {
           "discount_applied": "0",
           "item_cost": "15",
           "calculated_cost": "15",
-          "product_type": "certified-copy"
+          "product_type": "certificate"
         }
       ],
       "item_options": {
-        "delivery_method": "postal",
+        "collection_location": "collection location",
+        "contact_number": "0",
+        "delivery_method": "collection",
         "delivery_timescale": "standard",
-        "filing_history_documents": [
-          {
-            "filing_history_barcode": "barcode",
-            "filing_history_category": "category",
-            "filing_history_cost": "cost",
-            "filing_history_date": "2015-05-26",
-            "filing_history_description": "something-else",
-            "filing_history_description_values": {
-            },
-            "filing_history_id": "MzEyMzcyNDc2OWFkaXF6a2N4",
-            "filing_history_type": "AP02"
-          }
-        ]
+        "forename": "forename",
+        "surname": "surname",
+        "certificate_type": "dissolution",
+        "company_type": "llp",
+        "company_status": "dissolved",
+        "include_email_copy": false
       },
       "etag": "F00DFACE",
-      "kind": "item#certified-copy",
+      "kind": "item#certificate",
       "links": {
-        "self": "/orderable/certified-copies/CCD-123123-123123"
+        "self": "/orderable/certificates/CRT-123123-123123"
       },
       "quantity": 1,
-      "item_uri": "/orderable/certified-copies/CCD-123123-123123",
+      "item_uri": "/orderable/certificates/CRT-123123-123123",
       "status": "unknown",
       "postage_cost": "0",
       "total_item_cost": "15",

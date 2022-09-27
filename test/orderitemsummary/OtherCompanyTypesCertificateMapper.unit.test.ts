@@ -2,7 +2,7 @@ import { OtherCompanyTypesCertificateMapper } from "../../src/orderitemsummary/O
 import {
     mockActiveLtdCertificateItemView,
     mockAdministratedLtdCertificateItemView,
-    mockCertificateItem,
+    mockCertificateItem, mockCheckoutNoItems,
     mockDissolvedCertificateItem,
     mockDissolvedCertificateItemView,
     mockLiquidatedLtdCertificateItemView,
@@ -13,15 +13,17 @@ describe("OtherCompanyTypesCertificateMapper", () => {
     describe("map", () => {
         it("Maps a certificate item for an active limited company to a view model", () => {
             // given
+            const mockItem = {
+                ...mockCertificateItem,
+                itemOptions: {
+                    ...mockCertificateItem.itemOptions,
+                    companyStatus: "active"
+                }
+            };
+
             const mapper = new OtherCompanyTypesCertificateMapper({
                 orderId: ORDER_ID,
-                item: {
-                    ...mockCertificateItem,
-                    itemOptions: {
-                        ...mockCertificateItem.itemOptions,
-                        companyStatus: "active"
-                    }
-                }
+                checkout: {...mockCheckoutNoItems, items: [mockItem]}
             });
 
             // when
@@ -34,17 +36,18 @@ describe("OtherCompanyTypesCertificateMapper", () => {
 
         it("Maps a certificate item for an administrated limited company to a view model", () => {
             // given
-            const mapper = new OtherCompanyTypesCertificateMapper({
-                orderId: ORDER_ID,
-                item: {
-                    ...mockCertificateItem,
-                    itemOptions: {
-                        ...mockCertificateItem.itemOptions,
-                        companyStatus: "administration",
-                        administratorsDetails: {
-                        }
+            const mockItem = {
+                ...mockCertificateItem,
+                itemOptions: {
+                    ...mockCertificateItem.itemOptions,
+                    companyStatus: "administration",
+                    administratorsDetails: {
                     }
                 }
+            }
+            const mapper = new OtherCompanyTypesCertificateMapper({
+                orderId: ORDER_ID,
+                checkout: {...mockCheckoutNoItems, items: [mockItem]}
             });
 
             // when
@@ -57,18 +60,19 @@ describe("OtherCompanyTypesCertificateMapper", () => {
 
         it("Maps a certificate item for a liquidated limited company to a view model", () => {
             // given
-            const mapper = new OtherCompanyTypesCertificateMapper({
-                orderId: ORDER_ID,
-                item: {
-                    ...mockCertificateItem,
-                    itemOptions: {
-                        ...mockCertificateItem.itemOptions,
-                        companyStatus: "liquidation",
-                        liquidatorsDetails: {
-                            includeBasicInformation: true
-                        }
+            const mockItem = {
+                ...mockCertificateItem,
+                itemOptions: {
+                    ...mockCertificateItem.itemOptions,
+                    companyStatus: "liquidation",
+                    liquidatorsDetails: {
+                        includeBasicInformation: true
                     }
                 }
+            }
+            const mapper = new OtherCompanyTypesCertificateMapper({
+                orderId: ORDER_ID,
+                checkout: {...mockCheckoutNoItems, items: [mockItem]}
             });
 
             // when
@@ -83,7 +87,7 @@ describe("OtherCompanyTypesCertificateMapper", () => {
             // given
             const mapper = new OtherCompanyTypesCertificateMapper({
                 orderId: ORDER_ID,
-                item: mockDissolvedCertificateItem
+                checkout: {...mockCheckoutNoItems, items: [mockDissolvedCertificateItem]}
             });
 
             // when

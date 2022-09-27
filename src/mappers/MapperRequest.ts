@@ -1,6 +1,6 @@
-import { Item } from "@companieshouse/api-sdk-node/dist/services/order/order/types";
+import {Checkout} from "@companieshouse/api-sdk-node/dist/services/order/checkout";
 
 export class MapperRequest {
-    constructor (public orderId: string, public item: Item) {
+    constructor (public orderId: string, public checkout: Checkout) {
     }
 }

@@ -8,6 +8,7 @@ import { FilingHistoryMapper } from "../mappers/FilingHistoryMapper";
 import { CertificateTextMapper } from "../orderdetails/CertificateTextMapper";
 import { Page } from "../core/Page";
 import {CertifiedCopyDocumentDetailsComponent} from "./CertifiedCopyDocumentDetailsComponent";
+import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order";
 
 export class CertifiedCopyMapper implements OrderItemMapper {
     private readonly data: CertifiedCopySummary;
@@ -17,10 +18,11 @@ export class CertifiedCopyMapper implements OrderItemMapper {
     }
 
     map (): void {
+        const item: Item = this.mapperRequest.checkout.items[0];
         this.data.orderId = this.mapperRequest.orderId;
-        this.data.itemId = this.mapperRequest.item.id;
-        this.mapItemDetails();
-        this.mapDocumentDetails();
+        this.data.itemId = item.id;
+        this.mapItemDetails(item);
+        this.mapDocumentDetails(item);
         this.data.backLinkUrl = "javascript:history.back()";
     }
 
@@ -31,19 +33,18 @@ export class CertifiedCopyMapper implements OrderItemMapper {
         return result.render();
     }
 
-    private mapItemDetails (): void {
-        this.data.companyName = this.mapperRequest.item.companyName;
-        this.data.companyNumber = this.mapperRequest.item.companyNumber;
-        this.data.deliveryMethod = CertificateTextMapper.mapDeliveryMethod(this.mapperRequest.item.itemOptions) || "";
+    private mapItemDetails (item: Item): void {
+        this.data.companyName = item.companyName;
+        this.data.companyNumber = item.companyNumber;
+        this.data.deliveryMethod = CertificateTextMapper.mapDeliveryMethod(item.itemOptions) || "";
     }
 
-    private mapDocumentDetails (): void {
-        const filingHistoryDocument =
-            (this.mapperRequest.item.itemOptions as CertifiedCopyItemOptions).filingHistoryDocuments[0];
+    private mapDocumentDetails (item: Item): void {
+        const filingHistoryDocument = (item.itemOptions as CertifiedCopyItemOptions).filingHistoryDocuments[0];
         this.data.dateFiled = this.filingHistoryMapper.mapFilingHistoryDate(filingHistoryDocument.filingHistoryDate, false);
         this.data.type = filingHistoryDocument.filingHistoryType;
         this.data.description = this.filingHistoryMapper.mapFilingHistory(filingHistoryDocument.filingHistoryDescription,
             filingHistoryDocument.filingHistoryDescriptionValues || {});
-        this.data.fee = `£${this.mapperRequest.item.totalItemCost}`;
+        this.data.fee = `£${item.totalItemCost}`;
     }
 }

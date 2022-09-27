@@ -169,7 +169,7 @@ export class OrderItemSummary extends AbstractOrderItemSummaryPageState {
     }
 
     async verifyPageLayout(): Promise<void> {
-        expect(await this.interactor.getElementText("h1")).to.equal("CCD-123123-123123");
+        expect(await this.interactor.getElementText("h1")).to.equal("ORD-123123-123123");
     }
 
     async verifyItemDetails(expected: string[][]): Promise<void> {
