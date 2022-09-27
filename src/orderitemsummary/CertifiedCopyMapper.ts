@@ -8,7 +8,7 @@ import { FilingHistoryMapper } from "../mappers/FilingHistoryMapper";
 import { CertificateTextMapper } from "../orderdetails/CertificateTextMapper";
 import { Page } from "../core/Page";
 import {CertifiedCopyDocumentDetailsComponent} from "./CertifiedCopyDocumentDetailsComponent";
-import {Item} from "../../../api-sdk-node/dist/services/order/order";
+import {Item} from "@companieshouse/api-sdk-node/dist/services/order/order";
 
 export class CertifiedCopyMapper implements OrderItemMapper {
     private readonly data: CertifiedCopySummary;
