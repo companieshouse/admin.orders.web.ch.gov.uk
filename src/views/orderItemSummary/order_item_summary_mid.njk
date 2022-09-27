@@ -1,8 +1,16 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 id="item-reference" class="govuk-heading-xl">{{ control.data.itemId }}</h1>
+        <h1 id="order-reference" class="govuk-heading-xl">{{ control.data.orderId }}</h1>
         <h2 class="govuk-heading-m">Item Details</h2>
         <dl class="govuk-summary-list" id="itemDetailsList">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Item number
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.itemId }}
+                </dd>
+            </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Company name
@@ -11,7 +19,6 @@
                     {{ control.data.companyName }}
                 </dd>
             </div>
-
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Company number
@@ -20,7 +27,6 @@
                     {{ control.data.companyNumber }}
                 </dd>
             </div>
-
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Date
@@ -29,7 +35,6 @@
                     {{ control.data.date }}
                 </dd>
             </div>
-
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Type
@@ -38,7 +43,6 @@
                     {{ control.data.type }}
                 </dd>
             </div>
-
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Description
@@ -47,7 +51,14 @@
                     {{ control.data.description }}
                 </dd>
             </div>
-
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    Email address
+                </dt>
+                <dd class="govuk-summary-list__value">
+                    {{ control.data.emailAddress }}
+                </dd>
+            </div>
             <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">
                     Fee

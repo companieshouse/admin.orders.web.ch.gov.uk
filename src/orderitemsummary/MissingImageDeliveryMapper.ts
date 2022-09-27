@@ -36,6 +36,7 @@ export class MissingImageDeliveryMapper implements OrderItemMapper {
         this.data.date = this.filingHistoryMapper.mapFilingHistoryDate(itemOptions.filingHistoryDate, false);
         this.data.type = itemOptions.filingHistoryType;
         this.data.description = this.filingHistoryMapper.mapFilingHistory(itemOptions.filingHistoryDescription, itemOptions.filingHistoryDescriptionValues);
+        this.data.emailAddress = this.mapperRequest.checkout.checkedOutBy.email;
         this.data.fee = `£${item.totalItemCost}`;
     }
 }

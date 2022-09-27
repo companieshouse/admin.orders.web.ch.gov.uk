@@ -7,15 +7,15 @@ Feature: Item summary for missing image delivery
     Given The item is of type missing image delivery
     When I view the missing image delivery order item summary
     Then The following item details should be displayed:
-      | Company name         | Company number | Date        | Type | Description                                         | Fee |
-      | COMPANY NAME LIMITED | 12345678       | 26 May 2015 | AP01 | Appointment of Mr Richard John Harris as a director | £3 |
+      | Item number       | Company name         | Company number | Date        | Type | Description                                         | Email address     | Fee |
+      | MID-123123-123123 | COMPANY NAME LIMITED | 12345678       | 26 May 2015 | AP01 | Appointment of Mr Richard John Harris as a director | example@ch.gov.uk | £3  |
 
   Scenario: Missing image delivery with unhandled filing history description
     Given The item is a missing image delivery with an unhandled description
     When I view the missing image delivery order item summary
     Then The following item details should be displayed:
-      | Company name                   | Company number | Date        | Type | Description    | Fee |
-      | UNHANDLED COMPANY NAME LIMITED | 12345670       | 26 May 2015 | AP02 | something-else | £3 |
+      | Item number       | Company name                   | Company number | Date        | Type | Description    | Email address     | Fee |
+      | MID-123123-123123 | UNHANDLED COMPANY NAME LIMITED | 12345670       | 26 May 2015 | AP02 | something-else | example@ch.gov.uk | £3  |
 
   Scenario: Display item not found if nonexistent item fetched
     Given The requested order item resource does not exist
