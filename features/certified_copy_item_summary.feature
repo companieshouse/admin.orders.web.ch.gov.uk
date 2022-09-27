@@ -17,8 +17,8 @@ Feature: Item summary for certified copies
     Given The item is a certified copy with express delivery requested
     When I view the certified copy order item summary
     Then The following item details should be displayed:
-      | Company name       | Company number | Delivery method |                                                                                                                           Delivery address                                                                               | Email address     |                                                                                                                            |
-      | OTHER NAME LIMITED | 12345679       | Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day) | bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom | example@ch.gov.uk |
+      | Item number       | Company name       | Company number | Delivery method                                                                                                                           | Delivery address                                                                               | Email address     |
+      | CCD-123123-123123 | OTHER NAME LIMITED | 12345679       | Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day) | bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom | example@ch.gov.uk |
     And The following document details should be displayed:
       | Date filed  | Type | Description                                                          | Fee |
       | 12 May 2022 | SH01 | Statement of capital following an allotment of shares on 12 May 2022 | £50 |
@@ -27,8 +27,8 @@ Feature: Item summary for certified copies
     Given The item is a certified copy with an unhandled description
     When I view the certified copy order item summary
     Then The following item details should be displayed:
-      | Company name                   | Company number | Delivery method                                            | Delivery address                                                                               | Email address     |
-      | UNHANDLED COMPANY NAME LIMITED | 12345670       | Standard delivery (aim to dispatch within 10 working days) | bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom | example@ch.gov.uk |
+      | Item number       | Company name                   | Company number | Delivery method                                            | Delivery address                                                                               | Email address     |
+      | CCD-123123-123123 | UNHANDLED COMPANY NAME LIMITED | 12345670       | Standard delivery (aim to dispatch within 10 working days) | bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom | example@ch.gov.uk |
     And The following document details should be displayed:
       | Date filed  | Type | Description    | Fee |
       | 26 May 2015 | AP02 | something-else | £15 |

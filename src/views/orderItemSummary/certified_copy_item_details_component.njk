@@ -43,7 +43,7 @@
                     Delivery address
                 </dt>
                 <dd class="govuk-summary-list__value">
-                    {{ control.data.deliveryAddress }}
+                    {{ control.data.deliveryAddress | striptags(true) | escape | nl2br  }}
                 </dd>
             </div>
 
