@@ -70,7 +70,7 @@ describe("OrderItemSummaryService", () => {
 
         it("Returns client error when api returns 404 not found", async () => {
             // given
-            const response = new Failure<Item, OrderItemErrorResponse>({
+            const response = new Failure<Checkout, OrderItemErrorResponse>({
                 httpStatusCode: 404,
                 error: "Not found"
             });
@@ -114,10 +114,45 @@ describe("OrderItemSummaryService", () => {
             expect(factory.getMapper).toHaveBeenCalledTimes(0);
         });
 
-        it("Returns client error when api returns 404 not found", async () => {
+        it("Returns server error when api returns 500 service unavailable", async () => {
             // given
-            const response = new Failure<Item, OrderItemErrorResponse>({
+            const response = new Failure<Checkout, OrderItemErrorResponse>({
                 httpStatusCode: 500
+            });
+
+            const checkoutItem: any = {};
+            checkoutItem.getCheckoutItem = jest.fn(() => {
+                return response;
+            });
+            const apiClientFactory: any = {};
+            apiClientFactory.newApiClient = jest.fn(() => {
+                return {
+                    checkoutItem: checkoutItem
+                };
+            });
+
+            const mappedResults: OrderItemView = {
+                status: Status.SERVER_ERROR,
+            }
+
+            const service = new OrderItemSummaryService(apiClientFactory, new OrderItemSummaryFactory(new FilingHistoryMapper({
+                applicationRootDir: "."
+            } as ServerPaths)));
+
+            // when
+            const result = await service.getOrderItem(new OrderItemRequest("123123", "ORD-123456-123456", "MID-123456-123456"));
+
+            // then
+            expect(result).toStrictEqual(mappedResults);
+            expect(apiClientFactory.newApiClient).toHaveBeenCalled();
+            expect(checkoutItem.getCheckoutItem).toHaveBeenCalledWith("ORD-123456-123456", "MID-123456-123456");
+        });
+
+        it("Returns error when api client returns a failure due to a response containing a checkout with multiple items", async () => {
+            // given
+            const response = new Failure<Checkout, OrderItemErrorResponse>({
+                httpStatusCode: 200,
+                error: "Get order item endpoint returned HTTP [200] with error: Expected checkout returned by api to have exactly one embedded item."
             });
 
             const checkoutItem: any = {};
