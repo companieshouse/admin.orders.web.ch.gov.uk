@@ -7,7 +7,7 @@ Feature: Order summary page
     Given The checkout contains all known item types with all known delivery timescales
     When I view the order summary
     Then The following items should be displayed:
-      | Item number       | Order type         | Company number | Delivery method | Fee |
+      | Item number       | Order type         | Company number | Dispatch method | Fee |
       | MID-123123-123123 | Missing image      | 12345678       | N/A             | £3  |
       | CRT-123123-123123 | Certificate        | 12345678       | Standard        | £15 |
       | CRT-123123-123124 | Certificate        | 12345679       | Express         | £50 |
@@ -24,7 +24,7 @@ Feature: Order summary page
     Given The checkout contains no deliverable items
     When I view the order summary
     Then The following items should be displayed:
-      | Item number       | Order type         | Company number | Delivery method | Fee |
+      | Item number       | Order type         | Company number | Dispatch method | Fee |
       | MID-123123-123123 | Missing image      | 12345678       | N/A             | £3  |
     And Delivery details for the order should not be displayed
     And Payment details for the order should be:

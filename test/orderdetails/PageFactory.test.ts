@@ -21,7 +21,7 @@ describe("PageFactory", () => {
                 designatedMembers: "Including designated members':<br><br>Appointment date<br>",
             },
             deliveryInfo: {
-                deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
+                deliveryMethod: "Standard (aim to send out within 10 working days)",
                 deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
             },
             paymentDetails: {
@@ -51,7 +51,7 @@ describe("PageFactory", () => {
                 designatedMembers: "Including designated members':<br><br>Appointment date<br>",
             }),
             new ViewModel("orderDetails/delivery_details_component.njk", [], {
-                deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
+                deliveryMethod: "Standard (aim to send out within 10 working days)",
                 deliveryDetails: "John Test<br>1 Crown Way<br>Maindy<br>Cardiff<br>Cardiff<br>CF14 3UZ<br>UK<br>",
             }),
             new ViewModel("orderDetails/payment_details_component.njk", [], {
