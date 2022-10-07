@@ -161,7 +161,7 @@ export const mockCertCopyOrderItemView: ViewModel = {
             itemId: "CCD-123456-123456",
             companyName: "Company Name",
             companyNumber: "00000000",
-            deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
+            deliveryMethod: "Standard (aim to send out within 10 working days)",
             deliveryAddress: "bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom\n",
             emailAddress: "example@email.com",
             dateFiled: "12 Feb 2010",
@@ -179,7 +179,7 @@ export const mockCertCopyOrderItemView: ViewModel = {
                 itemId: "CCD-123456-123456",
                 companyName: "Company Name",
                 companyNumber: "00000000",
-                deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
+                deliveryMethod: "Standard (aim to send out within 10 working days)",
                 deliveryAddress: "bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom\n",
                 emailAddress: "example@email.com",
                 dateFiled: "12 Feb 2010",
@@ -204,7 +204,7 @@ export const mockExpressCertCopyItemView: ViewModel = {
             itemId: "CCD-123456-123456",
             companyName: "Company Name",
             companyNumber: "00000000",
-            deliveryMethod: "Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day)",
+            deliveryMethod: "Express (Orders received before 11am will be sent out the same day. Orders received after 11am will be sent out the next working day)",
             deliveryAddress: "bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom\n",
             emailAddress: "example@email.com",
             dateFiled: "12 Feb 2010",
@@ -222,7 +222,7 @@ export const mockExpressCertCopyItemView: ViewModel = {
                 itemId: "CCD-123456-123456",
                 companyName: "Company Name",
                 companyNumber: "00000000",
-                deliveryMethod: "Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day)",
+                deliveryMethod: "Express (Orders received before 11am will be sent out the same day. Orders received after 11am will be sent out the next working day)",
                 deliveryAddress: "bob bob\ncompany name\naddress line 1\naddress line 2\nlocal\nregion\npostcode\nUnited Kingdom\n",
                 emailAddress: "example@email.com",
                 dateFiled: "12 Feb 2010",
@@ -373,8 +373,8 @@ export const mockActiveLtdCertificateItemView: ViewModel = {
                     value: "No"
                 },
                 {
-                    key: "Delivery method",
-                    value: "Standard delivery (aim to dispatch within 10 working days)"
+                    key: "Dispatch method",
+                    value: "Standard (aim to send out within 10 working days)"
                 },
                 {
                     key: "Delivery address",
@@ -382,7 +382,7 @@ export const mockActiveLtdCertificateItemView: ViewModel = {
                 },
                 {
                     key: "Email copy required",
-                    value: "Email only available for express delivery method"
+                    value: "Email only available for express dispatch"
                 },
                 {
                     key: "Email address",
@@ -446,8 +446,8 @@ export const mockAdministratedLtdCertificateItemView: ViewModel = {
                     value: "No"
                 },
                 {
-                    key: "Delivery method",
-                    value: "Standard delivery (aim to dispatch within 10 working days)"
+                    key: "Dispatch method",
+                    value: "Standard (aim to send out within 10 working days)"
                 },
                 {
                     key: "Delivery address",
@@ -455,7 +455,7 @@ export const mockAdministratedLtdCertificateItemView: ViewModel = {
                 },
                 {
                     key: "Email copy required",
-                    value: "Email only available for express delivery method"
+                    value: "Email only available for express dispatch"
                 },
                 {
                     key: "Email address",
@@ -519,8 +519,8 @@ export const mockLiquidatedLtdCertificateItemView: ViewModel = {
                     value: "Yes"
                 },
                 {
-                    key: "Delivery method",
-                    value: "Standard delivery (aim to dispatch within 10 working days)"
+                    key: "Dispatch method",
+                    value: "Standard (aim to send out within 10 working days)"
                 },
                 {
                     key: "Delivery address",
@@ -528,7 +528,7 @@ export const mockLiquidatedLtdCertificateItemView: ViewModel = {
                 },
                 {
                     key: "Email copy required",
-                    value: "Email only available for express delivery method"
+                    value: "Email only available for express dispatch"
                 },
                 {
                     key: "Email address",
@@ -572,8 +572,8 @@ export const mockDissolvedCertificateItemView: ViewModel = {
                     value: "Dissolution with all company name changes"
                 },
                 {
-                    key: "Delivery method",
-                    value: "Standard delivery (aim to dispatch within 10 working days)"
+                    key: "Dispatch method",
+                    value: "Standard (aim to send out within 10 working days)"
                 },
                 {
                     key: "Delivery address",
@@ -581,7 +581,7 @@ export const mockDissolvedCertificateItemView: ViewModel = {
                 },
                 {
                     key: "Email copy required",
-                    value: "Email only available for express delivery method"
+                    value: "Email only available for express dispatch"
                 },
                 {
                     key: "Email address",
@@ -641,8 +641,8 @@ export const mockActiveLLPCertificateItemView: ViewModel = {
                     value: "Yes"
                 },
                 {
-                    key: "Delivery method",
-                    value: "Standard delivery (aim to dispatch within 10 working days)"
+                    key: "Dispatch method",
+                    value: "Standard (aim to send out within 10 working days)"
                 },
                 {
                     key: "Delivery address",
@@ -650,7 +650,7 @@ export const mockActiveLLPCertificateItemView: ViewModel = {
                 },
                 {
                     key: "Email copy required",
-                    value: "Email only available for express delivery method"
+                    value: "Email only available for express dispatch"
                 },
                 {
                     key: "Email address",
@@ -710,8 +710,8 @@ export const mockAdministratedLLPCertificateItemView: ViewModel = {
                     value: "No"
                 },
                 {
-                    key: "Delivery method",
-                    value: "Standard delivery (aim to dispatch within 10 working days)"
+                    key: "Dispatch method",
+                    value: "Standard (aim to send out within 10 working days)"
                 },
                 {
                     key: "Delivery address",
@@ -719,7 +719,7 @@ export const mockAdministratedLLPCertificateItemView: ViewModel = {
                 },
                 {
                     key: "Email copy required",
-                    value: "Email only available for express delivery method"
+                    value: "Email only available for express dispatch"
                 },
                 {
                     key: "Email address",
@@ -779,8 +779,8 @@ export const mockLiquidatedLLPCertificateItemView: ViewModel = {
                     value: "Yes"
                 },
                 {
-                    key: "Delivery method",
-                    value: "Standard delivery (aim to dispatch within 10 working days)"
+                    key: "Dispatch method",
+                    value: "Standard (aim to send out within 10 working days)"
                 },
                 {
                     key: "Delivery address",
@@ -788,7 +788,7 @@ export const mockLiquidatedLLPCertificateItemView: ViewModel = {
                 },
                 {
                     key: "Email copy required",
-                    value: "Email only available for express delivery method"
+                    value: "Email only available for express dispatch"
                 },
                 {
                     key: "Email address",
@@ -852,8 +852,8 @@ export const mockActiveLPCertificateItemView: ViewModel = {
                     value: "Yes"
                 },
                 {
-                    key: "Delivery method",
-                    value: "Standard delivery (aim to dispatch within 10 working days)"
+                    key: "Dispatch method",
+                    value: "Standard (aim to send out within 10 working days)"
                 },
                 {
                     key: "Delivery address",
@@ -861,7 +861,7 @@ export const mockActiveLPCertificateItemView: ViewModel = {
                 },
                 {
                     key: "Email copy required",
-                    value: "Email only available for express delivery method"
+                    value: "Email only available for express dispatch"
                 },
                 {
                     key: "Email address",

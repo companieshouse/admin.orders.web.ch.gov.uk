@@ -117,7 +117,7 @@ describe("LLPOrderDetailsMapper", () => {
                     isNotDissolution: true
                 },
                 deliveryInfo: {
-                    deliveryMethod: "Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day)",
+                    deliveryMethod: "Express (Orders received before 11am will be sent out the same day. Orders received after 11am will be sent out the next working day)",
                     deliveryDetails: "John Test\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
                     emailCopyRequired: "Yes"
                 },
@@ -232,9 +232,9 @@ describe("LLPOrderDetailsMapper", () => {
                     isNotDissolution: true
                 },
                 deliveryInfo: {
-                    deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
+                    deliveryMethod: "Standard (aim to send out within 10 working days)",
                     deliveryDetails: "John Test\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
-                    emailCopyRequired: "Email only available for express delivery method"
+                    emailCopyRequired: "Email only available for express dispatch"
                 },
                 paymentDetails: {
                     paymentReference: "somereference",
@@ -353,7 +353,7 @@ describe("LLPOrderDetailsMapper", () => {
                     isNotDissolution: true
                 },
                 deliveryInfo: {
-                    deliveryMethod:"Express (Orders received before 11am will be dispatched the same day. Orders received after 11am will be dispatched the next working day)",
+                    deliveryMethod:"Express (Orders received before 11am will be sent out the same day. Orders received after 11am will be sent out the next working day)",
                     deliveryDetails: "John Test\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
                     emailCopyRequired: "No"
                 },
@@ -471,9 +471,9 @@ describe("LLPOrderDetailsMapper", () => {
                     isNotDissolution: true
                 },
                 deliveryInfo: {
-                    deliveryMethod: "Standard delivery (aim to dispatch within 10 working days)",
+                    deliveryMethod: "Standard (aim to send out within 10 working days)",
                     deliveryDetails: "John Test\n1 Crown Way\nMaindy\nCardiff\nCardiff\nCF14 3UZ\nUK\n",
-                    emailCopyRequired: "Email only available for express delivery method"
+                    emailCopyRequired: "Email only available for express dispatch"
                 },
                 paymentDetails: {
                     paymentReference: "somereference",
