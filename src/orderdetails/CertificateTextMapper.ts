@@ -198,7 +198,7 @@ export abstract class CertificateTextMapper {
 
     static mapDeliveryMethod (itemOptions: Record<string, any>): string | null {
         if (itemOptions?.deliveryTimescale === "standard") {
-            return "Standard delivery (aim to dispatch within " + DISPATCH_DAYS + " working days)";
+            return "Standard (aim to send out within " + DISPATCH_DAYS + " working days)";
         }
         if (itemOptions?.deliveryTimescale === "same-day") {
             return "Express (Orders received before 11am will be sent out the same day. Orders received after 11am will be sent out the next working day)";
