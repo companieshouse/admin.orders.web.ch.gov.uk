@@ -17,6 +17,7 @@ export class ItemSummary {
 }
 
 export class PaymentDetails {
+    public paymentStatus?: string;
     public paymentReference?: string;
     public amountPaid?: string;
 }

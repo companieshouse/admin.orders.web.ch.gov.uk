@@ -4,6 +4,16 @@ import {MapperRequest} from "../core/MapperRequest";
 import {CertificateTextMapper} from "../orderdetails/CertificateTextMapper";
 import {Checkout} from "@companieshouse/api-sdk-node/dist/services/order/checkout/types";
 
+const paymentStatusMappings: {[key: string]: string} = {
+    "paid": "Paid",
+    "failed": "Failed",
+    "pending": "Pending",
+    "expired": "Expired",
+    "in-progress": "In progress",
+    "cancelled": "Cancelled",
+    "no-funds": "No funds"
+};
+
 export class OrderSummaryConverter {
 
     private orderSummary: OrderSummary = new OrderSummary();
@@ -52,6 +62,7 @@ export class OrderSummaryConverter {
 
     private mapPaymentDetails(checkout: Checkout) {
         this.orderSummary.paymentDetails = {
+            paymentStatus: this.mapPaymentStatus(checkout.status),
             paymentReference: checkout.paymentReference || "",
             amountPaid: `£${checkout.totalOrderCost}`
         };
@@ -65,5 +76,9 @@ export class OrderSummaryConverter {
         } else {
             return "";
         }
+    }
+
+    private mapPaymentStatus(paymentStatus: string): string {
+        return paymentStatusMappings[paymentStatus] || "Unknown";
     }
 }

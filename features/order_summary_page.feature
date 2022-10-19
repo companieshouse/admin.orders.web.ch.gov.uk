@@ -17,8 +17,8 @@ Feature: Order summary page
       | Delivery address                                                                      |
       | Forename Surname\nAddress line 1\nAddress line 2\nLocality\nRegion\nPostcode\nCountry |
     And Payment details for the order should be:
-      | Payment reference | Fee  |
-      | payment_reference | £133 |
+      | Status | Payment reference | Fee  |
+      | Paid | payment_reference | £133 |
 
   Scenario: Hide the delivery details section if order contains no deliverable items
     Given The checkout contains no deliverable items
@@ -28,8 +28,8 @@ Feature: Order summary page
       | MID-123123-123123 | Missing image      | 12345678       | N/A             | £3  |
     And Delivery details for the order should not be displayed
     And Payment details for the order should be:
-      | Payment reference | Fee  |
-      | payment_reference | £3 |
+      | Status | Payment reference | Fee  |
+      | Paid | payment_reference | £3 |
 
   Scenario: Display order not found if the order summary doesn't exist
     Given The checkout does not exist
