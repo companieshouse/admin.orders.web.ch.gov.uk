@@ -25,6 +25,7 @@ describe("OrderSummaryService", () => {
                     deliveryAddress: "Forename Surname\nAddress line 1\nAddress line 2\nLocality\nRegion\nPostcode\nCountry\n"
                 },
                 paymentDetails: {
+                    paymentStatus: "Paid",
                     paymentReference: "payment_reference",
                     amountPaid: "£133"
                 },
@@ -91,6 +92,7 @@ describe("OrderSummaryService", () => {
                     deliveryAddress: "Forename Surname\nAddress line 1\nAddress line 2\nLocality\nRegion\nPostcode\nCountry\n"
                 },
                 paymentDetails: {
+                    paymentStatus: "Paid",
                     paymentReference: "payment_reference",
                     amountPaid: "£3"
                 },
