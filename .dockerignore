@@ -1,9 +1,10 @@
 *
-
-!src
-!gulpfile.ts
-!LICENSE
-!package.json
-!package-lock.json
-!tsconfig.json
 !api-enumerations
+!dist
+!docker_start.sh
+!routes.yaml
+!src
+!views
+!package-lock.json
+!package.json
+!tsconfig.json
