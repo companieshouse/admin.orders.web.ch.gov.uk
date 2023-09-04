@@ -70,9 +70,6 @@ variable "chs_url" {
 variable "cdn_host" {
   type        = string
 }
-variable "account_local_url" {
-  type        = string
-}
 
 variable "piwik_url" {
   type        = string
@@ -105,6 +102,11 @@ variable "default_session_expiration" {
   default     = "3600"
 }
 
+variable "human_log" {
+  type        = string
+  default     = "1"
+}
+
 variable "radio_button_value_log_length" {
   type        = string
   default     = "50"
@@ -121,25 +123,27 @@ variable "url_param_max_length" {
   type        = string
   default     = "50"
 }
-variable "feature_flag_private_sdk_12052021" {
+variable "port" {
   type        = string
 }
-variable "feature_flag_active_officers_01072021" {
+variable "search_orders_piwik_start_goal_id" {
   type        = string
 }
-variable "feature_flag_five_or_less_officers_journey_21102021" {
+variable "order_details_piwik_start_goal_id" {
   type        = string
 }
-variable "psc_statements_api_page_size" {
+variable "node_env" {
   type        = string
-  default     = "100"
 }
-variable "ewf_url" {
+variable "orders_search_multibasket_enabled" {
   type        = string
 }
 variable "api_url" {
   type        = string
 }
-variable "piwik_start_goal_id" {
+variable "dispatch_days" {
+  type        = string
+}
+variable "tz" {
   type        = string
 }

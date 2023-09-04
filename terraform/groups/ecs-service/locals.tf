@@ -1,13 +1,13 @@
 # Define all hardcoded local variable and local variables looked up from data resources
 locals {
-  stack_name                = "filing-maintain" # this must match the stack name the service deploys into
+  stack_name                = "order-service" # this must match the stack name the service deploys into
   name_prefix               = "${local.stack_name}-${var.environment}"
-  service_name              = "confirmation-statement-web"
+  service_name              = "admin-orders-web"
   container_port            = "3000" # default node port required here until prod docker container is built allowing port change via env var
-  docker_repo               = "confirmation-statement-web"
-  lb_listener_rule_priority = 10
-  lb_listener_paths         = ["/confirmation-statement*"]
-  healthcheck_path          = "/confirmation-statement" #healthcheck path for confirmation statement web
+  docker_repo               = "admin.orders.web.ch.gov.uk"
+  lb_listener_rule_priority = 55
+  lb_listener_paths         = ["/orders-admin/*"]
+  healthcheck_path          = "/orders-admin" #healthcheck path for confirmation statement web
   healthcheck_matcher       = "200-302" # no explicit healthcheck in this service yet, change this when added!
 
   service_secrets           = jsondecode(data.vault_generic_secret.service_secrets.data_json)
@@ -59,6 +59,7 @@ locals {
 
   task_environment = [
     { "name": "NODE_PORT", "value": "${local.container_port}" },
+    { "name": "PORT", "value": "${var.port}" },
     { "name": "LOG_LEVEL", "value": "${var.log_level}" },
     { "name": "CHS_URL", "value": "${var.chs_url}" },
     { "name": "PIWIK_URL", "value": "${var.piwik_url}" },
@@ -70,17 +71,17 @@ locals {
     { "name": "COOKIE_NAME", "value": "${var.cookie_name}" },
     { "name": "COOKIE_SECURE_ONLY", "value": "${var.cookie_secure_only}" },
     { "name": "DEFAULT_SESSION_EXPIRATION", "value": "${var.default_session_expiration}" },
-    { "name": "APPLICATIONS_API_URL", "value": "${var.account_local_url}" },
-    { "name": "PIWIK_START_GOAL_ID", "value": "${var.piwik_start_goal_id}" },
     { "name": "RADIO_BUTTON_VALUE_LOG_LENGTH", "value": "${var.radio_button_value_log_length}" },
     { "name": "SHOW_SERVICE_OFFLINE_PAGE", "value": "${var.show_service_offline_page}" },
     { "name": "URL_LOG_MAX_LENGTH", "value": "${var.url_log_max_length}" },
     { "name": "URL_PARAM_MAX_LENGTH", "value": "${var.url_param_max_length}" },
-    { "name": "FEATURE_FLAG_PRIVATE_SDK_12052021", "value": "${var.feature_flag_private_sdk_12052021}" },
-    { "name": "FEATURE_FLAG_ACTIVE_OFFICERS_01072021", "value": "${var.feature_flag_active_officers_01072021}" },
-    { "name": "FEATURE_FLAG_FIVE_OR_LESS_OFFICERS_JOURNEY_21102021", "value": "${var.feature_flag_five_or_less_officers_journey_21102021}" },
-    { "name": "PSC_STATEMENTS_API_PAGE_SIZE", "value": "${var.psc_statements_api_page_size}" },
-    { "name": "EWF_URL", "value": "${var.ewf_url}" },
+    { "name": "HUMAN_LOG", "value": "${var.human_log}" },
+    { "name": "TZ", "value": "${var.tz}" },
+    { "name": "SEARCH_ORDERS_PIWIK_START_GOAL_ID", "value": "${var.search_orders_piwik_start_goal_id}" },
+    { "name": "ORDER_DETAILS_PIWIK_START_GOAL_ID", "value": "${var.order_details_piwik_start_goal_id}" },
+    { "name": "NODE_ENV", "value": "${var.node_env}" },
+    { "name": "ORDERS_SEARCH_MULTIBASKET_ENABLED", "value": "${var.orders_search_multibasket_enabled}" },
+    { "name": "DISPATCH_DAYS", "value": "${var.dispatch_days}" },
     { "name": "API_URL", "value": "${var.api_url}" }
   ]
 }
