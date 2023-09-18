@@ -77,8 +77,6 @@ locals {
     { "name": "URL_PARAM_MAX_LENGTH", "value": "${var.url_param_max_length}" },
     { "name": "HUMAN_LOG", "value": "${var.human_log}" },
     { "name": "TZ", "value": "${var.tz}" },
-    { "name": "SEARCH_ORDERS_PIWIK_START_GOAL_ID", "value": "${var.search_orders_piwik_start_goal_id}" },
-    { "name": "ORDER_DETAILS_PIWIK_START_GOAL_ID", "value": "${var.order_details_piwik_start_goal_id}" },
     { "name": "NODE_ENV", "value": "${var.node_env}" },
     { "name": "ORDERS_SEARCH_MULTIBASKET_ENABLED", "value": "${var.orders_search_multibasket_enabled}" },
     { "name": "DISPATCH_DAYS", "value": "${var.dispatch_days}" },
