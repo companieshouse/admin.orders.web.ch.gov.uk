@@ -126,12 +126,6 @@ variable "url_param_max_length" {
 variable "port" {
   type        = string
 }
-variable "search_orders_piwik_start_goal_id" {
-  type        = string
-}
-variable "order_details_piwik_start_goal_id" {
-  type        = string
-}
 variable "node_env" {
   type        = string
 }
