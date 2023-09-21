@@ -1,9 +1,8 @@
 environment = "staging"
 aws_profile = "staging-eu-west-2"
-kms_alias = "alias/staging-eu-west-2/environment-services-kms"
 
 # scaling configs
-desired_task_count = 2 # use multi instance in staging
+desired_task_count = 2
 
 # service configs
 
