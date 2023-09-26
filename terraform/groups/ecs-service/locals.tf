@@ -5,7 +5,7 @@ locals {
   service_name              = "admin-orders-web"
   container_port            = "3000" # default node port required here until prod docker container is built allowing port change via env var
   docker_repo               = "admin.orders.web.ch.gov.uk"
-  lb_listener_rule_priority = 55
+  lb_listener_rule_priority = 9
   lb_listener_paths         = ["/orders-admin/*"]
   healthcheck_path          = "/orders-admin" #healthcheck path for confirmation statement web
   healthcheck_matcher       = "200-302" # no explicit healthcheck in this service yet, change this when added!
