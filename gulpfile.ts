@@ -1,6 +1,6 @@
 import { parallel, src, dest } from "gulp";
-import dartSass from "sass";
-import gulpSass from "gulp-sass";;
+const dartSass = require("sass");
+const gulpSass = require("gulp-sass");
 
 const sass = gulpSass(dartSass);
 
