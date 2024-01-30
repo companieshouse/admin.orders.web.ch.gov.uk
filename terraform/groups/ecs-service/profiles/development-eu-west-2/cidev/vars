@@ -1,19 +1,5 @@
 environment = "cidev"
 aws_profile = "development-eu-west-2"
 
-### Service Config
-
-api_url = "https://api.cidev.aws.chdev.org"
-cdn_host = "d3uvya5a8a1ncx.cloudfront.net"
-chs_url = "https://cidev.aws.chdev.org"
-cookie_domain = "cidev.aws.chdev.org"
-default_session_expiration = "3600"
-human_log = "1"
-log_level = "debug"
-piwik_site_id = "123"
-piwik_url = "https://matomo.platform.aws.chdev.org/"
-tz = "europe/london"
-port = "8741"
-node_env = "production"
-orders_search_multibasket_enabled = "true"
-dispatch_days = "10"
+# service configs
+use_set_environment_files = true

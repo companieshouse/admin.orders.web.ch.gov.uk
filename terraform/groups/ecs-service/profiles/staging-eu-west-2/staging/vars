@@ -1,22 +1,10 @@
 environment = "staging"
 aws_profile = "staging-eu-west-2"
 
-# scaling configs
-desired_task_count = 2
-
 # service configs
+use_set_environment_files = true
 
-api_url = "https://private-api-staging.company-information.service.gov.uk"
-cdn_host = "d6nh3dxv55e16.cloudfront.net"
-chs_url = "https://staging.company-information.service.gov.uk"
-cookie_domain = "company-information.service.gov.uk"
-default_session_expiration = "3600"
-human_log = "1"
-log_level = "debug"
-piwik_site_id = "15"
-piwik_url = "https://matomo.platform.aws.chdev.org/"
-tz = "europe/london"
-port = "8741"
-node_env = "production"
-orders_search_multibasket_enabled = "true"
-dispatch_days = "10"
+# Scheduled scaling of tasks
+service_autoscale_enabled  = true
+service_scaledown_schedule = "55 19 * * ? *"
+service_scaleup_schedule   = "5 6 * * ? *"

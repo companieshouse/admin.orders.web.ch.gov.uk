@@ -1,21 +1,5 @@
 environment = "live"
 aws_profile = "live-eu-west-2"
 
-# scaling configs
-desired_task_count = 2
-
 # service configs
-api_url = "https://private-api.companieshouse.gov.uk"
-cdn_host = "d6nh3dxv55e16.cloudfront.net"
-chs_url = "https://find-and-update.company-information.service.gov.uk"
-cookie_domain = "company-information.service.gov.uk"
-default_session_expiration = "3600"
-human_log = "1"
-log_level = "info"
-piwik_site_id = ""
-piwik_url = ""
-tz = "europe/london"
-port = "8741"
-node_env = "production"
-orders_search_multibasket_enabled = "true"
-dispatch_days = "10"
+use_set_environment_files = true
