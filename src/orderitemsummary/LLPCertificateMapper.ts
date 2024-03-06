@@ -17,7 +17,7 @@ export class LLPCertificateMapper extends AbstractCertificateMapper {
             return;
         }
         if (itemOptions.companyStatus === CompanyStatus.ACTIVE) {
-            this.addField("Statement of good standing", CertificateTextMapper.isOptionSelected(itemOptions.includeGoodStandingInformation));
+            this.addField("Summary statement previously known as statement of good standing", CertificateTextMapper.isOptionSelected(itemOptions.includeGoodStandingInformation));
         }
         this.addField("Registered office address", CertificateTextMapper.mapAddressOption(itemOptions.registeredOfficeAddressDetails?.includeAddressRecordsType));
         this.addField("The names of all current designated members", CertificateTextMapper.mapMembersOptions("Including designated members':", itemOptions.designatedMemberDetails));
