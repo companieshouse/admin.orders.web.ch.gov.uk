@@ -353,7 +353,7 @@ export const mockActiveLtdCertificateItemView: ViewModel = {
                     value: "Incorporation with all company name changes"
                 },
                 {
-                    key: "Statement of good standing",
+                    key: "Summary statement previously known as statement of good standing",
                     value: "Yes"
                 },
                 {
@@ -625,7 +625,7 @@ export const mockActiveLLPCertificateItemView: ViewModel = {
                     value: "Incorporation with all company name changes"
                 },
                 {
-                    key: "Statement of good standing",
+                    key: "Summary statement previously known as statement of good standing",
                     value: "Yes"
                 },
                 {
@@ -832,7 +832,7 @@ export const mockActiveLPCertificateItemView: ViewModel = {
                     value: "Incorporation with all company name changes"
                 },
                 {
-                    key: "Statement of good standing",
+                    key: "Summary statement previously known as statement of good standing",
                     value: "Yes"
                 },
                 {
