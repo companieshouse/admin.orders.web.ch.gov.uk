@@ -1,6 +1,7 @@
 import http, { Server } from "http";
 import express, { Express, NextFunction, Request, Response, Router } from "express";
 import { Middlewareable } from "application/Middlewareable";
+import { CsrfProtectionMiddleware } from "@companieshouse/web-security-node";
 import { Service } from "typedi";
 import { Config } from "./Config";
 
@@ -12,6 +13,13 @@ const cookieParser = require("cookie-parser");
 
 type HandlerFunction = (req: Request, res: Response, next: NextFunction) => Promise<void>
 type Process = () => void
+
+const csrfProtectionMiddleware = CsrfProtectionMiddleware({
+  sessionStore,
+  enabled: true,
+  sessionCookieName: config.COOKIE_NAME
+});
+app.use(csrfProtectionMiddleware);
 
 @Service()
 export class Application {
