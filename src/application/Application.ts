@@ -1,5 +1,6 @@
 import http, { Server } from "http";
 import express, { Express, NextFunction, Request, Response, Router } from "express";
+import {CookieConfig, SessionMiddleware, SessionStore} from "@companieshouse/node-session-handler";
 import { Middlewareable } from "application/Middlewareable";
 import { CsrfProtectionMiddleware } from "@companieshouse/web-security-node";
 import { Service } from "typedi";
@@ -14,12 +15,6 @@ const cookieParser = require("cookie-parser");
 type HandlerFunction = (req: Request, res: Response, next: NextFunction) => Promise<void>
 type Process = () => void
 
-const csrfProtectionMiddleware = CsrfProtectionMiddleware({
-  sessionStore,
-  enabled: true,
-  sessionCookieName: config.COOKIE_NAME
-});
-app.use(csrfProtectionMiddleware);
 
 @Service()
 export class Application {
@@ -72,6 +67,13 @@ export class Application {
         this.server.listen(this.requestedPort);
         this.server.on("error", this.onError.bind(this));
         this.server.on("listening", this.onListening.bind(this));
+
+        const csrfProtectionMiddleware = CsrfProtectionMiddleware({
+          SessionStore,
+          enabled: true,
+          sessionCookieName: CookieConfig.COOKIE_NAME
+        });
+        this.express.use(csrfProtectionMiddleware);
     }
 
     // Bind uriPath GET to handlerFunction
