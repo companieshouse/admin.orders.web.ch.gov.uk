@@ -1,5 +1,5 @@
-import http, { Server } from "http";
-import express, { Express, NextFunction, Request, Response, Router } from "express";
+import {Server } from "http";
+import { Express, NextFunction, Request, Response, Router } from "express";
 import {CookieConfig, SessionMiddleware, SessionStore} from "@companieshouse/node-session-handler";
 import { Middlewareable } from "application/Middlewareable";
 import { CsrfProtectionMiddleware } from "@companieshouse/web-security-node";
@@ -68,12 +68,13 @@ export class Application {
         this.server.on("error", this.onError.bind(this));
         this.server.on("listening", this.onListening.bind(this));
 
+        const redisSessionMiddleware = Container.get(RedisSessionMiddleware)
         const csrfProtectionMiddleware = CsrfProtectionMiddleware({
-          SessionStore,
-          enabled: true,
-          sessionCookieName: CookieConfig.COOKIE_NAME
-        });
-        this.express.use(csrfProtectionMiddleware);
+            sessionStore: redisSessionMiddleware.sessionStore,
+            enabled: true,
+            sessionCookieName: process.env.COOKIE_NAME
+          });
+ this.express.use(csrfProtectionMiddleware);
     }
 
     // Bind uriPath GET to handlerFunction
