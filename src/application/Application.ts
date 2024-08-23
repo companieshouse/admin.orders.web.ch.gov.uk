@@ -67,14 +67,6 @@ export class Application {
         this.server.listen(this.requestedPort);
         this.server.on("error", this.onError.bind(this));
         this.server.on("listening", this.onListening.bind(this));
-
-        const redisSessionMiddleware = Container.get(RedisSessionMiddleware)
-        const csrfProtectionMiddleware = CsrfProtectionMiddleware({
-            sessionStore: redisSessionMiddleware.sessionStore,
-            enabled: true,
-            sessionCookieName: process.env.COOKIE_NAME
-          });
- this.express.use(csrfProtectionMiddleware);
     }
 
     // Bind uriPath GET to handlerFunction
