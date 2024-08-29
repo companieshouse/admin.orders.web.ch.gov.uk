@@ -11,7 +11,8 @@ const paymentStatusMappings: {[key: string]: string} = {
     "expired": "Expired",
     "in-progress": "In progress",
     "cancelled": "Cancelled",
-    "no-funds": "No funds"
+    "no-funds": "No funds",
+    "free": "Free (Admin Order)"
 };
 
 export class OrderSummaryConverter {
