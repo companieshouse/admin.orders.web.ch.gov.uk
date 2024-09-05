@@ -17,7 +17,7 @@ Feature: View order details
     Given The checkout endpoint will return a paid certificate order for an active limited company
     When I view order details
     Then The following order details should be displayed:
-      | Ordered by      | Company name         | Company number | Certificate type                            | Summary statement previously known as Summary statement previously known as statement of good standing | Registered office address          | The names of all current company directors | The names of all current secretaries | Company objects |
+      | Ordered by      | Company name         | Company number | Certificate type                            | Summary statement previously known as statement of good standing | Registered office address          | The names of all current company directors | The names of all current secretaries | Company objects |
       | demo1@ch.gov.uk | TEST COMPANY LIMITED | 12345678       | Incorporation with all company name changes | Yes                        | All current and previous addresses | Yes                                        | Yes                                  | Yes             |
     And The following delivery details should be displayed:
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
