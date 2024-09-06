@@ -17,7 +17,7 @@ Feature: View order details
     Given The checkout endpoint will return a paid certificate order for an active limited company
     When I view order details
     Then The following order details should be displayed:
-      | Ordered by      | Company name         | Company number | Certificate type                            | Statement of good standing | Registered office address          | The names of all current company directors | The names of all current secretaries | Company objects |
+      | Ordered by      | Company name         | Company number | Certificate type                            | Summary statement previously known as statement of good standing | Registered office address          | The names of all current company directors | The names of all current secretaries | Company objects |
       | demo1@ch.gov.uk | TEST COMPANY LIMITED | 12345678       | Incorporation with all company name changes | Yes                        | All current and previous addresses | Yes                                        | Yes                                  | Yes             |
     And The following delivery details should be displayed:
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
@@ -56,7 +56,7 @@ Feature: View order details
     Given The checkout endpoint will return a paid certificate order for an active LLP
     When I view order details
     Then The following order details should be displayed:
-      | Ordered by     | Company name         | Company number | Certificate type                            | Statement of good standing | Registered office address | The names of all current designated members | The names of all current members |
+      | Ordered by     | Company name         | Company number | Certificate type                            | Summary statement previously known as statement of good standing | Registered office address | The names of all current designated members | The names of all current members |
       | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | No                         | No                        | Yes                                         | No                               |
     And The following delivery details should be displayed:
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
@@ -69,7 +69,7 @@ Feature: View order details
     Given The checkout endpoint will return a paid certificate order for an active limited partnership
     When I view order details
     Then The following order details should be displayed:
-      | Ordered by     | Company name         | Company number | Certificate type                            | Statement of good standing | Principal place of business          | The names of all current general partners | The names of all current limited partners | General nature of business |
+      | Ordered by     | Company name         | Company number | Certificate type                            | Summary statement previously known as statement of good standing | Principal place of business          | The names of all current general partners | The names of all current limited partners | General nature of business |
       | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | Yes                        | Current address and the two previous | Yes                                       | Yes                                       | Yes                        |
     And The following delivery details should be displayed:
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
