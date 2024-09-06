@@ -5,12 +5,16 @@ import { Middlewareable } from "application/Middlewareable";
 import { CsrfProtectionMiddleware } from "@companieshouse/web-security-node";
 import { Service } from "typedi";
 import { Config } from "./Config";
+import actuator from 'express-actuator';
 
 const createError = require('http-errors');
 import ErrnoException = NodeJS.ErrnoException;
 import { AddressInfo } from "net";
 
 const cookieParser = require("cookie-parser");
+const actuatorOptions = {
+    basePath: "/orders-admin"  // Define the actuator base path
+};
 
 type HandlerFunction = (req: Request, res: Response, next: NextFunction) => Promise<void>
 type Process = () => void
@@ -44,6 +48,8 @@ export class Application {
         this.express.use(express.json());
         this.express.use(express.urlencoded({ extended: false }));
         this.express.use(cookieParser());
+
+        this.express.use(actuator(actuatorOptions));
 
         // Custom configuration e.g. template engine, static routes etc.
         this.config.expressConfigurators.forEach(configurator => configurator.configure(this.express));

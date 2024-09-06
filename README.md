@@ -56,7 +56,7 @@ to follow the standards set by the [GovUK Design System](https://design-system.s
 Development mode is available for this service
 in [Docker CHS Development](https://github.com/companieshouse/docker-chs-development).
 
-    ./bin/chs-dev development enable admin.orders.web.ch.gov.uk
+    ./bin/chs-dev development enable admin-orders-web-ch-gov-uk
 
 This will clone the admin orders web app into the repositories folder. Any changes to the code, or resources will
 automatically trigger a rebuild and reluanch.
