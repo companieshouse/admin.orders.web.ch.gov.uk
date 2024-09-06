@@ -15,6 +15,16 @@ const cookieParser = require("cookie-parser");
 type HandlerFunction = (req: Request, res: Response, next: NextFunction) => Promise<void>
 type Process = () => void
 
+const getEnvironmentVariable = (key: string, defaultValue?: any): string => {
+    const isMandatory: boolean = !defaultValue;
+    const value: string = process.env[key] || "";
+  
+    if (!value && isMandatory) {
+      throw new Error(`Please set the environment variable "${key}"`);
+    }
+  
+    return value || defaultValue as string;
+  };
 
 @Service()
 export class Application {
@@ -60,6 +70,22 @@ export class Application {
         this.middlewareBindings.forEach(middlewareBinding => middlewareBinding());
         this.routerBindings.forEach(routerBinding => routerBinding());
 
+        const cookieConfig = {
+            cookieName: '__SID',
+            cookieSecret: getEnvironmentVariable("COOKIE_SECRET"),
+            cookieDomain: getEnvironmentVariable("COOKIE_DOMAIN"),
+            cookieTimeToLiveInSeconds: parseInt(getEnvironmentVariable("DEFAULT_SESSION_EXPIRATION"), 10)
+          };
+          const sessionStore = new SessionStore(new Redis(`redis://${getEnvironmentVariable("CACHE_SERVER")}`));
+          app.use(SessionMiddleware(cookieConfig, sessionStore));
+          
+          const csrfProtectionMiddleware = CsrfProtectionMiddleware({
+            sessionStore,
+            enabled: true,
+            sessionCookieName: getEnvironmentVariable("COOKIE_NAME")
+          });
+          app.use(csrfProtectionMiddleware);
+        
         // Create HTTP server.
         this.server = http.createServer(this.express);
 
