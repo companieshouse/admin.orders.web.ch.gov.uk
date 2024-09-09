@@ -4,7 +4,6 @@ import "reflect-metadata";
 import { AuthorisationMiddleware } from "./AuthorisationMiddleware";
 import { AuthenticationMiddleware } from "./AuthenticationMiddleware";
 import { RedisSessionMiddleware } from "./RedisSessionMiddleware";
-import { CsrfProtectionsMiddleware } from "./CsrfProtectionsMiddleware";
 
 @Service("production.middleware")
 export class DefaultMiddlewareProvider implements MiddlewareProvider {
@@ -12,9 +11,8 @@ export class DefaultMiddlewareProvider implements MiddlewareProvider {
 
     constructor(private readonly sessionMiddleware: RedisSessionMiddleware,
                 private readonly authenticationMiddleware: AuthenticationMiddleware,
-                private readonly authorisationMiddleware: AuthorisationMiddleware,
-                private readonly csrfProtectionMiddleware: CsrfProtectionsMiddleware) {
-        this.middlewareables = [ sessionMiddleware, authenticationMiddleware, authorisationMiddleware, csrfProtectionMiddleware  ];
+                private readonly authorisationMiddleware: AuthorisationMiddleware) {
+        this.middlewareables = [ sessionMiddleware, authenticationMiddleware, authorisationMiddleware  ];
     }
 }
 
