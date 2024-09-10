@@ -1,11 +1,12 @@
-import {Server } from "http";
-import { Express, NextFunction, Request, Response, Router } from "express";
+import http, {Server } from "http";
+import express, { Express, NextFunction, Request, Response, Router } from "express";
 import {CookieConfig, SessionMiddleware, SessionStore} from "@companieshouse/node-session-handler";
 import { Middlewareable } from "application/Middlewareable";
 import { CsrfProtectionMiddleware } from "@companieshouse/web-security-node";
 import { Service } from "typedi";
 import { Config } from "./Config";
 import actuator from 'express-actuator';
+import Redis from "ioredis"
 
 const createError = require('http-errors');
 import ErrnoException = NodeJS.ErrnoException;
@@ -83,14 +84,14 @@ export class Application {
             cookieTimeToLiveInSeconds: parseInt(getEnvironmentVariable("DEFAULT_SESSION_EXPIRATION"), 10)
           };
           const sessionStore = new SessionStore(new Redis(`redis://${getEnvironmentVariable("CACHE_SERVER")}`));
-          app.use(SessionMiddleware(cookieConfig, sessionStore));
+          this.express.use(SessionMiddleware(cookieConfig, sessionStore));
           
           const csrfProtectionMiddleware = CsrfProtectionMiddleware({
             sessionStore,
             enabled: true,
             sessionCookieName: getEnvironmentVariable("COOKIE_NAME")
           });
-          app.use(csrfProtectionMiddleware);
+          this.express.use(csrfProtectionMiddleware);
         
         // Create HTTP server.
         this.server = http.createServer(this.express);
