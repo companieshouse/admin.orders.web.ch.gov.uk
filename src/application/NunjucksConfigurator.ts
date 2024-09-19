@@ -18,7 +18,7 @@ export class NunjucksConfigurator implements ExpressConfigurator {
         // Assets to serve at web context path
         const templatePaths = [ path.join(this.config.applicationRootDir, "node_modules/govuk-frontend"),
             path.join(this.config.applicationRootDir, "node_modules/govuk-frontend/components"),
-            path.join(this.config.applicationRootDir,  "node_modules/@companieshouse"),
+            path.join(this.config.applicationRootDir,  "node_modules/@companieshouse/web-security-node/components"),
             path.join(this.config.applicationRootDir, "dist/views") ];
 
         // set up the template engine
