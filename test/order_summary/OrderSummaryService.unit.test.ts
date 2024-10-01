@@ -36,6 +36,7 @@ describe("OrderSummaryService", () => {
                         orderType: "Missing image",
                         companyNumber: "12345678",
                         deliveryMethod: "N/A",
+                        quantity: 1,
                         fee: "£3",
                         itemLink: "/orders-admin/order-summaries/ORD-123123-123123/items/MID-123123-123123"
                     },
@@ -44,6 +45,7 @@ describe("OrderSummaryService", () => {
                         orderType: "Certificate",
                         companyNumber: "12345678",
                         deliveryMethod: "Standard",
+                        quantity: 1,
                         fee: "£15",
                         itemLink: "/orders-admin/order-summaries/ORD-123123-123123/items/CRT-123123-123123"
                     },
@@ -52,6 +54,7 @@ describe("OrderSummaryService", () => {
                         orderType: "Certificate",
                         companyNumber: "12345679",
                         deliveryMethod: "Express",
+                        quantity: 1,
                         fee: "£50",
                         itemLink: "/orders-admin/order-summaries/ORD-123123-123123/items/CRT-123123-123124"
                     },
@@ -60,6 +63,7 @@ describe("OrderSummaryService", () => {
                         orderType: "Certified document",
                         companyNumber: "12345678",
                         deliveryMethod: "Standard",
+                        quantity: 1,
                         fee: "£15",
                         itemLink: "/orders-admin/order-summaries/ORD-123123-123123/items/CCD-123123-123123"
                     },
@@ -68,6 +72,7 @@ describe("OrderSummaryService", () => {
                         orderType: "Certified document",
                         companyNumber: "12345670",
                         deliveryMethod: "Express",
+                        quantity: 1,
                         fee: "£50",
                         itemLink: "/orders-admin/order-summaries/ORD-123123-123123/items/CCD-123123-123124"
                     }
@@ -103,6 +108,7 @@ describe("OrderSummaryService", () => {
                         orderType: "Missing image",
                         companyNumber: "12345678",
                         deliveryMethod: "N/A",
+                        quantity: 1,
                         fee: "£3",
                         itemLink: "/orders-admin/order-summaries/ORD-123123-123123/items/MID-123123-123123"
                     }

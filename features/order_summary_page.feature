@@ -7,12 +7,12 @@ Feature: Order summary page
     Given The checkout contains all known item types with all known delivery timescales
     When I view the order summary
     Then The following items should be displayed:
-      | Item number       | Order type         | Company number | Dispatch method | Fee |
-      | MID-123123-123123 | Missing image      | 12345678       | N/A             | £3  |
-      | CRT-123123-123123 | Certificate        | 12345678       | Standard        | £15 |
-      | CRT-123123-123124 | Certificate        | 12345679       | Express         | £50 |
-      | CCD-123123-123123 | Certified document | 12345678       | Standard        | £15 |
-      | CCD-123123-123124 | Certified document | 12345670       | Express         | £50 |
+      | Item number       | Order type         | Company number | Dispatch method | Quantity| Fee |
+      | MID-123123-123123 | Missing image      | 12345678       | N/A             | 1       |  £3 |
+      | CRT-123123-123123 | Certificate        | 12345678       | Standard        | 1       | £15 |
+      | CRT-123123-123124 | Certificate        | 12345679       | Express         | 1       | £50 |
+      | CCD-123123-123123 | Certified document | 12345678       | Standard        | 1       | £15 |
+      | CCD-123123-123124 | Certified document | 12345670       | Express         | 1       | £50 |
     And Delivery details for the order should be:
       | Delivery address                                                                      |
       | Forename Surname\nAddress line 1\nAddress line 2\nLocality\nRegion\nPostcode\nCountry |
@@ -24,8 +24,8 @@ Feature: Order summary page
     Given The checkout contains no deliverable items
     When I view the order summary
     Then The following items should be displayed:
-      | Item number       | Order type         | Company number | Dispatch method | Fee |
-      | MID-123123-123123 | Missing image      | 12345678       | N/A             | £3  |
+      | Item number       | Order type         | Company number | Dispatch method | Quantity| Fee |
+      | MID-123123-123123 | Missing image      | 12345678       | N/A             | 1       | £3  |
     And Delivery details for the order should not be displayed
     And Payment details for the order should be:
       | Status | Payment reference | Fee  |

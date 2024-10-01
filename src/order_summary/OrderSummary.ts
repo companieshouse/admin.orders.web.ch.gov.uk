@@ -12,6 +12,7 @@ export class ItemSummary {
     public orderType?: string;
     public companyNumber?: string;
     public deliveryMethod?: string;
+    public quantity?: number;
     public fee?: string;
     public itemLink?: string;
 }
