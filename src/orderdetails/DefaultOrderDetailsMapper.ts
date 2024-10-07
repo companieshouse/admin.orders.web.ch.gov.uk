@@ -21,6 +21,7 @@ export class DefaultOrderDetailsMapper extends AbstractOrderDetailsMapper {
             companyName: item?.companyName,
             companyNumber: item?.companyNumber,
             certificateType: CertificateTextMapper.mapCertificateType(itemOptions.certificateType),
+            quantity: item?.quantity,
             statementOfGoodStanding: CertificateTextMapper.isOptionSelected(itemOptions.includeGoodStandingInformation),
             registeredOfficeAddress: CertificateTextMapper.mapAddressOption(itemOptions.registeredOfficeAddressDetails?.includeAddressRecordsType),
             directors: CertificateTextMapper.mapDirectorOptions(itemOptions.directorDetails),
