@@ -389,6 +389,10 @@ export const mockActiveLtdCertificateItemView: ViewModel = {
                     value: "example@email.com"
                 },
                 {
+                    key: "Quantity",
+                    value: "1"
+                },
+                {
                     key: "Fee",
                     value: "£15"
                 }
@@ -460,6 +464,10 @@ export const mockAdministratedLtdCertificateItemView: ViewModel = {
                 {
                     key: "Email address",
                     value: "example@email.com"
+                },
+                {
+                    key: "Quantity",
+                    value: "1"
                 },
                 {
                     key: "Fee",
@@ -535,6 +543,10 @@ export const mockLiquidatedLtdCertificateItemView: ViewModel = {
                     value: "example@email.com"
                 },
                 {
+                    key: "Quantity",
+                    value: "1"
+                },
+                {
                     key: "Fee",
                     value: "£15"
                 }
@@ -586,6 +598,10 @@ export const mockDissolvedCertificateItemView: ViewModel = {
                 {
                     key: "Email address",
                     value: "example@email.com"
+                },
+                {
+                    key: "Quantity",
+                    value: "1"
                 },
                 {
                     key: "Fee",
@@ -657,6 +673,10 @@ export const mockActiveLLPCertificateItemView: ViewModel = {
                     value: "example@email.com"
                 },
                 {
+                    key: "Quantity",
+                    value: "1"
+                },
+                {
                     key: "Fee",
                     value: "£15"
                 }
@@ -726,6 +746,10 @@ export const mockAdministratedLLPCertificateItemView: ViewModel = {
                     value: "example@email.com"
                 },
                 {
+                    key: "Quantity",
+                    value: "1"
+                },
+                {
                     key: "Fee",
                     value: "£15"
                 }
@@ -793,6 +817,10 @@ export const mockLiquidatedLLPCertificateItemView: ViewModel = {
                 {
                     key: "Email address",
                     value: "example@email.com"
+                },
+                {
+                    key: "Quantity",
+                    value: "1"
                 },
                 {
                     key: "Fee",
@@ -866,6 +894,10 @@ export const mockActiveLPCertificateItemView: ViewModel = {
                 {
                     key: "Email address",
                     value: "example@email.com"
+                },
+                {
+                    key: "Quantity",
+                    value: "1"
                 },
                 {
                     key: "Fee",

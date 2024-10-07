@@ -21,6 +21,7 @@ export abstract class AbstractCertificateMapper implements OrderItemMapper {
         this.mapCompanyDetails(item);
         this.mapCertificateDetails();
         this.mapDeliveryDetails(item);
+        this.mapQuantity(item);
         this.mapFee(item);
         this.data.backLinkUrl = "javascript:history.back()";
     }
@@ -49,6 +50,10 @@ export abstract class AbstractCertificateMapper implements OrderItemMapper {
         this.addField("Delivery address", CertificateTextMapper.mapDeliveryDetails(this.mapperRequest.checkout.deliveryDetails));
         this.addField("Email copy required", CertificateTextMapper.mapEmailCopyRequired(itemOptions));
         this.addField("Email address", this.mapperRequest.checkout.checkedOutBy.email);
+    }
+
+    private mapQuantity(item: Item): void {
+        this.addField("Quantity", item.quantity.toString());
     }
 
     private mapFee(item: Item): void {

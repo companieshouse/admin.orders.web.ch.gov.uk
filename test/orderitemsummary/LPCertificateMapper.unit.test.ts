@@ -15,6 +15,7 @@ describe("LPCertificateMapper", () => {
                itemOptions: {
                    ...mockCertificateItem.itemOptions,
                    companyType: "limited-partnership",
+                   quantity: "1",
                    principalPlaceOfBusinessDetails: {
                        includeAddressRecordsType: "current-and-previous"
                    },
