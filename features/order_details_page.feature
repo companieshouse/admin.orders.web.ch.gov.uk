@@ -10,8 +10,8 @@ Feature: View order details
       | Dispatch method                                           | Email copy required                              | Delivery details                                                                         |
       | Standard (aim to send out within 10 working days)| Email only available for express dispatch | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
-      | Payment reference | Fee |
-      | CAFE              | £15 |
+      | Payment reference |Quantity| Fee |
+      | CAFE              |1| £15 |
 
   Scenario: View order details for a certificate order for an active limited company
     Given The checkout endpoint will return a paid certificate order for an active limited company
@@ -23,8 +23,8 @@ Feature: View order details
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
       | Standard (aim to send out within 10 working days) | Email only available for express dispatch | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
-      | Payment reference | Fee |
-      | CAFE              | £15 |
+      | Payment reference |Quantity| Fee |
+      | CAFE              |1| £15 |
 
   Scenario: View order details for a certificate order for an administrated limited company
     Given The checkout endpoint will return a paid certificate order for an administrated limited company with no options requested
@@ -36,8 +36,8 @@ Feature: View order details
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
       | Standard (aim to send out within 10 working days) | Email only available for express dispatch | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
-      | Payment reference | Fee |
-      | CAFE              | £15 |
+      | Payment reference |Quantity| Fee |
+      | CAFE              |1| £15 |
 
   Scenario: View order details for an existing administrated LLP certificate order
     Given The checkout endpoint will return a paid certificate order for an administrated LLP
@@ -49,8 +49,8 @@ Feature: View order details
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
       | Standard (aim to send out within 10 working days) | Email only available for express dispatch | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
-      | Payment reference | Fee |
-      | CAFE              | £15 |
+      | Payment reference |Quantity| Fee |
+      | CAFE              |1| £15 |
 
   Scenario: View order details for an existing active LLP certificate order
     Given The checkout endpoint will return a paid certificate order for an active LLP
@@ -62,8 +62,8 @@ Feature: View order details
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
       | Standard (aim to send out within 10 working days) | Email only available for express dispatch | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
-      | Payment reference | Fee |
-      | CAFE              | £15 |
+      | Payment reference |Quantity| Fee |
+      | CAFE              |1| £15 |
 
   Scenario: View order details for an existing limited partnership certificate order
     Given The checkout endpoint will return a paid certificate order for an active limited partnership
@@ -75,8 +75,8 @@ Feature: View order details
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
       | Standard (aim to send out within 10 working days) | Email only available for express dispatch |forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
-      | Payment reference | Fee |
-      | CAFE              | £15 |
+      | Payment reference |Quantity| Fee |
+      | CAFE              |1| £15 |
 
   Scenario: Unpaid certificate
     Given The checkout endpoint will return an unpaid certificate order
