@@ -4,79 +4,79 @@ Feature: View order details
     Given The checkout endpoint will return a paid certificate order for a liquidated limited company
     When I view order details
     Then The following order details should be displayed:
-      | Ordered by     | Company name         | Company number | Certificate type                            | Registered office address            | The names of all current company directors                                      | The names of all current secretaries                                | Company objects | Liquidators' details |
-      | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | Current address and the two previous | Including directors':\n\nCorrespondence address\nDate of birth (month and year) | Including secretaries':\n\nCorrespondence address\nAppointment date | Yes             | Yes                  |
+      | Ordered by     | Company name         | Company number | Certificate type                            | Registered office address            | The names of all current company directors                                      | The names of all current secretaries                                | Company objects | Liquidators' details |Quantity|
+      | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | Current address and the two previous | Including directors':\n\nCorrespondence address\nDate of birth (month and year) | Including secretaries':\n\nCorrespondence address\nAppointment date | Yes             | Yes                  |1       |
     And The following delivery details should be displayed:
       | Dispatch method                                           | Email copy required                              | Delivery details                                                                         |
       | Standard (aim to send out within 10 working days)| Email only available for express dispatch | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
-      | Payment reference |Quantity| Fee |
-      | CAFE              |1| £15 |
+      | Payment reference | Fee |
+      | CAFE              | £15 |
 
   Scenario: View order details for a certificate order for an active limited company
     Given The checkout endpoint will return a paid certificate order for an active limited company
     When I view order details
     Then The following order details should be displayed:
-      | Ordered by      | Company name         | Company number | Certificate type                            | Summary statement previously known as statement of good standing | Registered office address          | The names of all current company directors | The names of all current secretaries | Company objects |
-      | demo1@ch.gov.uk | TEST COMPANY LIMITED | 12345678       | Incorporation with all company name changes | Yes                        | All current and previous addresses | Yes                                        | Yes                                  | Yes             |
+      | Ordered by      | Company name         | Company number | Certificate type                            | Summary statement previously known as statement of good standing | Registered office address          | The names of all current company directors | The names of all current secretaries | Company objects |Quantity|
+      | demo1@ch.gov.uk | TEST COMPANY LIMITED | 12345678       | Incorporation with all company name changes | Yes                        | All current and previous addresses | Yes                                        | Yes                                  | Yes             |1              |
     And The following delivery details should be displayed:
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
       | Standard (aim to send out within 10 working days) | Email only available for express dispatch | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
-      | Payment reference |Quantity| Fee |
-      | CAFE              |1| £15 |
+      | Payment reference | Fee |
+      | CAFE              | £15 |
 
   Scenario: View order details for a certificate order for an administrated limited company
     Given The checkout endpoint will return a paid certificate order for an administrated limited company with no options requested
     When I view order details
     Then The following order details should be displayed:
-      | Ordered by     | Company name         | Company number | Certificate type                            | Registered office address | The names of all current company directors | The names of all current secretaries | Company objects | Administrators' details |
-      | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | No                        | No                                         | No                                   | No              | No                      |
+      | Ordered by     | Company name         | Company number | Certificate type                            | Registered office address | The names of all current company directors | The names of all current secretaries | Company objects | Administrators' details |Quantity|
+      | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | No                        | No                                         | No                                   | No              | No                      |1       |
     And The following delivery details should be displayed:
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
       | Standard (aim to send out within 10 working days) | Email only available for express dispatch | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
-      | Payment reference |Quantity| Fee |
-      | CAFE              |1| £15 |
+      | Payment reference | Fee |
+      | CAFE              | £15 |
 
   Scenario: View order details for an existing administrated LLP certificate order
     Given The checkout endpoint will return a paid certificate order for an administrated LLP
     When I view order details
     Then The following order details should be displayed:
-      | Ordered by     | Company name         | Company number | Certificate type                            | Registered office address            | The names of all current designated members                                              | The names of all current members                                | Administrators' details |
-      | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | Current address and the two previous | Including designated members':\n\nCorrespondence address\nDate of birth (month and year) | Including members':\n\nCorrespondence address\nAppointment date | Yes                     |
+      | Ordered by     | Company name         | Company number | Certificate type                            | Registered office address            | The names of all current designated members                                              | The names of all current members                                | Administrators' details |Quantity|
+      | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | Current address and the two previous | Including designated members':\n\nCorrespondence address\nDate of birth (month and year) | Including members':\n\nCorrespondence address\nAppointment date | Yes                     |1       |
     And The following delivery details should be displayed:
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
       | Standard (aim to send out within 10 working days) | Email only available for express dispatch | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
-      | Payment reference |Quantity| Fee |
-      | CAFE              |1| £15 |
+      | Payment reference | Fee |
+      | CAFE              | £15 |
 
   Scenario: View order details for an existing active LLP certificate order
     Given The checkout endpoint will return a paid certificate order for an active LLP
     When I view order details
     Then The following order details should be displayed:
-      | Ordered by     | Company name         | Company number | Certificate type                            | Summary statement previously known as statement of good standing | Registered office address | The names of all current designated members | The names of all current members |
-      | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | No                         | No                        | Yes                                         | No                               |
+      | Ordered by     | Company name         | Company number | Certificate type                            | Summary statement previously known as statement of good standing | Registered office address | The names of all current designated members | The names of all current members |Quantity|
+      | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | No                         | No                        | Yes                                         | No                               |1              |
     And The following delivery details should be displayed:
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
       | Standard (aim to send out within 10 working days) | Email only available for express dispatch | forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
-      | Payment reference |Quantity| Fee |
-      | CAFE              |1| £15 |
+      | Payment reference | Fee |
+      | CAFE              | £15 |
 
   Scenario: View order details for an existing limited partnership certificate order
     Given The checkout endpoint will return a paid certificate order for an active limited partnership
     When I view order details
     Then The following order details should be displayed:
-      | Ordered by     | Company name         | Company number | Certificate type                            | Summary statement previously known as statement of good standing | Principal place of business          | The names of all current general partners | The names of all current limited partners | General nature of business |
-      | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | Yes                        | Current address and the two previous | Yes                                       | Yes                                       | Yes                        |
+      | Ordered by     | Company name         | Company number | Certificate type                            | Summary statement previously known as statement of good standing | Principal place of business          | The names of all current general partners | The names of all current limited partners | General nature of business |Quantity|
+      | demo@ch.gov.uk | TEST COMPANY LIMITED | 00000000       | Incorporation with all company name changes | Yes                        | Current address and the two previous | Yes                                       | Yes                                       | Yes                        |1                 |
     And The following delivery details should be displayed:
       | Dispatch method                                            | Email copy required                              | Delivery details                                                                         |
       | Standard (aim to send out within 10 working days) | Email only available for express dispatch |forename surname\naddress line 1\naddress line 2\nlocality\nregion\npostal code\ncountry |
     And The following payment details should be displayed:
-      | Payment reference |Quantity| Fee |
-      | CAFE              |1| £15 |
+      | Payment reference | Fee |
+      | CAFE              | £15 |
 
   Scenario: Unpaid certificate
     Given The checkout endpoint will return an unpaid certificate order
