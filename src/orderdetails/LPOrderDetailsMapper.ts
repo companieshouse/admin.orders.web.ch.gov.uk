@@ -24,6 +24,7 @@ export class LPOrderDetailsMapper extends AbstractOrderDetailsMapper {
                     companyName: item?.companyName,
                     companyNumber: item?.companyNumber,
                     certificateType: CertificateTextMapper.mapCertificateType(itemOptions.certificateType),
+                    quantity: item?.quantity,
                     statementOfGoodStanding: CertificateTextMapper.isOptionSelected(itemOptions.includeGoodStandingInformation),
                     principalPlaceOfBusiness: CertificateTextMapper.mapAddressOption(itemOptions.principalPlaceOfBusinessDetails?.includeAddressRecordsType),
                     generalPartners: CertificateTextMapper.isOptionSelected(itemOptions.generalPartnerDetails?.includeBasicInformation),

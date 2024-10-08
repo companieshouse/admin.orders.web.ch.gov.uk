@@ -9,6 +9,7 @@ export class CertificateDetails {
     public orderedBy?: string;
     public companyName?: string;
     public companyNumber?: string;
+    public quantity?: number;
     public certificateType?: string;
     public statementOfGoodStanding?: string;
     public registeredOfficeAddress?: string;
