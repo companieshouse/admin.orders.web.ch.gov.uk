@@ -4,6 +4,8 @@ import "reflect-metadata";
 import { AuthorisationMiddleware } from "./AuthorisationMiddleware";
 import { AuthenticationMiddleware } from "./AuthenticationMiddleware";
 import { RedisSessionMiddleware } from "./RedisSessionMiddleware";
+import { CsrfMiddleware } from "./CsrfMiddleware";
+import { COOKIE_NAME } from "config/EnvironmentProperties";
 
 @Service("production.middleware")
 export class DefaultMiddlewareProvider implements MiddlewareProvider {
@@ -12,7 +14,9 @@ export class DefaultMiddlewareProvider implements MiddlewareProvider {
     constructor(private readonly sessionMiddleware: RedisSessionMiddleware,
                 private readonly authenticationMiddleware: AuthenticationMiddleware,
                 private readonly authorisationMiddleware: AuthorisationMiddleware) {
-        this.middlewareables = [ sessionMiddleware, authenticationMiddleware, authorisationMiddleware ];
+
+                const csrfMiddleware = new CsrfMiddleware(this.sessionMiddleware.getSessionStore, COOKIE_NAME, true)
+        this.middlewareables = [ sessionMiddleware, authenticationMiddleware, authorisationMiddleware, csrfMiddleware ];
     }
 }
 
