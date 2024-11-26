@@ -2,6 +2,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 <form method="POST">
+{% include "../csrf_token.njk" %}
     {{
         govukFieldset({
             legend: {

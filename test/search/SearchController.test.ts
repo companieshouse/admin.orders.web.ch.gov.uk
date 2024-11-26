@@ -8,8 +8,15 @@ import {OrderSummary} from "../../src/search/OrderSummary";
 import {SearchCriteria} from "../../src/search/SearchCriteria";
 import {OrderSearchParameters} from "../../src/search/OrderSearchParameters";
 import {BACK_LINK_TOGGLER} from "../../src/config/BackLinkToggler";
+import { getAppWithMockedCsrf } from "../../test/__mocks__/csrf.mocks";
+import sinon from "sinon";
 
 describe("SearchController", () => {
+
+    let app;
+    beforeEach(() => {
+        app = getAppWithMockedCsrf(sinon.createSandbox());
+    });
 
     it("Handles get requests", async () => {
         // given
