@@ -5,7 +5,7 @@ import { AuthorisationMiddleware } from "./AuthorisationMiddleware";
 import { AuthenticationMiddleware } from "./AuthenticationMiddleware";
 import { RedisSessionMiddleware } from "./RedisSessionMiddleware";
 import { CsrfMiddleware } from "./CsrfMiddleware";
-import { COOKIE_NAME } from "config/EnvironmentProperties";
+import { COOKIE_NAME } from "../config/EnvironmentProperties";
 
 @Service("production.middleware")
 export class DefaultMiddlewareProvider implements MiddlewareProvider {
