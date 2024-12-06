@@ -63,7 +63,7 @@ endif
 	rm -rf $(tmpdir)
 
 .PHONY: sonar
-sonar:
+sonar: test
 	npm run sonarqube
 
 .PHONY: security-check
