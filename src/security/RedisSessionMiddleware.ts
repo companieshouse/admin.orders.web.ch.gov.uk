@@ -11,9 +11,15 @@ import {SessionModel} from "../session/SessionModel";
 @Service()
 export class RedisSessionMiddleware implements Middlewareable {
     private readonly sessionMiddleware: RequestHandler;
+    private readonly sessionStore: SessionStore;
 
     constructor(@Inject("cookieConfig") cookieConfig: CookieConfig) {
-        this.sessionMiddleware = SessionMiddleware(cookieConfig, new SessionStore(new Redis(`redis://${process.env.CACHE_SERVER}`)));
+        this.sessionStore = new SessionStore(new Redis(`redis://${process.env.CACHE_SERVER}`))
+        this.sessionMiddleware = SessionMiddleware(cookieConfig, this.sessionStore);
+    }
+
+    public get getSessionStore(): SessionStore {
+        return this.sessionStore;
     }
 
     public async handler(req: Request, res: Response, next: NextFunction): Promise<void> {

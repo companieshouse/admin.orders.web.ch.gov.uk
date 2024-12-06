@@ -10,3 +10,4 @@ const getEnvironmentValue = (key: string, defaultValue?: any): string => {
 };
 
 export const DISPATCH_DAYS = getEnvironmentValue("DISPATCH_DAYS", false);
+export const COOKIE_NAME = getEnvironmentValue("COOKIE_NAME");

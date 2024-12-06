@@ -7,8 +7,16 @@ import {OrderItemView} from "../../src/orderitemsummary/OrderItemView";
 import "../../src/session/OrderAdminSession";
 import {SessionModel} from "../../src/session/SessionModel";
 import {ViewModel} from "../../src/core/ViewModel";
+import { getAppWithMockedCsrf } from "../../test/__mocks__/csrf.mocks";
+import sinon from "sinon";
 
 describe("OrderItemSummaryController", () => {
+
+    let app;
+    beforeEach(() => {
+        app = getAppWithMockedCsrf(sinon.createSandbox());
+    });
+
     describe("viewSummary", () => {
         it("Renders a view mapped from an order item", async () => {
             // given

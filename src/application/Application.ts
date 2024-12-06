@@ -4,6 +4,7 @@ import { Middlewareable } from "application/Middlewareable";
 import { Service } from "typedi";
 import { Config } from "./Config";
 import actuator from 'express-actuator';
+import { CsrfError } from "@companieshouse/web-security-node";
 
 const createError = require('http-errors');
 import ErrnoException = NodeJS.ErrnoException;
@@ -48,8 +49,16 @@ export class Application {
             next(createError(404));
         });
 
+        // CSRF error handler
+        this.express.use(function (err: any, req: any, res: any, next: (arg0: any) => void) {
+        if (err instanceof CsrfError) {
+            res.status(403).render("service_unavailable");
+        }
+    });
+
         // error handler
         this.express.use(function (err: { message: any; status: any; }, req: { app: { get: (arg0: string) => string; }; }, res: { locals: { message: any; error: any; }; status: (arg0: any) => void; render: (arg0: string) => void; }) {
+            
             // set locals, only providing error in development
             res.locals.message = err.message;
             res.locals.error = req.app.get("env") !== "development" ? {} : err;

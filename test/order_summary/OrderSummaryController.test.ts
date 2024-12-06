@@ -8,8 +8,15 @@ import { Request, Response } from "express";
 import "../../src/session/OrderAdminSession";
 import {SessionModel} from "../../src/session/SessionModel";
 import {OrderSummaryService} from "../../src/order_summary/OrderSummaryService";
+import { getAppWithMockedCsrf } from "../../test/__mocks__/csrf.mocks";
+import sinon from "sinon";
 
 describe("OrderSummaryController", () => {
+    let app;
+    beforeEach(() => {
+        app = getAppWithMockedCsrf(sinon.createSandbox());
+    });
+
     describe("readOrder", () => {
         it("Renders order information if resource found", async () => {
             // given
