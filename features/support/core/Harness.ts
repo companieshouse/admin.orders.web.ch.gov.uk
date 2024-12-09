@@ -1,5 +1,3 @@
-process.env.COOKIE_NAME = process.env.COOKIE_NAME || "test";
-
 import {AfterAll, Before, BeforeAll} from '@cucumber/cucumber';
 import {Registrar} from "../../../dist/application/Registrar";
 import {Container} from "typedi";

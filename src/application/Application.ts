@@ -57,8 +57,7 @@ export class Application {
     });
 
         // error handler
-        this.express.use(function (err: { message: any; status: any; }, req: { app: { get: (arg0: string) => string; }; }, res: { locals: { message: any; error: any; }; status: (arg0: any) => void; render: (arg0: string) => void; }) {
-            
+        this.express.use(function (err: { message: any; status: any; }, req: { app: { get: (arg0: string) => string; }; }, res: { locals: { message: any; error: any; }; status: (arg0: any) => void; render: (arg0: string) => void; }) {        
             // set locals, only providing error in development
             res.locals.message = err.message;
             res.locals.error = req.app.get("env") !== "development" ? {} : err;
