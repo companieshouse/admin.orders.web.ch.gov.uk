@@ -8,8 +8,15 @@ import { OrderDetailsResults } from "../../src/orderdetails/OrderDetailsResults"
 import { Status } from "../../src/core/Status";
 import {FEATURE_FLAGS} from "../../src/config/FeatureOptions";
 import { Response } from "express";
+import { getAppWithMockedCsrf } from "../../test/__mocks__/csrf.mocks";
+import sinon from "sinon";
 
 describe("OrderDetailsController", () => {
+
+    let app;
+    beforeEach(() => {
+        app = getAppWithMockedCsrf(sinon.createSandbox());
+    });
 
     afterAll(() => {
         FEATURE_FLAGS.multiItemBasketEnabled = false;
