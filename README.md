@@ -49,7 +49,7 @@ to follow the standards set by the [GovUK Design System](https://design-system.s
 
 1. Enable the `orders` module
 
-1. Run `tilt up` and wait for all services to start
+1. Run `chs-dev up` and wait for all services to start
 
 ### To make local changes
 
