@@ -10,7 +10,9 @@
     "test": "npx jest --verbose",
     "coverage": "npx jest --verbose --coverage",
     "sonarqube": "sonar-scanner",
-    "chs-dev": "nodemon --legacy-watch"
+    "chs-dev": "nodemon --legacy-watch",
+    "test-integration": "agent=zombie ADMIN_ORDERS_DEVELOPMENT_MODE=true npx cucumber-js",
+    "test-automation": "agent=selenium ADMIN_ORDERS_DEVELOPMENT_MODE=true npx cucumber-js"
   },
   "dependencies": {
     "@companieshouse/api-sdk-node": "^2.0.144",
@@ -29,7 +31,7 @@
     "ioredis": "^5.0.4",
     "jade": "^0.29.0",
     "js-yaml": "^3.14.0",
-    "morgan": "~1.9.1",
+    "morgan": "^1.10.1",
     "nunjucks": "^3.2.4",
     "reflect-metadata": "^0.1.13",
     "typedi": "^0.10.0"
@@ -77,7 +79,8 @@
   },
   "overrides": {
     "chokidar": "3.5.3",
-    "glob-parent": "6.0.2"
+    "glob-parent": "6.0.2",
+    "tough-cookie": "6.0.0"
   },
   "main": "src/application/Application.ts",
   "keywords": [],
