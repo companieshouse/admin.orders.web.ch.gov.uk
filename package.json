@@ -10,9 +10,7 @@
     "test": "npx jest --verbose",
     "coverage": "npx jest --verbose --coverage",
     "sonarqube": "sonar-scanner",
-    "chs-dev": "nodemon --legacy-watch",
-    "test-integration": "agent=zombie ADMIN_ORDERS_DEVELOPMENT_MODE=true npx cucumber-js",
-    "test-automation": "agent=selenium ADMIN_ORDERS_DEVELOPMENT_MODE=true npx cucumber-js"
+    "chs-dev": "nodemon --legacy-watch"
   },
   "dependencies": {
     "@companieshouse/api-sdk-node": "^2.0.144",
@@ -26,7 +24,7 @@
     "express": "^4.21.2",
     "express-actuator": "^1.8.4",
     "govuk-frontend": "^4.7.0",
-    "gulp-cli": "^2.3.0",
+    "gulp-cli": "^3.1.0",
     "http-errors": "~1.6.3",
     "ioredis": "^5.0.4",
     "jade": "^0.29.0",
@@ -55,7 +53,7 @@
     "cheerio": "^1.0.0-rc.10",
     "chromedriver": "^120.0.2",
     "cucumber-tsflow": "^4.0.0-preview.7",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.1",
     "gulp-sass": "^5.1.0",
     "jest": "^27.5.1",
     "nodemon": "^3.0.1",
@@ -68,8 +66,7 @@
     "ts-jest": "^27.1.4",
     "ts-node": "^8.10.1",
     "tslib": "^2.3.1",
-    "typescript": "^4.9.5",
-    "zombie": "^6.1.4"
+    "typescript": "^4.9.5"
   },
   "@comments devDependencies": {
     "@package sass": [
