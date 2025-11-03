@@ -18,7 +18,7 @@ for further processing.
 * The template engine used is [Nunjucks](https://mozilla.github.io/nunjucks/), 
 to follow the standards set by the [GovUK Design System](https://design-system.service.gov.uk/).
 * Unit tests has been written using the [Jest](https://jestjs.io/) testing framework and [Mocha](https://mochajs.org/).
-[Gherkin](https://cucumber.io/docs/gherkin/), Jest, [Chai](https://www.chaijs.com/) and
+[Chai](https://www.chaijs.com/) and
 [TestContainers](https://github.com/testcontainers/testcontainers-node).
 
 ## Build, run and test the application locally

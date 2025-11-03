@@ -37,7 +37,6 @@
     "typedi": "^0.10.0"
   },
   "devDependencies": {
-    "@cucumber/cucumber": "^7.3.2",
     "@types/chai": "^4.3.0",
     "@types/cheerio": "^0.22.31",
     "@types/express": "^4.17.13",
@@ -54,7 +53,6 @@
     "chai": "^4.3.6",
     "cheerio": "^1.0.0-rc.10",
     "chromedriver": "^120.0.2",
-    "cucumber-tsflow": "^4.0.0-preview.7",
     "gulp": "^5.0.1",
     "gulp-sass": "^5.1.0",
     "jest": "^27.5.1",
