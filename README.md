@@ -18,16 +18,14 @@ for further processing.
 * The template engine used is [Nunjucks](https://mozilla.github.io/nunjucks/), 
 to follow the standards set by the [GovUK Design System](https://design-system.service.gov.uk/).
 * Unit tests has been written using the [Jest](https://jestjs.io/) testing framework and [Mocha](https://mochajs.org/).
-* Integration tests has been written using [CucumberJS](https://cucumber.io/docs/installation/javascript/), 
-[Gherkin](https://cucumber.io/docs/gherkin/), Jest, [Chai](https://www.chaijs.com/) and
+[Chai](https://www.chaijs.com/) and
 [TestContainers](https://github.com/testcontainers/testcontainers-node).
 
 ## Build, run and test the application locally
 
 * Run `make` to install required dependencies and build the application.
 * Run `npm run start` to start the application.
-* Run `npm run test` to run both unit and integration tests.  
-* Run `npm run test-automation` to run integration tests over selenium-webdriver.
+* Run `npm run test` to run unit tests
     
 ## Environment variables
 

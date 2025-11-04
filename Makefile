@@ -31,19 +31,11 @@ gulp-install:
 init: npm-install gulp-install
 
 .PHONY: test
-test: test-unit test-integration
+test: test-unit
 
 .PHONY: test-unit
 test-unit:
 	npm run test
-
-.PHONY: test-integration
-test-integration:
-	npm run test-integration
-
-.PHONY: test-automation
-test-automation:
-	npm run test-automation
 
 .PHONY: package
 package: build

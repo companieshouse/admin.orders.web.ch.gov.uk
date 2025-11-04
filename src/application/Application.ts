@@ -32,6 +32,10 @@ export class Application {
         this.express.set("port", this.requestedPort);
     }
 
+    public getExpressApp(): Express {
+        return this.express;
+    }
+
     public start(): void {
         this.express.use(express.json());
         this.express.use(express.urlencoded({ extended: false }));
