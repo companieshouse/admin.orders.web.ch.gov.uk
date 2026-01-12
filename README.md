@@ -25,7 +25,7 @@ to follow the standards set by the [GovUK Design System](https://design-system.s
 
 * Run `make` to install required dependencies and build the application.
 * Run `npm run start` to start the application.
-* Run `npm run test` to run unit tests
+* Run `npm run test` to run unit tests.
     
 ## Environment variables
 
