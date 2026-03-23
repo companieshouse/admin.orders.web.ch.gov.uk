@@ -337,6 +337,6 @@ describe("OrderDetailsErrorMapper", () => {
         const execution = () => mapper.map(serverResponse);
 
         // then
-        expect(execution).toThrowError();
+        expect(execution).toThrow();
     });
 });
