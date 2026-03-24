@@ -25,7 +25,7 @@ describe("DefaultApiClientFactory", () => {
         const execution = () => factory.newApiClient("");
 
         // then
-        expect(execution).toThrowError();
+        expect(execution).toThrow();
     });
 
     it("Throws an error if no token specified", () => {
@@ -36,6 +36,6 @@ describe("DefaultApiClientFactory", () => {
         const execution = () => factory.newApiClient("");
 
         // then
-        expect(execution).toThrowError();
+        expect(execution).toThrow();
     });
 });
